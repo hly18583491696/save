@@ -3,7 +3,7 @@
     <!-- 侧边栏 -->
     <el-aside :width="isCollapse ? '64px' : '200px'" class="sidebar">
       <div class="logo">
-        <img src="/logo.png" alt="Logo" v-if="!isCollapse" />
+        <img src="/logo.svg" alt="Logo" v-if="!isCollapse" />
         <span v-if="!isCollapse">宿舍管理系统</span>
       </div>
       
