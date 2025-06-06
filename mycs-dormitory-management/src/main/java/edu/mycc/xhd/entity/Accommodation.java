@@ -1,6 +1,6 @@
 package edu.mycc.xhd.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+// import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("dorm_accommodation")
+// @TableName("dorm_accommodation")
 public class Accommodation extends BaseEntity {
     
     /**

@@ -1,13 +1,13 @@
 package edu.mycc.xhd.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+// import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.mycc.xhd.common.Result;
 import edu.mycc.xhd.entity.User;
 import edu.mycc.xhd.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 /**
  * 用户控制器
@@ -38,25 +38,25 @@ public class UserController {
         return userService.register(user);
     }
     
-    /**
-     * 分页查询用户
-     */
-    @GetMapping("/page")
-    public Result<Page<User>> pageUsers(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String realName,
-            @RequestParam(required = false) Integer userType) {
-        return userService.pageUsers(page, size, username, realName, userType);
-    }
+    // /**
+    //  * 分页查询用户
+    //  */
+    // @GetMapping("/page")
+    // public Result<Page<User>> pageUsers(
+    //         @RequestParam(defaultValue = "1") Integer page,
+    //         @RequestParam(defaultValue = "10") Integer size,
+    //         @RequestParam(required = false) String username,
+    //         @RequestParam(required = false) String realName,
+    //         @RequestParam(required = false) Integer userType) {
+    //     return userService.pageUsers(page, size, username, realName, userType);
+    // }
     
     /**
-     * 根据ID获取用户信息
+     * 根据用户名获取用户信息
      */
-    @GetMapping("/{id}")
-    public Result<User> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @GetMapping("/info/{username}")
+    public Result<User> getUserInfo(@PathVariable String username) {
+        return userService.getUserInfo(username);
     }
     
     /**
@@ -75,29 +75,29 @@ public class UserController {
         return userService.deleteUser(id);
     }
     
-    /**
-     * 重置密码
-     */
-    @PostMapping("/{id}/reset-password")
-    public Result<Void> resetPassword(@PathVariable Long id, @RequestBody ResetPasswordRequest request) {
-        return userService.resetPassword(id, request.getNewPassword());
-    }
+    // /**
+    //  * 重置密码
+    //  */
+    // @PostMapping("/{id}/reset-password")
+    // public Result<Void> resetPassword(@PathVariable Long id, @RequestBody ResetPasswordRequest request) {
+    //     return userService.resetPassword(id, request.getNewPassword());
+    // }
     
-    /**
-     * 修改密码
-     */
-    @PostMapping("/{id}/change-password")
-    public Result<Void> changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
-        return userService.changePassword(id, request.getOldPassword(), request.getNewPassword());
-    }
+    // /**
+    //  * 修改密码
+    //  */
+    // @PostMapping("/{id}/password")
+    // public Result<Void> changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
+    //     return userService.changePassword(id, request.getOldPassword(), request.getNewPassword());
+    // }
     
-    /**
-     * 启用/禁用用户
-     */
-    @PostMapping("/{id}/status")
-    public Result<Void> updateStatus(@PathVariable Long id, @RequestBody UpdateStatusRequest request) {
-        return userService.updateStatus(id, request.getStatus());
-    }
+    // /**
+    //  * 启用/禁用用户
+    //  */
+    // @PostMapping("/{id}/status")
+    // public Result<Void> updateStatus(@PathVariable Long id, @RequestBody UpdateStatusRequest request) {
+    //     return userService.updateStatus(id, request.getStatus());
+    // }
     
     /**
      * 登录请求

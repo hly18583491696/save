@@ -1,6 +1,6 @@
 package edu.mycc.xhd.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+// import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("dorm_building")
+// @TableName("dorm_building")
 public class Building extends BaseEntity {
     
     /**
