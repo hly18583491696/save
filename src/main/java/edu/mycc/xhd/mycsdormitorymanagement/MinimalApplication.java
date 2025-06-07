@@ -5,13 +5,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+    org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class,
+    org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration.class
+})
 // @RestController // 禁用以避免与CleanApp冲突
-public class MycsDormitoryManagementApplication {
+public class MinimalApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MycsDormitoryManagementApplication.class, args);
-        System.out.println("Application started successfully on port 8081");
+        SpringApplication.run(MinimalApplication.class, args);
+        System.out.println("Minimal Application started successfully on port 8081");
     }
     
     // @GetMapping("/")
@@ -20,7 +23,12 @@ public class MycsDormitoryManagementApplication {
     // }
     
     // @GetMapping("/health")
-    // public String health() {
-    //     return "OK";
-    // }
+    public String health() {
+        return "OK";
+    }
+    
+    @GetMapping("/api/test")
+    public String test() {
+        return "Test endpoint is working!";
+    }
 }

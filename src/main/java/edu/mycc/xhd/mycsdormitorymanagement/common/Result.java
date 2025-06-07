@@ -26,7 +26,7 @@ public class Result<T> {
         return new Result<>(200, "操作成功", data);
     }
     
-    public static <T> Result<T> success(String message, T data) {
+    public static <T> Result<T> success(T data, String message) {
         return new Result<>(200, message, data);
     }
     

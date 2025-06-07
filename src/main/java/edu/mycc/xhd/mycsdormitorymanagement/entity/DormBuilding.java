@@ -8,36 +8,34 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 用户实体类
+ * 宿舍楼实体类
  */
 @Data
-@TableName("sys_user")
-public class User {
+@TableName("dorm_building")
+public class DormBuilding {
     
     @TableId(type = IdType.AUTO)
     private Long id;
     
-    private String username;
+    private String buildingCode;
     
-    private String password;
+    private String buildingName;
     
-    private String realName;
+    private String buildingType;
     
-    private String email;
+    private Integer floors;
     
-    private String phone;
+    private Integer roomsPerFloor;
     
-    private String role; // ADMIN, TEACHER, USER
+    private String managerName;
     
-    private Integer status; // 1-启用, 0-禁用
+    private String managerPhone;
     
-    private String studentId;
-    
-    private String avatar;
+    private String description;
     
     private LocalDateTime createTime;
     
     private LocalDateTime updateTime;
     
-    private Integer deleted; // 0-未删除, 1-已删除
+    private Integer deleted;
 }

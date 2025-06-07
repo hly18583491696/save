@@ -5,39 +5,44 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 用户实体类
+ * 宿舍房间实体类
  */
 @Data
-@TableName("sys_user")
-public class User {
+@TableName("dorm_room")
+public class DormRoom {
     
     @TableId(type = IdType.AUTO)
     private Long id;
     
-    private String username;
+    private String roomNumber;
     
-    private String password;
+    private Long buildingId;
     
-    private String realName;
+    private Integer floor;
     
-    private String email;
+    private String roomType;
     
-    private String phone;
+    private Integer capacity;
     
-    private String role; // ADMIN, TEACHER, USER
+    private Integer currentCount;
     
-    private Integer status; // 1-启用, 0-禁用
+    private String gender;
     
-    private String studentId;
+    private String status;
     
-    private String avatar;
+    private String facilities;
+    
+    private BigDecimal rent;
+    
+    private String description;
     
     private LocalDateTime createTime;
     
     private LocalDateTime updateTime;
     
-    private Integer deleted; // 0-未删除, 1-已删除
+    private Integer deleted;
 }

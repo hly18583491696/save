@@ -3,253 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学生宿舍管理系统</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-building"></i>
-                <span>宿舍管理系统</span>
-            </div>
-            <div class="nav-menu">
-                <a href="#home" class="nav-link active">首页</a>
-                <a href="#buildings" class="nav-link">宿舍楼管理</a>
-                <a href="#rooms" class="nav-link">房间管理</a>
-                <a href="#students" class="nav-link">学生管理</a>
-                <a href="#maintenance" class="nav-link">维修管理</a>
-                <a href="#visitors" class="nav-link">访客管理</a>
-            </div>
-            <div class="nav-user">
-                <div class="user-info">
-                    <i class="fas fa-user-circle"></i>
-                    <span id="username">管理员</span>
-                </div>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 主要内容区域 -->
-    <main class="main-content">
-        <!-- 首页内容 -->
-        <section id="home" class="content-section active">
-            <div class="dashboard">
-                <h1 class="page-title">系统概览</h1>
-                
-                <!-- 统计卡片 -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="buildingCount">12</h3>
-                            <p>宿舍楼总数</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-door-open"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="roomCount">480</h3>
-                            <p>房间总数</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="studentCount">1,856</h3>
-                            <p>在住学生</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="maintenanceCount">23</h3>
-                            <p>待处理维修</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 快速操作 -->
-                <div class="quick-actions">
-                    <h2>快速操作</h2>
-                    <div class="action-grid">
-                        <button class="action-btn" onclick="showSection('students')">
-                            <i class="fas fa-user-plus"></i>
-                            <span>学生入住</span>
-                        </button>
-                        <button class="action-btn" onclick="showSection('maintenance')">
-                            <i class="fas fa-wrench"></i>
-                            <span>维修申请</span>
-                        </button>
-                        <button class="action-btn" onclick="showSection('visitors')">
-                            <i class="fas fa-user-check"></i>
-                            <span>访客登记</span>
-                        </button>
-                        <button class="action-btn" onclick="showSection('rooms')">
-                            <i class="fas fa-search"></i>
-                            <span>房间查询</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 最近活动 -->
-                <div class="recent-activities">
-                    <h2>最近活动</h2>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-user-plus"></i>
-                            </div>
-                            <div class="activity-content">
-                                <p><strong>张三</strong> 入住了 <strong>1号楼101室</strong></p>
-                                <span class="activity-time">2小时前</span>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-tools"></i>
-                            </div>
-                            <div class="activity-content">
-                                <p><strong>李四</strong> 提交了维修申请</p>
-                                <span class="activity-time">4小时前</span>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <div class="activity-content">
-                                <p><strong>王五</strong> 的访客已登记</p>
-                                <span class="activity-time">6小时前</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 宿舍楼管理 -->
-        <section id="buildings" class="content-section">
-            <div class="section-header">
-                <h1 class="page-title">宿舍楼管理</h1>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    添加宿舍楼
-                </button>
-            </div>
-            <div class="content-placeholder">
-                <i class="fas fa-building"></i>
-                <p>宿舍楼管理功能正在开发中...</p>
-            </div>
-        </section>
-
-        <!-- 房间管理 -->
-        <section id="rooms" class="content-section">
-            <div class="section-header">
-                <h1 class="page-title">房间管理</h1>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    添加房间
-                </button>
-            </div>
-            <div class="content-placeholder">
-                <i class="fas fa-door-open"></i>
-                <p>房间管理功能正在开发中...</p>
-            </div>
-        </section>
-
-        <!-- 学生管理 -->
-        <section id="students" class="content-section">
-            <div class="section-header">
-                <h1 class="page-title">学生管理</h1>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    添加学生
-                </button>
-            </div>
-            <div class="content-placeholder">
-                <i class="fas fa-users"></i>
-                <p>学生管理功能正在开发中...</p>
-            </div>
-        </section>
-
-        <!-- 维修管理 -->
-        <section id="maintenance" class="content-section">
-            <div class="section-header">
-                <h1 class="page-title">维修管理</h1>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    新建维修单
-                </button>
-            </div>
-            <div class="content-placeholder">
-                <i class="fas fa-tools"></i>
-                <p>维修管理功能正在开发中...</p>
-            </div>
-        </section>
-
-        <!-- 访客管理 -->
-        <section id="visitors" class="content-section">
-            <div class="section-header">
-                <h1 class="page-title">访客管理</h1>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    访客登记
-                </button>
-            </div>
-            <div class="content-placeholder">
-                <i class="fas fa-user-check"></i>
-                <p>访客管理功能正在开发中...</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- 加载脚本 -->
+    <title>学生宿舍管理系统 - 重定向</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            color: white;
+        }
+        .redirect-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .redirect-container h1 {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        .redirect-container p {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .redirect-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .redirect-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .countdown {
+            margin-top: 1rem;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+    </style>
     <script>
-        // 页面加载时检查认证状态
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuthentication();
-        });
-        
-        function checkAuthentication() {
-            const token = localStorage.getItem('userToken');
-            const userInfo = localStorage.getItem('userInfo');
-            
-            if (!token || !userInfo) {
-                // 没有登录信息，重定向到登录页面
-                window.location.href = '/login.html';
-                return;
-            }
-            
-            try {
-                const user = JSON.parse(userInfo);
-                // 更新用户显示信息
-                const usernameElement = document.getElementById('username');
-                if (usernameElement && user.name) {
-                    usernameElement.textContent = user.name;
-                }
-            } catch (error) {
-                console.error('解析用户信息失败:', error);
-                // 清除无效的用户信息
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userInfo');
-                window.location.href = '/login.html';
+        // 自动重定向到Vue3前端应用
+        let countdown = 5;
+        function redirect() {
+            if (countdown > 0) {
+                document.getElementById('countdown').textContent = countdown;
+                countdown--;
+                setTimeout(redirect, 1000);
+            } else {
+                window.location.href = 'http://localhost:5174/';
             }
         }
+        
+        window.onload = function() {
+            redirect();
+        }
     </script>
-    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="redirect-container">
+        <h1>🏢 学生宿舍管理系统</h1>
+        <p>系统正在重定向到新版Vue3前端应用...</p>
+        <a href="http://localhost:5173/" class="redirect-btn">立即访问新版系统</a>
+        <div class="countdown">
+            <span id="countdown">5</span> 秒后自动跳转
+        </div>
+    </div>
 </body>
 </html>

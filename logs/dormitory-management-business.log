@@ -1,0 +1,81 @@
+2025-06-08 01:26:45.110 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:26:45.148 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 01:28:29.489 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:28:29.531 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 01:28:44.030 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:28:44.034 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 01:30:08.636 [http-nio-8082-exec-4] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:30:08.641 [http-nio-8082-exec-4] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 01:33:41.576 [http-nio-8082-exec-7] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:33:41.580 [http-nio-8082-exec-7] WARN  e.m.x.m.controller.AuthController - 用户登录失败: username=admin, error=密码错误
+2025-06-08 01:33:46.462 [http-nio-8082-exec-8] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:33:46.467 [http-nio-8082-exec-8] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 01:35:30.612 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:35:30.615 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 01:35:36.164 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:35:36.168 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:35:36.172 [http-nio-8082-exec-4] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:35:36.180 [http-nio-8082-exec-4] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:35:36.938 [http-nio-8082-exec-10] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:35:36.939 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.StudentController - 获取所有学生列表请求
+2025-06-08 01:35:36.941 [http-nio-8082-exec-10] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:35:37.004 [http-nio-8082-exec-1] ERROR e.m.x.m.controller.StudentController - 获取学生列表失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 01:35:37.232 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:35:37.234 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:35:37.235 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:35:37.237 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:35:39.670 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.StudentController - 获取所有学生列表请求
+2025-06-08 01:35:39.671 [http-nio-8082-exec-10] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:35:39.673 [http-nio-8082-exec-2] ERROR e.m.x.m.controller.StudentController - 获取学生列表失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 01:35:39.673 [http-nio-8082-exec-10] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:35:47.404 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:35:47.405 [http-nio-8082-exec-1] WARN  e.m.x.m.controller.AuthController - 用户登录失败: username=admin, error=密码错误
+2025-06-08 01:35:48.583 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 01:35:48.586 [http-nio-8082-exec-5] WARN  e.m.x.m.controller.AuthController - 用户登录失败: username=admin, error=密码错误
+2025-06-08 01:51:15.910 [http-nio-8082-exec-1] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 01:51:16.112 [http-nio-8082-exec-1] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 01:51:27.343 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:51:27.346 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:51:27.358 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:51:27.358 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:51:29.055 [http-nio-8082-exec-9] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-08 01:51:29.055 [http-nio-8082-exec-10] INFO  e.m.x.m.controller.StudentController - 获取所有学生列表请求
+2025-06-08 01:51:29.059 [http-nio-8082-exec-9] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-08 01:51:29.060 [http-nio-8082-exec-10] ERROR e.m.x.m.controller.StudentController - 获取学生列表失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 01:51:42.677 [http-nio-8082-exec-1] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 01:51:42.683 [http-nio-8082-exec-1] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []

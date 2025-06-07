@@ -8,11 +8,11 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 用户实体类
+ * 学生实体类
  */
 @Data
 @TableName("sys_user")
-public class User {
+public class Student {
     
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -27,17 +27,29 @@ public class User {
     
     private String phone;
     
-    private String role; // ADMIN, TEACHER, USER
+    private String gender;
     
-    private Integer status; // 1-启用, 0-禁用
+    private String studentNumber;
     
-    private String studentId;
+    private String grade;
+    
+    private String major;
+    
+    private String className;
+    
+    private String idCard;
+    
+    private String address;
     
     private String avatar;
+    
+    private String status;
+    
+    private String remark;
     
     private LocalDateTime createTime;
     
     private LocalDateTime updateTime;
     
-    private Integer deleted; // 0-未删除, 1-已删除
+    private Integer deleted;
 }

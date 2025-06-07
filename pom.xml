@@ -42,10 +42,18 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         
-        <!-- Spring Boot Security Starter -->
+        <!-- Spring Boot Security Starter - 暂时禁用以创建最小可用版本 -->
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        -->
+        
+        <!-- Embedded Tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         
         <!-- Spring Boot Data JPA Starter -->
@@ -54,11 +62,13 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         
-        <!-- Spring Boot Redis Starter -->
+        <!-- Spring Boot Redis Starter - 暂时移除，避免连接问题 -->
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        -->
         
         <!-- MyBatis-Plus -->
         <dependency>
@@ -152,6 +162,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>edu.mycc.xhd.mycsdormitorymanagement.CleanApp</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

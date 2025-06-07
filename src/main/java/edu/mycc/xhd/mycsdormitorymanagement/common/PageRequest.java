@@ -30,4 +30,45 @@ public class PageRequest {
     
     // @Schema(description = "搜索关键词")
     private String keyword;
+    
+    // 手动添加getter和setter方法以解决Lombok问题
+    public Integer getPageNum() {
+        return pageNum;
+    }
+    
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+    
+    public Integer getPageSize() {
+        return pageSize;
+    }
+    
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+    
+    public String getSortField() {
+        return sortField;
+    }
+    
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+    
+    public String getSortOrder() {
+        return sortOrder;
+    }
+    
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+    
+    public String getKeyword() {
+        return keyword;
+    }
+    
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 }

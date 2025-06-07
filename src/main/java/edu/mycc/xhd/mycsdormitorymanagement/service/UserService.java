@@ -1,93 +1,117 @@
 package edu.mycc.xhd.mycsdormitorymanagement.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.User;
-import edu.mycc.xhd.mycsdormitorymanagement.common.PageRequest;
+import edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper;
+import edu.mycc.xhd.mycsdormitorymanagement.utils.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
- * 用户服务接口
+ * 用户服务类
  */
-public interface UserService {
+@Service
+public class UserService {
+    
+    @Autowired
+    private UserMapper userMapper;
+    
+    // @Autowired
+    // private JwtUtils jwtUtils;
     
     /**
      * 用户登录
      */
-    String login(String username, String password);
+    public String login(String username, String password) {
+        // 根据用户名查询用户
+        User user = userMapper.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        
+        // 验证密码（使用明文密码直接比较）
+        if (!password.equals(user.getPassword())) {
+            throw new RuntimeException("密码错误");
+        }
+        
+        // 检查用户状态
+        if (user.getStatus() != 1) {
+            throw new RuntimeException("用户已被禁用");
+        }
+        
+        // 生成JWT令牌 (暂时简化)
+        return "login_success_" + user.getUsername();
+    }
     
     /**
      * 用户注册
      */
-    User register(User user);
+    public boolean register(String username, String password, String realName, String email, String phone) {
+        // 参数验证
+        if (username == null || username.trim().isEmpty()) {
+            throw new RuntimeException("用户名不能为空");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new RuntimeException("密码不能为空");
+        }
+        
+        // 检查用户名是否已存在
+        User existingUser = userMapper.findByUsername(username);
+        if (existingUser != null) {
+            throw new RuntimeException("用户名已存在");
+        }
+        
+        // 创建新用户
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(password); // 明文密码存储
+        newUser.setRealName(realName);
+        newUser.setEmail(email);
+        newUser.setPhone(phone);
+        newUser.setRole("STUDENT"); // 默认角色为学生
+        newUser.setStatus(1); // 默认状态为启用
+        newUser.setCreateTime(LocalDateTime.now());
+        newUser.setUpdateTime(LocalDateTime.now());
+        newUser.setDeleted(0); // 默认未删除
+        
+        // 保存到数据库
+        int result = userMapper.insert(newUser);
+        return result > 0;
+    }
     
     /**
-     * 根据ID获取用户信息
+     * 根据用户名获取用户
      */
-    User getUserById(Long id);
+    public User getUserByUsername(String username) {
+        User user = userMapper.findByUsername(username);
+        if (user != null) {
+            // 不返回密码
+            user.setPassword(null);
+        }
+        return user;
+    }
     
     /**
-     * 根据用户名获取用户信息
+     * 根据学号获取用户
      */
-    User getUserByUsername(String username);
+    public User getUserByStudentId(String studentId) {
+        User user = userMapper.findByStudentId(studentId);
+        if (user != null) {
+            // 不返回密码
+            user.setPassword(null);
+        }
+        return user;
+    }
     
     /**
-     * 根据学号获取用户信息
+     * 根据角色获取用户列表
      */
-    User getUserByStudentId(String studentId);
-    
-    /**
-     * 分页查询用户列表
-     */
-    Page<User> getUserList(PageRequest pageRequest);
-    
-    /**
-     * 根据角色查询用户列表
-     */
-    List<User> getUsersByRole(String role);
-    
-    /**
-     * 创建用户
-     */
-    User createUser(User user);
-    
-    /**
-     * 更新用户信息
-     */
-    User updateUser(User user);
-    
-    /**
-     * 删除用户
-     */
-    boolean deleteUser(Long id);
-    
-    /**
-     * 批量删除用户
-     */
-    boolean deleteUsers(List<Long> ids);
-    
-    /**
-     * 启用/禁用用户
-     */
-    boolean updateUserStatus(Long id, Integer status);
-    
-    /**
-     * 重置用户密码
-     */
-    boolean resetPassword(Long id, String newPassword);
-    
-    /**
-     * 修改密码
-     */
-    boolean changePassword(Long id, String oldPassword, String newPassword);
-    
-    /**
-     * 检查用户名是否存在
-     */
-    boolean existsByUsername(String username);
-    
-    /**
-     * 检查学号是否存在
-     */
-    boolean existsByStudentId(String studentId);
+    public java.util.List<User> getUsersByRole(String role) {
+        java.util.List<User> users = userMapper.findByRole(role);
+        // 不返回密码
+        users.forEach(user -> user.setPassword(null));
+        return users;
+    }
 }
