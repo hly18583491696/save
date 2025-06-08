@@ -16,10 +16,7 @@ import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 
 @SpringBootApplication(exclude = {
         SecurityAutoConfiguration.class,
-        MongoAutoConfiguration.class,
-        MongoDataAutoConfiguration.class,
-        HibernateJpaAutoConfiguration.class,
-        JpaRepositoriesAutoConfiguration.class
+        MongoAutoConfiguration.class
 })
 @MapperScan("edu.mycc.xhd.mycsdormitorymanagement.mapper")
 public class CleanApp {
@@ -27,7 +24,6 @@ public class CleanApp {
         SpringApplication app = new SpringApplication(CleanApp.class);
         app.setWebApplicationType(org.springframework.boot.WebApplicationType.SERVLET);
         app.run(args);
-        System.out.println("Clean Application started successfully on port 8081");
     }
     
     @RestController

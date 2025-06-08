@@ -13,7 +13,7 @@
 使用MySQL命令行或图形化工具（如Navicat、phpMyAdmin等）执行以下命令：
 
 ```sql
-CREATE DATABASE IF NOT EXISTS dormitory_management CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS mycs_dormitory CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 或者直接运行项目根目录下的 `mysql-init.sql` 文件：
@@ -29,14 +29,14 @@ mysql -u root -p < mysql-init.sql
 ```properties
 # MySQL数据库配置
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/dormitory_management?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+spring.datasource.url=jdbc:mysql://localhost:3306/mycs_dormitory?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
 spring.datasource.username=root
 spring.datasource.password=123456
 ```
 
 **请根据实际情况修改：**
 - `localhost:3306` - MySQL服务器地址和端口
-- `dormitory_management` - 数据库名称
+- `mycs_dormitory` - 数据库名称
 - `root` - 数据库用户名
 - `123456` - 数据库密码
 
@@ -77,12 +77,13 @@ collation-server=utf8mb4_unicode_ci
 ## 数据库表说明
 
 应用会自动创建以下主要表：
-- `users` - 用户表
-- `buildings` - 宿舍楼表
-- `rooms` - 房间表
-- `accommodations` - 住宿记录表
+- `sys_user` - 用户表
+- `dorm_building` - 宿舍楼表
+- `dorm_room` - 房间表
+- `dorm_accommodation` - 住宿记录表
 - `dorm_notice` - 宿舍公告表
-- `maintenance_requests` - 维修申请表
+- `dorm_maintenance` - 维修申请表
+- `dorm_visitor` - 访客记录表
 
 ## 默认管理员账户
 

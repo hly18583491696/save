@@ -313,14 +313,18 @@ public class DormController {
      */
     @DeleteMapping("/accommodations/{id}")
     public Result<String> deleteAccommodation(@PathVariable Long id) {
+        log.info("删除住宿记录请求，ID: {}", id);
         try {
             boolean success = dormAccommodationService.deleteAccommodation(id);
             if (success) {
+                log.info("成功删除住宿记录，ID: {}", id);
                 return Result.success("删除住宿记录成功");
             } else {
+                log.warn("删除住宿记录失败，ID: {}", id);
                 return Result.error("删除住宿记录失败");
             }
         } catch (Exception e) {
+            log.error("删除住宿记录异常，ID: {}, 错误: {}", id, e.getMessage());
             return Result.error("删除住宿记录失败: " + e.getMessage());
         }
     }

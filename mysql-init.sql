@@ -1,5 +1,5 @@
 -- 宿舍管理系统数据库初始化脚本
--- 创建时间: 2024
+
 
 -- 创建数据库
 CREATE DATABASE IF NOT EXISTS `mycs_dormitory` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

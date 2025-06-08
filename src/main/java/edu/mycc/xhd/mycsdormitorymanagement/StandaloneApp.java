@@ -24,7 +24,6 @@ public class StandaloneApp {
         SpringApplication app = new SpringApplication(StandaloneApp.class);
         app.setWebApplicationType(org.springframework.boot.WebApplicationType.SERVLET);
         app.run(args);
-        System.out.println("Standalone Application started successfully on port 8081");
     }
 }
 

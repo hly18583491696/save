@@ -3,6 +3,8 @@ package edu.mycc.xhd.mycsdormitorymanagement.service;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormAccommodation;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormRoom;
 import edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class DormAccommodationService {
+    
+    private static final Logger log = LoggerFactory.getLogger(DormAccommodationService.class);
     
     @Autowired
     private DormAccommodationMapper accommodationMapper;
@@ -164,11 +168,26 @@ public class DormAccommodationService {
      * 删除住宿记录（逻辑删除）
      */
     public boolean deleteAccommodation(Long id) {
+        log.info("开始删除住宿记录，ID: {}", id);
+        
+        // 先查询记录是否存在
+        DormAccommodation existing = accommodationMapper.selectById(id);
+        if (existing == null) {
+            log.warn("要删除的住宿记录不存在，ID: {}", id);
+            return false;
+        }
+        
+        log.info("找到住宿记录，学生: {}, 当前状态: deleted={}", existing.getStudentName(), existing.getDeleted());
+        
         DormAccommodation accommodation = new DormAccommodation();
         accommodation.setId(id);
         accommodation.setDeleted(1);
         accommodation.setUpdateTime(LocalDateTime.now());
-        return accommodationMapper.updateById(accommodation) > 0;
+        
+        int result = accommodationMapper.updateById(accommodation);
+        log.info("数据库更新结果: {}, 受影响行数: {}", result > 0 ? "成功" : "失败", result);
+        
+        return result > 0;
     }
     
     /**

@@ -11,7 +11,6 @@ public class MycsDormitoryManagementApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MycsDormitoryManagementApplication.class, args);
-        System.out.println("Application started successfully on port 8081");
     }
     
     // @GetMapping("/")

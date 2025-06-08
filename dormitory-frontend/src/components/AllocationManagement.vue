@@ -72,7 +72,9 @@
               </div>
               <div class="student-details">
                 <div class="student-name">{{ allocation.studentName }}</div>
-                <div class="student-code">{{ allocation.studentCode }}</div>
+                <div class="student-code">{{ allocation.studentNumber }}</div>
+                <div class="student-class">{{ allocation.className || '未填写班级' }}</div>
+                <div class="student-id">{{ allocation.idCard || '未填写身份证' }}</div>
               </div>
             </div>
             
@@ -161,7 +163,7 @@
               <select v-model="formData.studentId" required :disabled="isEditing">
                 <option value="">请选择学生</option>
                 <option v-for="student in availableStudents" :key="student.id" :value="student.id">
-                  {{ student.name }} ({{ student.studentCode }})
+                  {{ student.studentName }} ({{ student.studentNumber }})
                 </option>
               </select>
             </div>
@@ -246,7 +248,15 @@
             </div>
             <div class="detail-item">
               <label>学号</label>
-              <span>{{ selectedAllocation?.studentCode }}</span>
+              <span>{{ selectedAllocation?.studentNumber }}</span>
+            </div>
+            <div class="detail-item">
+              <label>班级</label>
+              <span>{{ selectedAllocation?.className || '未填写' }}</span>
+            </div>
+            <div class="detail-item">
+              <label>身份证号</label>
+              <span>{{ selectedAllocation?.idCard || '未填写' }}</span>
             </div>
             <div class="detail-item">
               <label>楼栋</label>
@@ -319,58 +329,24 @@ export default {
     const loadAllocations = async () => {
       loading.value = true
       try {
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        const response = await fetch('/api/dorm/accommodations')
+        const result = await response.json()
         
-        // 模拟数据
-        allocations.value = [
-          {
-            id: 1,
-            studentId: 1,
-            studentName: '张三',
-            studentCode: '2021001',
-            buildingId: 1,
-            buildingName: '梧桐苑1号楼',
-            roomId: 1,
-            roomNumber: '101',
-            bedNumber: 1,
-            checkInDate: '2024-01-15',
-            status: 1,
-            remark: '正常入住'
-          },
-          {
-            id: 2,
-            studentId: 2,
-            studentName: '李四',
-            studentCode: '2021002',
-            buildingId: 1,
-            buildingName: '梧桐苑1号楼',
-            roomId: 1,
-            roomNumber: '101',
-            bedNumber: 2,
-            checkInDate: '2024-01-16',
-            status: 1,
-            remark: ''
-          },
-          {
-            id: 3,
-            studentId: 3,
-            studentName: '王五',
-            studentCode: '2021003',
-            buildingId: 2,
-            buildingName: '梧桐苑2号楼',
-            roomId: 3,
-            roomNumber: '201',
-            bedNumber: 1,
-            checkInDate: '2024-01-17',
-            status: 0,
-            remark: '已退宿'
-          }
-        ]
+        console.log('API响应:', result)
+        console.log('住宿分配数据:', result.data)
+        
+        if (result.code === 200) {
+          allocations.value = result.data
+          console.log('allocations.value已更新:', allocations.value)
+        } else {
+          console.error(result.message || '加载住宿分配数据失败')
+          allocations.value = []
+        }
         
         totalPages.value = Math.ceil(allocations.value.length / pageSize)
       } catch (error) {
         console.error('加载住宿分配失败:', error)
+        allocations.value = []
       } finally {
         loading.value = false
       }
@@ -378,15 +354,18 @@ export default {
     
     const loadBuildings = async () => {
       try {
-        // 模拟API调用
-        buildings.value = [
-          { id: 1, name: '梧桐苑1号楼' },
-          { id: 2, name: '梧桐苑2号楼' },
-          { id: 3, name: '银杏苑1号楼' },
-          { id: 4, name: '银杏苑2号楼' }
-        ]
+        const response = await fetch('/api/dorm/buildings')
+        const result = await response.json()
+        
+        if (result.code === 200) {
+          buildings.value = result.data
+        } else {
+          console.error(result.message || '加载楼栋数据失败')
+          buildings.value = []
+        }
       } catch (error) {
         console.error('加载楼栋失败:', error)
+        buildings.value = []
       }
     }
     
@@ -722,6 +701,30 @@ export default {
 .student-code {
   font-size: 0.875rem;
   color: var(--text-secondary);
+}
+
+.student-class {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.student-id {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.student-class {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.student-id {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
 }
 
 .room-info {

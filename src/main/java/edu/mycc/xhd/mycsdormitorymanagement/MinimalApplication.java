@@ -14,7 +14,6 @@ public class MinimalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MinimalApplication.class, args);
-        System.out.println("Minimal Application started successfully on port 8081");
     }
     
     // @GetMapping("/")

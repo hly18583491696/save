@@ -10,27 +10,28 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(50) NOT NULL COMMENT '用户名',
-  `password` varchar(255) NOT NULL COMMENT '密码',
+  `password` varchar(100) NOT NULL COMMENT '密码',
   `real_name` varchar(50) DEFAULT NULL COMMENT '真实姓名',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(20) DEFAULT NULL COMMENT '手机号',
-  `role` varchar(20) NOT NULL DEFAULT 'USER' COMMENT '角色(ADMIN-管理员,USER-普通用户)',
-  `status` int NOT NULL DEFAULT '1' COMMENT '状态(0-禁用,1-启用)',
+  `role` varchar(20) NOT NULL DEFAULT 'USER' COMMENT '角色(ADMIN-管理员,TEACHER-教师,USER-普通用户)',
+  `status` tinyint DEFAULT '1' COMMENT '状态：1-启用，0-禁用',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` int NOT NULL DEFAULT '0' COMMENT '删除标志(0-未删除,1-已删除)',
+  `deleted` tinyint DEFAULT '0' COMMENT '逻辑删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_username` (`username`),
+  KEY `idx_real_name` (`real_name`),
   KEY `idx_role` (`role`),
-  KEY `idx_status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+  KEY `idx_status` (`status`),
+  KEY `idx_deleted` (`deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统用户表';
 
 -- ----------------------------
 -- 宿舍楼表
 -- ----------------------------
-DROP TABLE IF EXISTS `dorm_building`;
 CREATE TABLE `dorm_building` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `building_code` varchar(20) NOT NULL COMMENT '楼栋编号',
@@ -79,6 +80,28 @@ CREATE TABLE `dorm_room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='宿舍房间表';
 
 -- ----------------------------
+-- 学生表
+-- ----------------------------
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '学生ID',
+  `student_number` varchar(20) NOT NULL COMMENT '学号',
+  `student_name` varchar(50) NOT NULL COMMENT '学生姓名',
+  `class_name` varchar(50) DEFAULT NULL COMMENT '班级',
+  `id_card` varchar(18) DEFAULT NULL COMMENT '身份证号',
+  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
+  `status` tinyint DEFAULT '1' COMMENT '状态：1-正常，0-禁用',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_student_number` (`student_number`),
+  KEY `idx_student_name` (`student_name`),
+  KEY `idx_class_name` (`class_name`),
+  KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学生信息表';
+
+-- ----------------------------
 -- 住宿记录表
 -- ----------------------------
 DROP TABLE IF EXISTS `dorm_accommodation`;
@@ -87,6 +110,8 @@ CREATE TABLE `dorm_accommodation` (
   `student_id` bigint NOT NULL COMMENT '学生ID',
   `student_name` varchar(50) DEFAULT NULL COMMENT '学生姓名',
   `student_number` varchar(20) DEFAULT NULL COMMENT '学号',
+  `class_name` varchar(50) DEFAULT NULL COMMENT '班级',
+  `id_card` varchar(18) DEFAULT NULL COMMENT '身份证号',
   `room_id` bigint NOT NULL COMMENT '房间ID',
   `room_number` varchar(20) DEFAULT NULL COMMENT '房间号',
   `building_id` bigint DEFAULT NULL COMMENT '楼栋ID',

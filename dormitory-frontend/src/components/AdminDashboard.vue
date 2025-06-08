@@ -39,6 +39,12 @@
               <span v-if="!sidebarCollapsed">住宿分配</span>
             </router-link>
           </div>
+          <div class="nav-item">
+            <router-link to="/dashboard/visitors" class="nav-link">
+              <i class="fas fa-users"></i>
+              <span v-if="!sidebarCollapsed">访客管理</span>
+            </router-link>
+          </div>
         </div>
         
         <div class="nav-section">
@@ -190,12 +196,18 @@ export default {
     
     const getPageTitle = () => {
       const routeNames = {
-        'dashboard-home': '仪表盘',
+        'dashboard': '仪表盘',
+        'dashboard-students': '学生管理',
+        'dashboard-dormitories': '宿舍管理',
+        'dashboard-allocations': '住宿分配',
         'dashboard-reports': '统计报表',
+        'dashboard-settings': '系统设置',
         'dashboard-maintenance': '维修管理',
+        'dashboard-visitors': '访客管理',
         'dormitory': '宿舍管理',
         'student': '学生管理',
         'allocation': '分配管理',
+        'visitors': '访客管理',
         'settings': '系统设置'
       }
       return routeNames[route.name] || '仪表盘'

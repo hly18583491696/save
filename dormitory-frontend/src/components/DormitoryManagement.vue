@@ -252,8 +252,8 @@
                     <i class="fas fa-user"></i>
                   </div>
                   <div class="student-info">
-                    <div class="student-name">{{ student.name }}</div>
-                    <div class="student-code">学号：{{ student.studentCode }}</div>
+                    <div class="student-name">{{ student.studentName }}</div>
+                    <div class="student-code">学号：{{ student.studentNumber }}</div>
                     <div class="student-bed">床位：{{ student.bedNumber }}</div>
                   </div>
                   <div class="student-actions">
@@ -584,7 +584,7 @@ export default {
     }
     
     const viewStudent = (student) => {
-      alert(`查看学生 ${student.name} 的详细信息功能正在开发中...`)
+      alert(`查看学生 ${student.studentName} 的详细信息功能正在开发中...`)
     }
     
     const closeDialogs = () => {

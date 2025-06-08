@@ -1,72 +1,144 @@
 <template>
   <div class="maintenance-container">
     <div class="page-header">
-      <h2>维修管理</h2>
-      <p>管理宿舍维修申请和维修记录</p>
+      <h2>🔧 维修管理</h2>
+      <p>智能化宿舍维修申请与跟踪系统</p>
     </div>
     
-    <!-- 操作栏 -->
-    <div class="action-bar">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input 
-          type="text" 
-          placeholder="搜索维修申请..." 
-          v-model="searchQuery"
-          class="search-input"
-        >
+    <!-- 快速操作栏 -->
+    <div class="quick-actions">
+      <div class="search-section">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input 
+            type="text" 
+            placeholder="搜索申请单号、房间号、申请人..." 
+            v-model="searchQuery"
+            class="search-input"
+            @input="handleSearch"
+          >
+        </div>
+        <div class="filter-group">
+          <select v-model="statusFilter" class="form-select" @change="applyFilters">
+            <option value="">全部状态</option>
+            <option value="pending">🕐 待处理</option>
+            <option value="assigned">👷 已分配</option>
+            <option value="in_progress">🔧 维修中</option>
+            <option value="completed">✅ 已完成</option>
+            <option value="cancelled">❌ 已取消</option>
+          </select>
+          <select v-model="typeFilter" class="form-select" @change="applyFilters">
+            <option value="">全部类型</option>
+            <option value="水电维修">💧 水电维修</option>
+            <option value="家具维修">🪑 家具维修</option>
+            <option value="门窗维修">🚪 门窗维修</option>
+            <option value="网络维修">🌐 网络维修</option>
+            <option value="空调维修">❄️ 空调维修</option>
+            <option value="其他维修">🔧 其他维修</option>
+          </select>
+          <select v-model="urgencyFilter" class="form-select" @change="applyFilters">
+            <option value="">全部紧急度</option>
+            <option value="低">🟢 低</option>
+            <option value="中">🟡 中</option>
+            <option value="高">🟠 高</option>
+            <option value="紧急">🔴 紧急</option>
+          </select>
+        </div>
       </div>
       <div class="action-buttons">
-        <select v-model="statusFilter" class="form-select">
-          <option value="">全部状态</option>
-          <option value="pending">待处理</option>
-          <option value="in_progress">处理中</option>
-          <option value="completed">已完成</option>
-          <option value="cancelled">已取消</option>
-        </select>
+        <button class="btn btn-outline" @click="refreshData">
+          <i class="fas fa-sync-alt" :class="{spinning: loading}"></i>
+          刷新
+        </button>
         <button class="btn btn-primary" @click="showAddModal = true">
           <i class="fas fa-plus"></i>
-          新增维修申请
+          新增申请
         </button>
       </div>
     </div>
     
-    <!-- 统计卡片 -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon pending">
-          <i class="fas fa-clock"></i>
+    <!-- 数据统计面板 -->
+    <div class="stats-panel">
+      <div class="stats-grid">
+        <div class="stat-card pending" @click="filterByStatus('pending')">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.pending }}</h3>
+            <p>待处理申请</p>
+            <span class="stat-trend" v-if="stats.pendingTrend">
+              <i class="fas fa-arrow-up" v-if="stats.pendingTrend > 0"></i>
+              <i class="fas fa-arrow-down" v-else></i>
+              {{ Math.abs(stats.pendingTrend) }}
+            </span>
+          </div>
         </div>
-        <div class="stat-content">
-          <h3>{{ stats.pending }}</h3>
-          <p>待处理</p>
+        <div class="stat-card in-progress" @click="filterByStatus('in_progress')">
+          <div class="stat-icon">
+            <i class="fas fa-tools"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.inProgress }}</h3>
+            <p>维修进行中</p>
+            <span class="stat-trend" v-if="stats.inProgressTrend">
+              <i class="fas fa-arrow-up" v-if="stats.inProgressTrend > 0"></i>
+              <i class="fas fa-arrow-down" v-else></i>
+              {{ Math.abs(stats.inProgressTrend) }}
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon in-progress">
-          <i class="fas fa-tools"></i>
+        <div class="stat-card completed" @click="filterByStatus('completed')">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.completed }}</h3>
+            <p>本月完成</p>
+            <span class="stat-trend positive" v-if="stats.completedTrend">
+              <i class="fas fa-arrow-up"></i>
+              {{ stats.completedTrend }}
+            </span>
+          </div>
         </div>
-        <div class="stat-content">
-          <h3>{{ stats.inProgress }}</h3>
-          <p>处理中</p>
+        <div class="stat-card urgent" @click="filterByUrgency('紧急')">
+          <div class="stat-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.urgent }}</h3>
+            <p>紧急申请</p>
+            <span class="stat-trend negative" v-if="stats.urgent > 0">
+              <i class="fas fa-exclamation"></i>
+              需优先处理
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon completed">
-          <i class="fas fa-check-circle"></i>
+        <div class="stat-card total">
+          <div class="stat-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.total }}</h3>
+            <p>总申请数</p>
+            <span class="stat-rate">
+              完成率: {{ completionRate }}%
+            </span>
+          </div>
         </div>
-        <div class="stat-content">
-          <h3>{{ stats.completed }}</h3>
-          <p>已完成</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon total">
-          <i class="fas fa-list"></i>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.total }}</h3>
-          <p>总申请</p>
+        <div class="stat-card satisfaction">
+          <div class="stat-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.avgRating }}</h3>
+            <p>平均评分</p>
+            <div class="rating-stars">
+              <i v-for="n in 5" :key="n" 
+                 :class="['fas fa-star', n <= Math.round(stats.avgRating) ? 'active' : '']">
+              </i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -74,63 +146,241 @@
     <!-- 维修申请列表 -->
     <div class="maintenance-list">
       <div class="list-header">
-        <h3>维修申请列表</h3>
+        <div class="header-left">
+          <h3><i class="fas fa-list-alt"></i> 维修申请管理</h3>
+          <span class="list-count">共 {{ filteredRequests.length }} 条记录</span>
+        </div>
+        <div class="header-actions">
+          <div class="view-toggle">
+            <button :class="['btn', 'btn-sm', viewMode === 'table' ? 'btn-primary' : 'btn-outline']" 
+                    @click="viewMode = 'table'">
+              <i class="fas fa-table"></i> 表格
+            </button>
+            <button :class="['btn', 'btn-sm', viewMode === 'card' ? 'btn-primary' : 'btn-outline']" 
+                    @click="viewMode = 'card'">
+              <i class="fas fa-th-large"></i> 卡片
+            </button>
+          </div>
+          <button class="btn btn-success" @click="showAddModal = true">
+            <i class="fas fa-plus"></i> 新增申请
+          </button>
+          <button class="btn btn-outline" @click="exportData">
+            <i class="fas fa-download"></i> 导出
+          </button>
+        </div>
       </div>
       
-      <div class="table-container">
+      <!-- 表格视图 -->
+      <div v-if="viewMode === 'table'" class="table-container">
         <table class="data-table">
           <thead>
             <tr>
-              <th>申请编号</th>
-              <th>宿舍房间</th>
+              <th>
+                <input type="checkbox" v-model="selectAll" @change="toggleSelectAll">
+              </th>
+              <th @click="sortBy('id')" class="sortable">
+                申请编号 
+                <i :class="getSortIcon('id')"></i>
+              </th>
+              <th @click="sortBy('roomNumber')" class="sortable">
+                宿舍房间 
+                <i :class="getSortIcon('roomNumber')"></i>
+              </th>
               <th>申请人</th>
               <th>维修类型</th>
+              <th>紧急程度</th>
               <th>问题描述</th>
-              <th>申请时间</th>
+              <th @click="sortBy('createdAt')" class="sortable">
+                申请时间 
+                <i :class="getSortIcon('createdAt')"></i>
+              </th>
+              <th>处理进度</th>
               <th>状态</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="request in filteredRequests" :key="request.id">
-              <td>{{ request.id }}</td>
-              <td>{{ request.roomNumber }}</td>
-              <td>{{ request.applicant }}</td>
-              <td>{{ request.type }}</td>
-              <td class="description">{{ request.description }}</td>
-              <td>{{ formatDate(request.createdAt) }}</td>
+            <tr v-for="request in paginatedRequests" :key="request.id" 
+                :class="{'selected': selectedItems.includes(request.id), 'urgent': request.urgency === '紧急'}">
               <td>
-                <span :class="['status-badge', request.status]">
-                  {{ getStatusText(request.status) }}
+                <input type="checkbox" :value="request.id" v-model="selectedItems">
+              </td>
+              <td class="request-number">
+                <span class="number">{{ request.id }}</span>
+                <span v-if="request.urgency === '紧急'" class="urgent-badge">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              </td>
+              <td class="room-info">
+                <span class="room-number">{{ request.roomNumber }}</span>
+                <small class="building">{{ request.building }}栋</small>
+              </td>
+              <td class="applicant-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <span class="name">{{ request.applicant }}</span>
+                  <small class="contact">{{ request.contact }}</small>
+                </div>
+              </td>
+              <td>
+                <span :class="['type-badge', request.type.toLowerCase()]">
+                  <i :class="getTypeIcon(request.type)"></i>
+                  {{ request.type }}
                 </span>
               </td>
               <td>
+                <span :class="['urgency-badge', request.urgency]">
+                  {{ request.urgency }}
+                </span>
+              </td>
+              <td class="description">
+                <div class="desc-content" :title="request.description">
+                  {{ request.description.length > 30 ? request.description.substring(0, 30) + '...' : request.description }}
+                </div>
+              </td>
+              <td class="time-info">
+                <div class="request-time">{{ formatDate(request.createdAt) }}</div>
+                <small class="relative-time">{{ getRelativeTime(request.createdAt) }}</small>
+              </td>
+              <td class="progress-info">
+                <div class="progress-bar">
+                  <div class="progress-fill" :style="{width: getProgressWidth(request.status)}"></div>
+                </div>
+                <small class="progress-text">{{ getProgressText(request.status) }}</small>
+              </td>
+              <td>
+                <span :class="['status-badge', request.status]">
+                  <i :class="getStatusIcon(request.status)"></i>
+                  {{ getStatusText(request.status) }}
+                </span>
+              </td>
+              <td class="actions">
                 <div class="action-buttons">
-                  <button 
-                    class="btn btn-sm btn-outline"
-                    @click="viewRequest(request)"
-                  >
-                    查看
+                  <button class="btn btn-sm btn-info" @click="viewRequest(request)" title="查看详情">
+                    <i class="fas fa-eye"></i>
                   </button>
-                  <button 
-                    v-if="request.status === 'pending'"
-                    class="btn btn-sm btn-primary"
-                    @click="processRequest(request)"
-                  >
-                    处理
+                  <button v-if="request.status === 'pending'" 
+                          class="btn btn-sm btn-warning" 
+                          @click="processRequest(request)"
+                          title="开始处理">
+                    <i class="fas fa-play"></i>
                   </button>
-                  <button 
-                    v-if="request.status === 'in_progress'"
-                    class="btn btn-sm btn-success"
-                    @click="completeRequest(request)"
-                  >
-                    完成
+                  <button v-if="request.status === 'in_progress'" 
+                          class="btn btn-sm btn-success" 
+                          @click="completeRequest(request)"
+                          title="完成维修">
+                    <i class="fas fa-check"></i>
+                  </button>
+                  <button class="btn btn-sm btn-secondary" 
+                          @click="editRequest(request)"
+                          title="编辑">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button v-if="request.status === 'pending'" 
+                          class="btn btn-sm btn-danger" 
+                          @click="deleteRequest(request)"
+                          title="删除">
+                    <i class="fas fa-trash"></i>
                   </button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
+        
+        <!-- 分页控件 -->
+        <div class="pagination-container">
+          <div class="pagination-info">
+            显示第 {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, filteredRequests.length) }} 条，
+            共 {{ filteredRequests.length }} 条记录
+          </div>
+          <div class="pagination">
+            <button class="btn btn-sm" :disabled="currentPage === 1" @click="currentPage--">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <span v-for="page in visiblePages" :key="page">
+              <button v-if="page !== '...'" 
+                      :class="['btn', 'btn-sm', page === currentPage ? 'btn-primary' : 'btn-outline']"
+                      @click="currentPage = page">
+                {{ page }}
+              </button>
+              <span v-else class="pagination-ellipsis">...</span>
+            </span>
+            <button class="btn btn-sm" :disabled="currentPage === totalPages" @click="currentPage++">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="page-size-selector">
+            <label>每页显示：</label>
+            <select v-model="pageSize" @change="currentPage = 1">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片视图 -->
+      <div v-else class="card-container">
+        <div class="maintenance-cards">
+          <div v-for="request in paginatedRequests" :key="request.id" 
+               :class="['maintenance-card', request.status, {'urgent': request.urgency === '紧急'}]">
+            <div class="card-header">
+              <div class="card-title">
+                <span class="request-number">{{ request.id }}</span>
+                <span v-if="request.urgency === '紧急'" class="urgent-indicator">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              </div>
+              <div class="card-status">
+                <span :class="['status-badge', request.status]">
+                  {{ getStatusText(request.status) }}
+                </span>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="card-info">
+                <div class="info-item">
+                  <i class="fas fa-home"></i>
+                  <span>{{ request.building }}栋 {{ request.roomNumber }}</span>
+                </div>
+                <div class="info-item">
+                  <i class="fas fa-user"></i>
+                  <span>{{ request.applicant }}</span>
+                </div>
+                <div class="info-item">
+                  <i :class="getTypeIcon(request.type)"></i>
+                  <span>{{ request.type }}</span>
+                </div>
+                <div class="info-item">
+                  <i class="fas fa-clock"></i>
+                  <span>{{ formatDate(request.createdAt) }}</span>
+                </div>
+              </div>
+              <div class="card-description">
+                {{ request.description }}
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-info" @click="viewRequest(request)">
+                <i class="fas fa-eye"></i> 详情
+              </button>
+              <button v-if="request.status === 'pending'" 
+                      class="btn btn-sm btn-warning" 
+                      @click="processRequest(request)">
+                <i class="fas fa-play"></i> 处理
+              </button>
+              <button v-if="request.status === 'in_progress'" 
+                      class="btn btn-sm btn-success" 
+                      @click="completeRequest(request)">
+                <i class="fas fa-check"></i> 完成
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -202,171 +452,445 @@
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   name: 'Maintenance',
   setup() {
+    // 响应式数据
     const searchQuery = ref('')
     const statusFilter = ref('')
+    const typeFilter = ref('')
+    const urgencyFilter = ref('')
     const showAddModal = ref(false)
+    const showDetailModal = ref(false)
+    const viewMode = ref('table') // 'table' 或 'card'
+    const loading = ref(false)
     
-    const stats = reactive({
-      pending: 8,
-      inProgress: 5,
-      completed: 23,
-      total: 36
+    // 分页相关
+    const currentPage = ref(1)
+    const pageSize = ref(20)
+    
+    // 排序相关
+    const sortField = ref('')
+    const sortOrder = ref('asc') // 'asc' 或 'desc'
+    
+    // 选择相关
+    const selectedItems = ref([])
+    const selectAll = ref(false)
+    
+    // 统计数据
+    const stats = ref({
+      pending: 12,
+      inProgress: 8,
+      completed: 45,
+      urgent: 3,
+      total: 65,
+      avgRating: 4.2,
+      pendingTrend: 2,
+      inProgressTrend: -1,
+      completedTrend: 8
     })
     
-    const newRequest = reactive({
+    // 新增申请表单数据
+    const newRequest = ref({
       roomNumber: '',
+      building: '',
       applicant: '',
+      contact: '',
       type: '',
+      urgency: '普通',
       description: ''
     })
     
+    // 当前查看的申请详情
+    const currentRequest = ref(null)
+    
+    // 维修申请列表
     const maintenanceRequests = ref([
       {
-        id: 'MR001',
-        roomNumber: 'A101',
+        id: 'MR2024001',
+        roomNumber: '101',
+        building: 'A',
         applicant: '张三',
-        type: '水电',
-        description: '水龙头漏水，需要更换密封圈',
-        createdAt: '2024-01-15T10:30:00',
-        status: 'pending'
+        contact: '13800138001',
+        type: '水电维修',
+        urgency: '紧急',
+        description: '水龙头漏水严重，影响正常使用，需要紧急处理',
+        createdAt: '2024-01-15 09:30:00',
+        status: 'pending',
+        assignee: '',
+        completedAt: '',
+        rating: 0,
+        feedback: ''
       },
       {
-        id: 'MR002',
-        roomNumber: 'B205',
+        id: 'MR2024002',
+        roomNumber: '203',
+        building: 'B',
         applicant: '李四',
-        type: '家具',
-        description: '床铺松动，需要加固',
-        createdAt: '2024-01-14T14:20:00',
-        status: 'in_progress'
+        contact: '13800138002',
+        type: '家具维修',
+        urgency: '普通',
+        description: '床铺松动，需要加固螺丝',
+        createdAt: '2024-01-14 14:20:00',
+        status: 'in_progress',
+        assignee: '维修师傅A',
+        completedAt: '',
+        rating: 0,
+        feedback: ''
       },
       {
-        id: 'MR003',
-        roomNumber: 'C303',
+        id: 'MR2024003',
+        roomNumber: '305',
+        building: 'C',
         applicant: '王五',
-        type: '门窗',
-        description: '窗户关不严，需要调整',
-        createdAt: '2024-01-13T09:15:00',
-        status: 'completed'
-      },
-      {
-        id: 'MR004',
-        roomNumber: 'A203',
-        applicant: '赵六',
-        type: '网络',
-        description: '网络端口故障，无法上网',
-        createdAt: '2024-01-12T16:45:00',
-        status: 'pending'
-      },
-      {
-        id: 'MR005',
-        roomNumber: 'B108',
-        applicant: '钱七',
-        type: '其他',
-        description: '空调制冷效果差，需要检修',
-        createdAt: '2024-01-11T11:30:00',
-        status: 'in_progress'
+        contact: '13800138003',
+        type: '门窗维修',
+        urgency: '普通',
+        description: '窗户关不严，需要调整合页',
+        createdAt: '2024-01-13 16:45:00',
+        status: 'completed',
+        assignee: '维修师傅B',
+        completedAt: '2024-01-14 10:30:00',
+        rating: 5,
+        feedback: '维修及时，质量很好'
       }
     ])
     
+    // 计算属性
     const filteredRequests = computed(() => {
-      let filtered = maintenanceRequests.value
+      let filtered = maintenanceRequests.value.filter(item => {
+        const matchesSearch = !searchQuery.value || 
+          item.id.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+          item.roomNumber.includes(searchQuery.value) ||
+          item.applicant.includes(searchQuery.value) ||
+          item.description.includes(searchQuery.value)
+        
+        const matchesStatus = !statusFilter.value || item.status === statusFilter.value
+        const matchesType = !typeFilter.value || item.type === typeFilter.value
+        const matchesUrgency = !urgencyFilter.value || item.urgency === urgencyFilter.value
+        
+        return matchesSearch && matchesStatus && matchesType && matchesUrgency
+      })
       
-      if (searchQuery.value) {
-        const query = searchQuery.value.toLowerCase()
-        filtered = filtered.filter(request => 
-          request.roomNumber.toLowerCase().includes(query) ||
-          request.applicant.toLowerCase().includes(query) ||
-          request.type.toLowerCase().includes(query) ||
-          request.description.toLowerCase().includes(query)
-        )
-      }
-      
-      if (statusFilter.value) {
-        filtered = filtered.filter(request => request.status === statusFilter.value)
+      // 排序
+      if (sortField.value) {
+        filtered.sort((a, b) => {
+          let aVal = a[sortField.value]
+          let bVal = b[sortField.value]
+          
+          if (sortField.value === 'createdAt') {
+            aVal = new Date(aVal)
+            bVal = new Date(bVal)
+          }
+          
+          if (sortOrder.value === 'asc') {
+            return aVal > bVal ? 1 : -1
+          } else {
+            return aVal < bVal ? 1 : -1
+          }
+        })
       }
       
       return filtered
     })
     
+    const totalPages = computed(() => {
+      return Math.ceil(filteredRequests.value.length / pageSize.value)
+    })
+    
+    const paginatedRequests = computed(() => {
+      const start = (currentPage.value - 1) * pageSize.value
+      const end = start + pageSize.value
+      return filteredRequests.value.slice(start, end)
+    })
+    
+    const visiblePages = computed(() => {
+      const pages = []
+      const total = totalPages.value
+      const current = currentPage.value
+      
+      if (total <= 7) {
+        for (let i = 1; i <= total; i++) {
+          pages.push(i)
+        }
+      } else {
+        if (current <= 4) {
+          for (let i = 1; i <= 5; i++) {
+            pages.push(i)
+          }
+          pages.push('...')
+          pages.push(total)
+        } else if (current >= total - 3) {
+          pages.push(1)
+          pages.push('...')
+          for (let i = total - 4; i <= total; i++) {
+            pages.push(i)
+          }
+        } else {
+          pages.push(1)
+          pages.push('...')
+          for (let i = current - 1; i <= current + 1; i++) {
+            pages.push(i)
+          }
+          pages.push('...')
+          pages.push(total)
+        }
+      }
+      
+      return pages
+    })
+    
+    const completionRate = computed(() => {
+      const total = stats.value.total
+      const completed = stats.value.completed
+      return total > 0 ? Math.round((completed / total) * 100) : 0
+    })
+    
+    // 方法
     const formatDate = (dateString) => {
       const date = new Date(dateString)
-      return date.toLocaleString('zh-CN')
+      return date.toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    }
+    
+    const getRelativeTime = (dateString) => {
+      const date = new Date(dateString)
+      const now = new Date()
+      const diff = now - date
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const hours = Math.floor(diff / (1000 * 60 * 60))
+      
+      if (days > 0) {
+        return `${days}天前`
+      } else if (hours > 0) {
+        return `${hours}小时前`
+      } else {
+        return '刚刚'
+      }
     }
     
     const getStatusText = (status) => {
       const statusMap = {
-        pending: '待处理',
-        in_progress: '处理中',
-        completed: '已完成',
-        cancelled: '已取消'
+        'pending': '待处理',
+        'assigned': '已分配',
+        'in_progress': '维修中',
+        'completed': '已完成',
+        'cancelled': '已取消'
       }
       return statusMap[status] || status
     }
     
+    const getStatusIcon = (status) => {
+      const iconMap = {
+        'pending': 'fas fa-clock',
+        'assigned': 'fas fa-user-check',
+        'in_progress': 'fas fa-tools',
+        'completed': 'fas fa-check-circle',
+        'cancelled': 'fas fa-times-circle'
+      }
+      return iconMap[status] || 'fas fa-question-circle'
+    }
+    
+    const getTypeIcon = (type) => {
+      const iconMap = {
+        '水电维修': 'fas fa-tint',
+        '家具维修': 'fas fa-couch',
+        '门窗维修': 'fas fa-door-open',
+        '网络维修': 'fas fa-wifi',
+        '空调维修': 'fas fa-snowflake',
+        '其他维修': 'fas fa-wrench'
+      }
+      return iconMap[type] || 'fas fa-tools'
+    }
+    
+    const getProgressWidth = (status) => {
+      const progressMap = {
+        'pending': '25%',
+        'assigned': '50%',
+        'in_progress': '75%',
+        'completed': '100%',
+        'cancelled': '0%'
+      }
+      return progressMap[status] || '0%'
+    }
+    
+    const getProgressText = (status) => {
+      const textMap = {
+        'pending': '等待处理',
+        'assigned': '已分配',
+        'in_progress': '维修中',
+        'completed': '已完成',
+        'cancelled': '已取消'
+      }
+      return textMap[status] || '未知'
+    }
+    
+    const getSortIcon = (field) => {
+      if (sortField.value !== field) {
+        return 'fas fa-sort'
+      }
+      return sortOrder.value === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'
+    }
+    
+    const sortBy = (field) => {
+      if (sortField.value === field) {
+        sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+      } else {
+        sortField.value = field
+        sortOrder.value = 'asc'
+      }
+    }
+    
+    const toggleSelectAll = () => {
+      if (selectAll.value) {
+        selectedItems.value = paginatedRequests.value.map(item => item.id)
+      } else {
+        selectedItems.value = []
+      }
+    }
+    
+    const filterByStatus = (status) => {
+      statusFilter.value = statusFilter.value === status ? '' : status
+      applyFilters()
+    }
+    
+    const filterByUrgency = (urgency) => {
+      urgencyFilter.value = urgencyFilter.value === urgency ? '' : urgency
+      applyFilters()
+    }
+    
+    const applyFilters = () => {
+      currentPage.value = 1
+    }
+    
+    const handleSearch = () => {
+      currentPage.value = 1
+    }
+    
     const closeModal = () => {
       showAddModal.value = false
-      Object.assign(newRequest, {
+      newRequest.value = {
         roomNumber: '',
+        building: '',
         applicant: '',
+        contact: '',
         type: '',
+        urgency: '普通',
         description: ''
-      })
+      }
     }
     
     const submitRequest = () => {
-      const request = {
-        id: `MR${String(maintenanceRequests.value.length + 1).padStart(3, '0')}`,
-        ...newRequest,
-        createdAt: new Date().toISOString(),
-        status: 'pending'
-      }
-      
-      maintenanceRequests.value.unshift(request)
-      stats.pending++
-      stats.total++
-      
+      // 这里应该调用API提交申请
+      console.log('提交申请:', newRequest.value)
       closeModal()
-      alert('维修申请提交成功！')
     }
     
     const viewRequest = (request) => {
-      alert(`查看维修申请详情：\n申请编号：${request.id}\n房间：${request.roomNumber}\n申请人：${request.applicant}\n类型：${request.type}\n描述：${request.description}`)
+      currentRequest.value = request
+      showDetailModal.value = true
+    }
+    
+    const editRequest = (request) => {
+      console.log('编辑申请:', request)
+    }
+    
+    const deleteRequest = (request) => {
+      if (confirm('确定要删除这个维修申请吗？')) {
+        const index = maintenanceRequests.value.findIndex(item => item.id === request.id)
+        if (index > -1) {
+          maintenanceRequests.value.splice(index, 1)
+        }
+      }
     }
     
     const processRequest = (request) => {
+      console.log('处理申请:', request)
       request.status = 'in_progress'
-      stats.pending--
-      stats.inProgress++
-      alert('维修申请已开始处理！')
     }
     
     const completeRequest = (request) => {
+      console.log('完成申请:', request)
       request.status = 'completed'
-      stats.inProgress--
-      stats.completed++
-      alert('维修申请已完成！')
+      request.completedAt = new Date().toISOString().slice(0, 19).replace('T', ' ')
     }
     
+    const exportData = () => {
+      console.log('导出数据')
+      // 这里实现数据导出功能
+    }
+    
+    const refreshData = () => {
+      loading.value = true
+      setTimeout(() => {
+        loading.value = false
+      }, 1000)
+    }
+    
+    onMounted(() => {
+      // 组件挂载时获取数据
+      console.log('维修管理组件已挂载')
+    })
+    
     return {
+      // 响应式数据
       searchQuery,
       statusFilter,
+      typeFilter,
+      urgencyFilter,
       showAddModal,
+      showDetailModal,
+      viewMode,
+      loading,
+      currentPage,
+      pageSize,
+      sortField,
+      sortOrder,
+      selectedItems,
+      selectAll,
       stats,
       newRequest,
+      currentRequest,
       maintenanceRequests,
+      
+      // 计算属性
       filteredRequests,
+      totalPages,
+      paginatedRequests,
+      visiblePages,
+      completionRate,
+      
+      // 方法
       formatDate,
+      getRelativeTime,
       getStatusText,
+      getStatusIcon,
+      getTypeIcon,
+      getProgressWidth,
+      getProgressText,
+      getSortIcon,
+      sortBy,
+      toggleSelectAll,
+      filterByStatus,
+      filterByUrgency,
+      applyFilters,
+      handleSearch,
       closeModal,
       submitRequest,
       viewRequest,
+      editRequest,
+      deleteRequest,
       processRequest,
-      completeRequest
+      completeRequest,
+      exportData,
+      refreshData
     }
   }
 }
@@ -374,56 +898,89 @@ export default {
 
 <style scoped>
 .maintenance-container {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8fafc;
+  min-height: 100vh;
 }
 
 .page-header {
-  margin-bottom: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 32px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .page-header h2 {
   margin: 0 0 8px 0;
-  font-size: 28px;
-  font-weight: 600;
-  color: #1f2937;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .page-header p {
-  margin: 0;
-  color: #6b7280;
   font-size: 16px;
+  margin: 0;
+  opacity: 0.9;
 }
 
-.action-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* 快速操作栏 */
+.quick-actions {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
   margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.search-section {
+  display: flex;
   gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .search-box {
-  position: relative;
   flex: 1;
-  max-width: 400px;
+  min-width: 250px;
+  position: relative;
 }
 
 .search-box i {
   position: absolute;
-  left: 12px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #9ca3af;
+  color: #64748b;
+  z-index: 1;
 }
 
 .search-input {
   width: 100%;
-  padding: 10px 12px 10px 40px;
-  border: 1px solid #d1d5db;
+  padding: 12px 16px 12px 44px;
+  border: 2px solid #e2e8f0;
   border-radius: 8px;
   font-size: 14px;
+  transition: all 0.2s;
+  background: #f8fafc;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .action-buttons {
@@ -432,83 +989,229 @@ export default {
   align-items: center;
 }
 
+/* 统计面板 */
+.stats-panel {
+  margin-bottom: 24px;
+}
+
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  margin-bottom: 32px;
 }
 
 .stat-card {
   background: white;
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid #e2e8f0;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.stat-card:hover::before {
+  width: 100%;
+  opacity: 0.05;
+}
+
+.stat-card.pending::before {
+  background: #f59e0b;
+}
+
+.stat-card.in-progress::before {
+  background: #3b82f6;
+}
+
+.stat-card.completed::before {
+  background: #10b981;
+}
+
+.stat-card.urgent::before {
+  background: #ef4444;
+}
+
+.stat-card.total::before {
+  background: #6366f1;
+}
+
+.stat-card.satisfaction::before {
+  background: #f59e0b;
 }
 
 .stat-icon {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 24px;
   color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-.stat-icon.pending {
-  background: #f59e0b;
+.stat-card.pending .stat-icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
-.stat-icon.in-progress {
-  background: #3b82f6;
+.stat-card.in-progress .stat-icon {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
 
-.stat-icon.completed {
-  background: #10b981;
+.stat-card.completed .stat-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
 }
 
-.stat-icon.total {
-  background: #6b7280;
+.stat-card.urgent .stat-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.stat-card.total .stat-icon {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.stat-card.satisfaction .stat-icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-content {
+  flex: 1;
 }
 
 .stat-content h3 {
   margin: 0 0 4px 0;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
-  color: #1f2937;
+  color: #1e293b;
 }
 
 .stat-content p {
-  margin: 0;
-  color: #6b7280;
+  margin: 0 0 8px 0;
+  color: #64748b;
   font-size: 14px;
+  font-weight: 500;
 }
 
+.stat-trend {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.stat-trend.positive {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.stat-trend.negative {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.stat-rate {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.rating-stars .fa-star {
+  font-size: 12px;
+  color: #d1d5db;
+}
+
+.rating-stars .fa-star.active {
+  color: #f59e0b;
+}
+
+/* 维修申请列表 */
 .maintenance-list {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid #e2e8f0;
   overflow: hidden;
 }
 
 .list-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid #f3f4f6;
-  background: #f9fafb;
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
 }
 
-.list-header h3 {
-  margin: 0;
-  font-size: 18px;
+.header-left h3 {
+  margin: 0 0 4px 0;
+  color: #1e293b;
+  font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.list-count {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.view-toggle {
+  display: flex;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.view-toggle .btn {
+  border-radius: 0;
+  border: none;
+  margin: 0;
+}
+
+.view-toggle .btn:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.view-toggle .btn:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+/* 表格视图 */
 .table-container {
   overflow-x: auto;
 }
@@ -518,116 +1221,546 @@ export default {
   border-collapse: collapse;
 }
 
-.data-table th,
-.data-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid #f3f4f6;
-}
-
 .data-table th {
-  background: #f9fafb;
+  background: #f8fafc;
+  padding: 16px;
+  text-align: left;
   font-weight: 600;
-  color: #374151;
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
   font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.data-table th.sortable:hover {
+  background: #e2e8f0;
 }
 
 .data-table td {
-  color: #6b7280;
+  padding: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #475569;
+  vertical-align: middle;
+}
+
+.data-table tr:hover {
+  background: #f8fafc;
+}
+
+.data-table tr.selected {
+  background: #eff6ff;
+}
+
+.data-table tr.urgent {
+  border-left: 4px solid #ef4444;
+}
+
+.request-number {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.request-number .number {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.urgent-badge {
+  color: #ef4444;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.room-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.room-number {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.building {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.applicant-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
   font-size: 14px;
 }
 
-.data-table td.description {
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-details .name {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.user-details .contact {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.type-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.type-badge.水电维修 {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.type-badge.家具维修 {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.type-badge.门窗维修 {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.type-badge.网络维修 {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.type-badge.空调维修 {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.type-badge.其他维修 {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.urgency-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.urgency-badge.紧急 {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.urgency-badge.普通 {
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
+.urgency-badge.低 {
+  background: #f7fee7;
+  color: #365314;
+}
+
+.desc-content {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: help;
 }
 
-.data-table tbody tr:hover {
-  background: #f9fafb;
+.time-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.request-time {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.relative-time {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.progress-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 80px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  transition: width 0.3s;
+}
+
+.progress-text {
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
 }
 
 .status-badge {
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .status-badge.pending {
   background: #fef3c7;
-  color: #d97706;
+  color: #92400e;
+}
+
+.status-badge.assigned {
+  background: #e0e7ff;
+  color: #3730a3;
 }
 
 .status-badge.in_progress {
   background: #dbeafe;
-  color: #2563eb;
+  color: #1e40af;
 }
 
 .status-badge.completed {
   background: #d1fae5;
-  color: #059669;
+  color: #065f46;
 }
 
 .status-badge.cancelled {
-  background: #fee2e2;
+  background: #fef2f2;
   color: #dc2626;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.action-buttons .btn {
+  padding: 6px 8px;
+  min-width: auto;
+}
+
+/* 分页控件 */
+.pagination-container {
+  padding: 20px 24px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.pagination-info {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pagination {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pagination-ellipsis {
+  padding: 8px 4px;
+  color: #64748b;
+}
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.page-size-selector select {
+  padding: 4px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* 卡片视图 */
+.card-container {
+  padding: 24px;
+}
+
+.maintenance-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.maintenance-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.maintenance-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.maintenance-card.pending::before {
+  background: #f59e0b;
+}
+
+.maintenance-card.in_progress::before {
+  background: #3b82f6;
+}
+
+.maintenance-card.completed::before {
+  background: #10b981;
+}
+
+.maintenance-card.urgent {
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.maintenance-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.card-header {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title .request-number {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 16px;
+}
+
+.urgent-indicator {
+  color: #ef4444;
+  animation: pulse 2s infinite;
+}
+
+.card-status {
+  margin-top: 4px;
+}
+
+.card-content {
+  padding: 16px 20px;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.info-item i {
+  width: 16px;
+  color: #94a3b8;
+}
+
+.card-description {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+  border-left: 3px solid #e2e8f0;
+}
+
+.card-actions {
+  padding: 16px 20px 20px 20px;
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
 }
 
 .btn {
   padding: 8px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-sm {
-  padding: 4px 8px;
-  font-size: 12px;
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 
 .btn-primary {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .btn-primary:hover {
-  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 .btn-success {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981, #059669);
   color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .btn-success:hover {
-  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .btn-outline {
-  background: transparent;
-  color: #374151;
-  border: 1px solid #d1d5db;
+  background: white;
+  color: #475569;
+  border: 2px solid #e2e8f0;
 }
 
 .btn-outline:hover {
-  background: #f3f4f6;
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
 }
 
 .form-select {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 14px;
   background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .modal-overlay {
@@ -636,48 +1769,69 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
   background: white;
   border-radius: 12px;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .modal-header {
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid #f3f4f6;
+  background: #f8fafc;
 }
 
 .modal-header h3 {
   margin: 0;
-  font-size: 18px;
+  color: #1e293b;
+  font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .close-btn {
   background: none;
   border: none;
-  font-size: 18px;
-  color: #9ca3af;
+  font-size: 24px;
+  color: #64748b;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
 .close-btn:hover {
-  color: #374151;
+  background: #e2e8f0;
+  color: #475569;
 }
 
 .modal-body {
@@ -690,19 +1844,21 @@ export default {
 
 .form-group label {
   display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
+  margin-bottom: 8px;
   color: #374151;
+  font-weight: 500;
   font-size: 14px;
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 14px;
+  transition: all 0.2s;
+  background: #f8fafc;
   box-sizing: border-box;
 }
 
@@ -711,7 +1867,14 @@ export default {
 .form-select:focus {
   outline: none;
   border-color: #3b82f6;
+  background: white;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
 }
 
 .form-actions {
@@ -719,20 +1882,71 @@ export default {
   gap: 12px;
   justify-content: flex-end;
   margin-top: 24px;
+  padding: 24px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  
+  .maintenance-cards {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
-  .action-bar {
+  .maintenance-container {
+    padding: 16px;
+  }
+  
+  .page-header {
+    padding: 24px;
+  }
+  
+  .page-header h2 {
+    font-size: 24px;
+  }
+  
+  .search-section {
     flex-direction: column;
     align-items: stretch;
   }
   
   .search-box {
-    max-width: none;
+    min-width: auto;
   }
   
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .stat-card {
+    padding: 20px;
+  }
+  
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+  
+  .stat-content h3 {
+    font-size: 24px;
+  }
+  
+  .list-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
   }
   
   .data-table {
@@ -741,7 +1955,51 @@ export default {
   
   .data-table th,
   .data-table td {
-    padding: 8px 12px;
+    padding: 12px 8px;
+  }
+  
+  .desc-content {
+    max-width: 120px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .pagination-container {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .maintenance-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    width: 95%;
+    margin: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h2 {
+    font-size: 20px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 8px 4px;
+  }
+  
+  .action-buttons .btn {
+    padding: 4px 6px;
+    font-size: 11px;
   }
 }
 </style>

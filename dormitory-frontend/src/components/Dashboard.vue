@@ -235,7 +235,7 @@ export default {
       try {
         loading.value = true
         const response = await axios.get('http://localhost:8082/api/statistics/dashboard')
-        if (response.data.success) {
+        if (response.data.code === 200) {
           Object.assign(stats, response.data.data)
         } else {
           console.error('获取统计数据失败:', response.data.message)

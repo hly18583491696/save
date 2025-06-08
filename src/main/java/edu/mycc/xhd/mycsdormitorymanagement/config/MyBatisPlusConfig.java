@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
@@ -31,32 +32,36 @@ public class MybatisPlusConfig {
     private String driverClassName;
     
     @Bean
+    @Primary
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
         config.setDriverClassName(driverClassName);
-        config.setMaximumPoolSize(10);
+        
+        // 连接池配置
+        config.setMaximumPoolSize(20);
         config.setMinimumIdle(5);
         config.setConnectionTimeout(30000);
         config.setIdleTimeout(600000);
         config.setMaxLifetime(1800000);
+        
         return new HikariDataSource(config);
     }
     
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        MybatisSqlSessionFactoryBean factory = new MybatisSqlSessionFactoryBean();
-        factory.setDataSource(dataSource);
-        factory.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources("classpath*:mapper/*.xml"));
+        MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
         
+        // 配置MyBatis-Plus
         MybatisConfiguration configuration = new MybatisConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
-        factory.setConfiguration(configuration);
+        configuration.setCacheEnabled(false);
+        sessionFactory.setConfiguration(configuration);
         
-        return factory.getObject();
+        return sessionFactory.getObject();
     }
     
     @Bean

@@ -6,33 +6,31 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 住宿记录实体类
+ * 访客记录实体类
  */
 @Data
-@TableName("dorm_accommodation")
-public class DormAccommodation {
+@TableName("dorm_visitor")
+public class DormVisitor {
     
     @TableId(type = IdType.AUTO)
     private Long id;
     
-    @TableField("student_id")
-    private Long studentId;
-    
-    @TableField("student_name")
-    private String studentName;
-    
-    @TableField("student_number")
-    private String studentNumber;
-    
-    @TableField("class_name")
-    private String className;
+    @TableField("visitor_name")
+    private String visitorName;
     
     @TableField("id_card")
     private String idCard;
+    
+    private String phone;
+    
+    @TableField("visited_student_id")
+    private Long visitedStudentId;
+    
+    @TableField("visited_student_name")
+    private String visitedStudentName;
     
     @TableField("room_id")
     private Long roomId;
@@ -46,16 +44,22 @@ public class DormAccommodation {
     @TableField("building_name")
     private String buildingName;
     
-    @TableField("check_in_date")
-    private LocalDate checkInDate;
+    @TableField("visit_purpose")
+    private String visitPurpose;
     
-    @TableField("check_out_date")
-    private LocalDate checkOutDate;
+    @TableField("visit_time")
+    private LocalDateTime visitTime;
+    
+    @TableField("expected_leave_time")
+    private LocalDateTime expectedLeaveTime;
+    
+    @TableField("actual_leave_time")
+    private LocalDateTime actualLeaveTime;
     
     private String status;
     
-    @TableField("bed_number")
-    private String bedNumber;
+    @TableField("guard_name")
+    private String guardName;
     
     private String remarks;
     

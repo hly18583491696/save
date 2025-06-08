@@ -48,8 +48,8 @@ public class StatisticsController {
             // 获取房间总数
             int totalRooms = dormRoomService.getAllRooms().size();
             
-            // 获取学生总数
-            int totalStudents = studentService.getAllStudents().size();
+            // 获取学生总数（统计有住宿记录的学生数量，与学生管理页面保持一致）
+            int totalStudents = dormAccommodationService.getAllAccommodations().size();
             
             // 计算入住率
             int occupiedRooms = dormAccommodationService.getOccupiedRoomsCount();

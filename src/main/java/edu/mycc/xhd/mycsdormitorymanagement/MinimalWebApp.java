@@ -20,7 +20,6 @@ public class MinimalWebApp {
         SpringApplication app = new SpringApplication(MinimalWebApp.class);
         app.setWebApplicationType(org.springframework.boot.WebApplicationType.SERVLET);
         app.run(args);
-        System.out.println("Minimal Web Application started successfully on port 8081");
     }
 }
 

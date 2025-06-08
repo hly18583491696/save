@@ -22,28 +22,22 @@
         <input 
           v-model="searchQuery" 
           type="text" 
-          placeholder="搜索学生姓名、学号、手机号..."
+          placeholder="搜索学生姓名、学号、房间号..."
           @input="handleSearch"
         >
       </div>
       <div class="filters">
-        <select v-model="filterGender" @change="handleFilter">
-          <option value="">所有性别</option>
-          <option value="0">男</option>
-          <option value="1">女</option>
-        </select>
-        <select v-model="filterGrade" @change="handleFilter">
-          <option value="">所有年级</option>
-          <option value="2021">2021级</option>
-          <option value="2022">2022级</option>
-          <option value="2023">2023级</option>
-          <option value="2024">2024级</option>
+        <select v-model="filterBuilding" @change="handleFilter">
+          <option value="">所有楼栋</option>
+          <option v-for="building in buildings" :key="building.id" :value="building.name">
+            {{ building.name }}
+          </option>
         </select>
         <select v-model="filterStatus" @change="handleFilter">
           <option value="">所有状态</option>
-          <option value="0">在校</option>
-          <option value="1">休学</option>
-          <option value="2">毕业</option>
+          <option value="ACTIVE">在住</option>
+          <option value="CHECKED_OUT">已退宿</option>
+          <option value="PENDING">待入住</option>
         </select>
       </div>
     </div>
@@ -53,76 +47,63 @@
       <table class="students-table">
         <thead>
           <tr>
-            <th>头像</th>
-            <th>学号</th>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>年级</th>
-            <th>专业</th>
+            <th>学生学号</th>
+            <th>学生姓名</th>
             <th>班级</th>
-            <th>手机号</th>
-            <th>宿舍信息</th>
+            <th>身份证号</th>
+            <th>房间号</th>
+            <th>楼栋名称</th>
+            <th>床位号</th>
+            <th>入住日期</th>
+            <th>退宿日期</th>
             <th>状态</th>
+            <th>备注</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="student in filteredStudents" :key="student.id" class="student-row">
+          <tr v-for="accommodation in filteredStudents" :key="accommodation.id" class="student-row">
+            <td class="student-code">{{ accommodation.studentNumber }}</td>
+            <td class="student-name">{{ accommodation.studentName }}</td>
+            <td>{{ accommodation.className || '未知' }}</td>
+            <td>{{ accommodation.idCard || '未填写' }}</td>
+            <td>{{ accommodation.roomNumber }}</td>
+            <td>{{ accommodation.buildingName }}</td>
+            <td>{{ accommodation.bedNumber || '未分配' }}</td>
+            <td>{{ formatDate(accommodation.checkInDate) }}</td>
+            <td>{{ accommodation.checkOutDate ? formatDate(accommodation.checkOutDate) : '未退宿' }}</td>
             <td>
-              <div class="student-avatar">
-                <img v-if="student.avatar" :src="student.avatar" :alt="student.name">
-                <i v-else class="fas fa-user"></i>
-              </div>
-            </td>
-            <td class="student-code">{{ student.studentCode }}</td>
-            <td class="student-name">{{ student.name }}</td>
-            <td>
-              <span class="gender-badge" :class="student.gender == 0 ? 'male' : 'female'">
-                {{ student.gender == 0 ? '男' : '女' }}
+              <span class="status-badge" :class="accommodation.status?.toLowerCase()">
+                {{ accommodation.status || '未知' }}
               </span>
             </td>
-            <td>{{ student.grade }}级</td>
-            <td>{{ student.major }}</td>
-            <td>{{ student.className }}</td>
-            <td>{{ student.phone }}</td>
-            <td>
-              <div v-if="student.dormInfo" class="dorm-info">
-                <div class="dorm-building">{{ student.dormInfo.buildingName }}</div>
-                <div class="dorm-room">{{ student.dormInfo.roomNumber }}室</div>
-              </div>
-              <span v-else class="no-dorm">未分配</span>
-            </td>
-            <td>
-              <span class="status-badge" :class="getStatusClass(student.status)">
-                {{ getStatusText(student.status) }}
-              </span>
-            </td>
+            <td>{{ accommodation.remarks || '无' }}</td>
             <td>
               <div class="action-buttons">
                 <button 
                   class="btn btn-sm btn-outline" 
-                  @click="viewStudent(student)"
+                  @click="viewStudent(accommodation)"
                   title="查看详情"
                 >
                   <i class="fas fa-eye"></i>
                 </button>
                 <button 
                   class="btn btn-sm btn-outline" 
-                  @click="editStudent(student)"
+                  @click="editStudent(accommodation)"
                   title="编辑"
                 >
                   <i class="fas fa-edit"></i>
                 </button>
                 <button 
                   class="btn btn-sm btn-outline" 
-                  @click="assignDorm(student)"
+                  @click="assignDorm(accommodation)"
                   title="分配宿舍"
                 >
                   <i class="fas fa-bed"></i>
                 </button>
                 <button 
                   class="btn btn-sm btn-danger" 
-                  @click="deleteStudent(student)"
+                  @click="deleteStudent(accommodation)"
                   title="删除"
                 >
                   <i class="fas fa-trash"></i>
@@ -171,50 +152,18 @@
           <div class="form-row">
             <div class="form-group">
               <label>学号 *</label>
-              <input v-model="studentForm.studentCode" type="text" required placeholder="学号">
-            </div>
-            <div class="form-group">
-              <label>姓名 *</label>
-              <input v-model="studentForm.name" type="text" required placeholder="姓名">
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label>性别 *</label>
-              <select v-model="studentForm.gender" required>
-                <option value="">请选择性别</option>
-                <option value="0">男</option>
-                <option value="1">女</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>年级 *</label>
-              <select v-model="studentForm.grade" required>
-                <option value="">请选择年级</option>
-                <option value="2021">2021级</option>
-                <option value="2022">2022级</option>
-                <option value="2023">2023级</option>
-                <option value="2024">2024级</option>
-              </select>
+              <input v-model="studentForm.studentNumber" type="text" required placeholder="学号">
+        </div>
+        <div class="form-group">
+          <label>姓名 *</label>
+          <input v-model="studentForm.studentName" type="text" required placeholder="姓名">
             </div>
           </div>
           
           <div class="form-row">
             <div class="form-group">
-              <label>专业 *</label>
-              <input v-model="studentForm.major" type="text" required placeholder="专业">
-            </div>
-            <div class="form-group">
-              <label>班级 *</label>
-              <input v-model="studentForm.className" type="text" required placeholder="班级">
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label>手机号 *</label>
-              <input v-model="studentForm.phone" type="tel" required placeholder="手机号">
+              <label>手机号</label>
+              <input v-model="studentForm.phone" type="tel" placeholder="手机号">
             </div>
             <div class="form-group">
               <label>邮箱</label>
@@ -224,27 +173,23 @@
           
           <div class="form-row">
             <div class="form-group">
+              <label>班级</label>
+              <input v-model="studentForm.className" type="text" placeholder="班级">
+            </div>
+            <div class="form-group">
               <label>身份证号</label>
               <input v-model="studentForm.idCard" type="text" placeholder="身份证号">
             </div>
+          </div>
+          
+          <div class="form-row">
             <div class="form-group">
               <label>状态</label>
               <select v-model="studentForm.status">
-                <option value="0">在校</option>
-                <option value="1">休学</option>
-                <option value="2">毕业</option>
+                <option value="1">启用</option>
+                <option value="0">禁用</option>
               </select>
             </div>
-          </div>
-          
-          <div class="form-group">
-            <label>家庭地址</label>
-            <textarea v-model="studentForm.address" placeholder="家庭地址"></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label>备注</label>
-            <textarea v-model="studentForm.remark" placeholder="备注信息"></textarea>
           </div>
           
           <div class="modal-actions">
@@ -263,7 +208,7 @@
     <div v-if="showDetailsDialog" class="modal-overlay" @click="closeDialogs">
       <div class="modal modal-large" @click.stop>
         <div class="modal-header">
-          <h3>{{ selectedStudent?.name }} - 学生详情</h3>
+          <h3>{{ selectedStudent?.studentName }} - 学生详情</h3>
           <button class="close-btn" @click="closeDialogs">
             <i class="fas fa-times"></i>
           </button>
@@ -273,12 +218,12 @@
           <div class="student-details">
             <div class="detail-header">
               <div class="student-avatar-large">
-                <img v-if="selectedStudent?.avatar" :src="selectedStudent.avatar" :alt="selectedStudent.name">
+                <img v-if="selectedStudent?.avatar" :src="selectedStudent.avatar" :alt="selectedStudent.studentName">
                 <i v-else class="fas fa-user"></i>
               </div>
               <div class="student-basic-info">
-                <h3>{{ selectedStudent?.name }}</h3>
-                <p class="student-code">学号：{{ selectedStudent?.studentCode }}</p>
+                <h3>{{ selectedStudent?.studentName }}</h3>
+                <p class="student-code">学号：{{ selectedStudent?.studentNumber }}</p>
                 <p class="student-status">
                   <span class="status-badge" :class="getStatusClass(selectedStudent?.status)">
                     {{ getStatusText(selectedStudent?.status) }}
@@ -293,29 +238,19 @@
                 <div class="detail-grid">
                   <div class="detail-item">
                     <label>姓名：</label>
-                    <span>{{ selectedStudent?.name }}</span>
+                    <span>{{ selectedStudent?.studentName }}</span>
                   </div>
                   <div class="detail-item">
                     <label>学号：</label>
-                    <span>{{ selectedStudent?.studentCode }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <label>性别：</label>
-                    <span class="gender-badge" :class="selectedStudent?.gender == 0 ? 'male' : 'female'">
-                      {{ selectedStudent?.gender == 0 ? '男' : '女' }}
-                    </span>
-                  </div>
-                  <div class="detail-item">
-                    <label>年级：</label>
-                    <span>{{ selectedStudent?.grade }}级</span>
-                  </div>
-                  <div class="detail-item">
-                    <label>专业：</label>
-                    <span>{{ selectedStudent?.major }}</span>
+                    <span>{{ selectedStudent?.studentNumber }}</span>
                   </div>
                   <div class="detail-item">
                     <label>班级：</label>
-                    <span>{{ selectedStudent?.className }}</span>
+                    <span>{{ selectedStudent?.className || '未填写' }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <label>身份证号：</label>
+                    <span>{{ selectedStudent?.idCard || '未填写' }}</span>
                   </div>
                 </div>
               </div>
@@ -330,14 +265,6 @@
                   <div class="detail-item">
                     <label>邮箱：</label>
                     <span>{{ selectedStudent?.email || '未填写' }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <label>身份证号：</label>
-                    <span>{{ selectedStudent?.idCard || '未填写' }}</span>
-                  </div>
-                  <div class="detail-item full-width">
-                    <label>家庭地址：</label>
-                    <span>{{ selectedStudent?.address || '未填写' }}</span>
                   </div>
                 </div>
               </div>
@@ -372,12 +299,7 @@
                 </div>
               </div>
               
-              <div class="detail-section" v-if="selectedStudent?.remark">
-                <h4><i class="fas fa-sticky-note"></i> 备注信息</h4>
-                <div class="remark-content">
-                  {{ selectedStudent.remark }}
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
@@ -388,7 +310,7 @@
     <div v-if="showAssignDialog" class="modal-overlay" @click="closeDialogs">
       <div class="modal" @click.stop>
         <div class="modal-header">
-          <h3>为 {{ assignStudent?.name }} 分配宿舍</h3>
+          <h3>为 {{ assignStudent?.studentName }} 分配宿舍</h3>
           <button class="close-btn" @click="closeDialogs">
             <i class="fas fa-times"></i>
           </button>
@@ -467,8 +389,7 @@ export default {
   name: 'StudentManagement',
   setup() {
     const searchQuery = ref('')
-    const filterGender = ref('')
-    const filterGrade = ref('')
+    const filterBuilding = ref('')
     const filterStatus = ref('')
     const currentPage = ref(1)
     const pageSize = ref(10)
@@ -486,18 +407,13 @@ export default {
     
     const studentForm = reactive({
       id: null,
-      studentCode: '',
-      name: '',
-      gender: '',
-      grade: '',
-      major: '',
-      className: '',
+      studentNumber: '',
+      studentName: '',
       phone: '',
       email: '',
+      className: '',
       idCard: '',
-      address: '',
-      status: '0',
-      remark: ''
+      status: 1
     })
     
     const assignForm = reactive({
@@ -506,61 +422,39 @@ export default {
       bedNumber: ''
     })
     
-    // 计算属性
-    const filteredStudents = computed(() => {
+    // 计算属性 - 优化性能
+    const getFilteredStudentsBase = computed(() => {
       let filtered = students.value
       
       if (searchQuery.value) {
         const query = searchQuery.value.toLowerCase()
         filtered = filtered.filter(student => 
-          student.name.toLowerCase().includes(query) ||
-          student.studentCode.toLowerCase().includes(query) ||
-          student.phone.includes(query)
+          (student.studentName && student.studentName.toLowerCase().includes(query)) ||
+        (student.studentNumber && student.studentNumber.toLowerCase().includes(query)) ||
+          (student.roomNumber && student.roomNumber.toLowerCase().includes(query))
         )
       }
       
-      if (filterGender.value !== '') {
-        filtered = filtered.filter(student => student.gender == filterGender.value)
-      }
-      
-      if (filterGrade.value) {
-        filtered = filtered.filter(student => student.grade == filterGrade.value)
+      if (filterBuilding.value !== '') {
+        filtered = filtered.filter(student => student.buildingName == filterBuilding.value)
       }
       
       if (filterStatus.value !== '') {
         filtered = filtered.filter(student => student.status == filterStatus.value)
       }
       
+      return filtered
+    })
+    
+    const filteredStudents = computed(() => {
+      const filtered = getFilteredStudentsBase.value
       const start = (currentPage.value - 1) * pageSize.value
       const end = start + pageSize.value
       return filtered.slice(start, end)
     })
     
     const totalStudents = computed(() => {
-      let filtered = students.value
-      
-      if (searchQuery.value) {
-        const query = searchQuery.value.toLowerCase()
-        filtered = filtered.filter(student => 
-          student.name.toLowerCase().includes(query) ||
-          student.studentCode.toLowerCase().includes(query) ||
-          student.phone.includes(query)
-        )
-      }
-      
-      if (filterGender.value !== '') {
-        filtered = filtered.filter(student => student.gender == filterGender.value)
-      }
-      
-      if (filterGrade.value) {
-        filtered = filtered.filter(student => student.grade == filterGrade.value)
-      }
-      
-      if (filterStatus.value !== '') {
-        filtered = filtered.filter(student => student.status == filterStatus.value)
-      }
-      
-      return filtered.length
+      return getFilteredStudentsBase.value.length
     })
     
     const totalPages = computed(() => {
@@ -570,34 +464,50 @@ export default {
     // 方法
     const getStatusClass = (status) => {
       const statusMap = {
-        0: 'active',
-        1: 'suspended',
-        2: 'graduated'
+        'ACTIVE': 'active',
+        'CHECKED_OUT': 'graduated',
+        'PENDING': 'suspended'
       }
       return statusMap[status] || 'active'
     }
     
     const getStatusText = (status) => {
       const statusMap = {
-        0: '在校',
-        1: '休学',
-        2: '毕业'
+        'ACTIVE': '在住',
+        'CHECKED_OUT': '已退宿',
+        'PENDING': '待入住'
       }
       return statusMap[status] || '未知'
     }
     
+    const formatDate = (dateString) => {
+      if (!dateString) return '未设置'
+      const date = new Date(dateString)
+      return date.toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    }
+    
     const loadStudents = async () => {
       try {
-        const response = await fetch('/api/students')
+        const response = await fetch('/api/dorm/accommodations')
         const result = await response.json()
         
-        if (result.success) {
+        console.log('API响应:', result)
+        console.log('住宿记录数据:', result.data)
+        
+        if (result.code === 200) {
           students.value = result.data
+          console.log('students.value已更新:', students.value)
         } else {
-          console.error(result.message || '加载学生数据失败')
+          console.error(result.message || '加载住宿记录数据失败')
         }
       } catch (error) {
-        console.error('加载学生数据失败:', error)
+        console.error('加载住宿记录数据失败:', error)
       }
     }
     
@@ -606,7 +516,7 @@ export default {
         const response = await fetch('/api/dorm/buildings')
         const result = await response.json()
         
-        if (result.success) {
+        if (result.code === 200) {
           buildings.value = result.data
         } else {
           console.error(result.message || '加载楼栋数据失败')
@@ -626,7 +536,7 @@ export default {
         const response = await fetch(`/api/dorm/buildings/${assignForm.buildingId}/rooms/available`)
         const result = await response.json()
         
-        if (result.success) {
+        if (result.code === 200) {
           availableRooms.value = result.data
         } else {
           console.error(result.message || '加载可用房间失败')
@@ -671,18 +581,13 @@ export default {
     const resetForm = () => {
       Object.assign(studentForm, {
         id: null,
-        studentCode: '',
-        name: '',
-        gender: '',
-        grade: '',
-        major: '',
-        className: '',
+        studentNumber: '',
+        studentName: '',
         phone: '',
         email: '',
+        className: '',
         idCard: '',
-        address: '',
-        status: '0',
-        remark: ''
+        status: 1
       })
     }
     
@@ -696,26 +601,21 @@ export default {
       availableBeds.value = []
     }
     
-    const viewStudent = (student) => {
-      selectedStudent.value = student
+    const viewStudent = (accommodation) => {
+      selectedStudent.value = accommodation
       showDetailsDialog.value = true
     }
     
-    const editStudent = (student) => {
+    const editStudent = (accommodation) => {
       Object.assign(studentForm, {
-        id: student.id,
-        studentCode: student.studentCode,
-        name: student.name,
-        gender: student.gender,
-        grade: student.grade,
-        major: student.major,
-        className: student.className,
-        phone: student.phone,
-        email: student.email || '',
-        idCard: student.idCard || '',
-        address: student.address || '',
-        status: student.status,
-        remark: student.remark || ''
+        id: accommodation.id,
+        studentNumber: accommodation.studentNumber,
+        studentName: accommodation.studentName,
+        phone: accommodation.phone || '',
+        email: accommodation.email || '',
+        className: accommodation.className || '',
+        idCard: accommodation.idCard || '',
+        status: accommodation.status
       })
       showEditDialog.value = true
     }
@@ -745,7 +645,8 @@ export default {
         
         const result = await response.json()
         
-        if (result.success) {
+        // 修复响应格式检查 - 后端返回的是success字段，不是code字段
+        if (result.success === true) {
           alert(result.message || '保存学生成功')
           closeDialogs()
           await loadStudents() // 重新加载学生列表
@@ -758,30 +659,33 @@ export default {
       }
     }
     
-    const deleteStudent = async (student) => {
-      if (confirm(`确定要删除学生 ${student.realName || student.name} 吗？`)) {
+    const deleteStudent = async (accommodation) => {
+      if (confirm(`确定要删除住宿记录 ${accommodation.studentName} 吗？`)) {
         try {
-          const response = await fetch(`/api/students/${student.id}`, {
+          const response = await fetch(`/api/dorm/accommodations/${accommodation.id}`, {
             method: 'DELETE'
           })
           
           const result = await response.json()
           
-          if (result.success) {
-            alert(result.message || '学生删除成功！')
-            await loadStudents() // 重新加载学生列表
+          // 修复响应格式检查 - 后端返回的是success字段，不是code字段
+          if (result.success === true) {
+            alert(result.message || '住宿记录删除成功！')
+            
+            // 重新加载数据以确保前后端同步
+            await loadStudents()
           } else {
-            alert(result.message || '删除学生失败')
+            alert(result.message || '删除住宿记录失败')
           }
         } catch (error) {
-          console.error('删除学生失败:', error)
+          console.error('删除住宿记录失败:', error)
           alert('删除失败，请重试')
         }
       }
     }
     
-    const assignDorm = (student) => {
-      assignStudent.value = student
+    const assignDorm = (accommodation) => {
+      assignStudent.value = accommodation
       resetAssignForm()
       showAssignDialog.value = true
     }
@@ -790,7 +694,7 @@ export default {
       try {
         // 创建住宿记录
         const accommodationData = {
-          studentId: assignStudent.value.id,
+          studentNumber: assignStudent.value.id,
           roomId: assignForm.roomId,
           bedNumber: assignForm.bedNumber,
           checkInDate: new Date().toISOString().split('T')[0],
@@ -807,12 +711,12 @@ export default {
         
         const result = await response.json()
         
-        if (result.success) {
+        if (result.code === 200) {
           const building = buildings.value.find(b => b.id == assignForm.buildingId)
           const room = availableRooms.value.find(r => r.id == assignForm.roomId)
           
           closeDialogs()
-          alert(`宿舍分配成功！${assignStudent.value.realName || assignStudent.value.name} 已分配到 ${building.name || building.buildingName} ${room.roomNumber}室 ${assignForm.bedNumber}号床`)
+          alert(`宿舍分配成功！${assignStudent.value.studentName} 已分配到 ${building.name || building.buildingName} ${room.roomNumber}室 ${assignForm.bedNumber}号床`)
           await loadStudents() // 重新加载学生列表
         } else {
           alert(result.message || '分配宿舍失败')
@@ -846,8 +750,7 @@ export default {
     
     return {
       searchQuery,
-      filterGender,
-      filterGrade,
+      filterBuilding,
       filterStatus,
       currentPage,
       showAddDialog,
@@ -867,6 +770,7 @@ export default {
       totalPages,
       getStatusClass,
       getStatusText,
+      formatDate,
       handleSearch,
       handleFilter,
       changePage,

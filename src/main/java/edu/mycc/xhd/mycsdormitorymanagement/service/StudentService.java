@@ -5,8 +5,10 @@ import edu.mycc.xhd.mycsdormitorymanagement.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,32 +43,14 @@ public class StudentService {
         return studentMapper.findByStudentNumber(studentNumber);
     }
     
-    /**
-     * 根据性别获取学生
-     */
-    public List<Student> getStudentsByGender(String gender) {
-        return studentMapper.findByGender(gender);
-    }
-    
-    /**
-     * 根据年级获取学生
-     */
-    public List<Student> getStudentsByGrade(String grade) {
-        return studentMapper.findByGrade(grade);
-    }
-    
-    /**
-     * 根据专业获取学生
-     */
-    public List<Student> getStudentsByMajor(String major) {
-        return studentMapper.findByMajor(major);
-    }
+
     
     /**
      * 根据班级获取学生
      */
     public List<Student> getStudentsByClassName(String className) {
-        return studentMapper.findByClassName(className);
+        // TODO: 实现根据班级查询学生的功能
+        return new ArrayList<>();
     }
     
     /**
@@ -77,6 +61,14 @@ public class StudentService {
     }
     
     /**
+     * 根据性别获取学生
+     */
+    public List<Student> getStudentsByGender(String gender) {
+        // TODO: 实现根据性别查询学生的功能
+        return new ArrayList<>();
+    }
+    
+    /**
      * 搜索学生
      */
     public List<Student> searchStudents(String keyword) {
@@ -84,9 +76,13 @@ public class StudentService {
     }
     
     /**
-     * 添加学生
-     */
+     * 添加学生     */
     public boolean addStudent(Student student) {
+        // 添加调试日志
+        System.out.println("接收到的学生数据: " + student);
+        System.out.println("学号: " + student.getStudentNumber());
+        System.out.println("用户名: " + student.getUsername());
+        
         // 检查学号是否已存在
         Student existing = studentMapper.findByStudentNumber(student.getStudentNumber());
         if (existing != null) {
@@ -95,14 +91,27 @@ public class StudentService {
         
         // 设置默认用户名为学号
         if (student.getUsername() == null || student.getUsername().isEmpty()) {
-            student.setUsername(student.getStudentNumber());
+            if (student.getStudentNumber() != null && !student.getStudentNumber().isEmpty()) {
+                student.setUsername(student.getStudentNumber());
+            } else {
+                throw new RuntimeException("学号不能为空");
+            }
         }
         
         // 设置默认密码（加密后的学号）
         if (student.getPassword() == null || student.getPassword().isEmpty()) {
-            student.setPassword(student.getStudentNumber()); // 简化密码处理，实际项目中应该加密
+            if (student.getStudentNumber() != null && !student.getStudentNumber().isEmpty()) {
+                student.setPassword(student.getStudentNumber()); // 简化密码处理，实际项目中应该加密
+            } else {
+                student.setPassword("123456"); // 默认密码
+            }
         } else {
             student.setPassword(student.getPassword()); // 简化密码处理，实际项目中应该加密
+        }
+        
+        // 设置默认角色为USER
+        if (student.getRole() == null || student.getRole().isEmpty()) {
+            student.setRole("USER");
         }
         
         student.setCreateTime(LocalDateTime.now());
@@ -110,8 +119,8 @@ public class StudentService {
         student.setDeleted(0);
         
         // 设置默认状态为在校
-        if (student.getStatus() == null || student.getStatus().isEmpty()) {
-            student.setStatus("ACTIVE");
+        if (student.getStatus() == null) {
+            student.setStatus(1); // 1表示在校状态
         }
         
         return studentMapper.insert(student) > 0;
@@ -139,12 +148,15 @@ public class StudentService {
     /**
      * 删除学生（逻辑删除）
      */
+    @Transactional
     public boolean deleteStudent(Long id) {
-        Student student = new Student();
-        student.setId(id);
-        student.setDeleted(1);
-        student.setUpdateTime(LocalDateTime.now());
-        return studentMapper.updateById(student) > 0;
+        // 先检查学生是否存在
+        Student student = studentMapper.selectById(id);
+        if (student == null) {
+            throw new RuntimeException("学生不存在");
+        }
+        // 使用MyBatis-Plus的removeById方法，会自动处理逻辑删除
+        return studentMapper.deleteById(id) > 0;
     }
     
     /**

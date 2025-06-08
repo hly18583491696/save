@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class SimpleApp {
     public static void main(String[] args) {
         SpringApplication.run(SimpleApp.class, args);
-        System.out.println("Simple Application started successfully on port 8081");
     }
 }
 

@@ -1,7 +1,9 @@
 package edu.mycc.xhd.mycsdormitorymanagement.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -11,45 +13,42 @@ import java.time.LocalDateTime;
  * 学生实体类
  */
 @Data
-@TableName("sys_user")
+@TableName("student")
 public class Student {
     
     @TableId(type = IdType.AUTO)
     private Long id;
     
-    private String username;
+    @TableField("student_number")
+    private String studentNumber;
     
-    private String password;
+    @TableField("student_name")
+    private String studentName;
     
-    private String realName;
+    @TableField("class_name")
+    private String className;
     
-    private String email;
+    @TableField("id_card")
+    private String idCard;
     
     private String phone;
     
-    private String gender;
+    private String email;
     
-    private String studentNumber;
+    private String password;
     
-    private String grade;
+    private String username; // 用户名
     
-    private String major;
+    private String role; // 用户角色
     
-    private String className;
+    private Integer status; // 1-正常, 0-禁用
     
-    private String idCard;
+    @TableLogic
+    private Integer deleted; // 0-未删除, 1-已删除
     
-    private String address;
-    
-    private String avatar;
-    
-    private String status;
-    
-    private String remark;
-    
+    @TableField("create_time")
     private LocalDateTime createTime;
     
+    @TableField("update_time")
     private LocalDateTime updateTime;
-    
-    private Integer deleted;
 }
