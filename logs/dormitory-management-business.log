@@ -79,3 +79,59 @@
 ### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
 ### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
 ; bad SQL grammar []
+2025-06-08 08:39:43.001 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.AuthController - 用户登录尝试: username=admin
+2025-06-08 08:39:43.050 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.AuthController - 用户登录成功: username=admin
+2025-06-08 08:39:43.232 [http-nio-8082-exec-3] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 08:39:43.346 [http-nio-8082-exec-3] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 08:40:28.245 [http-nio-8082-exec-4] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 08:40:28.259 [http-nio-8082-exec-4] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 08:40:29.944 [http-nio-8082-exec-5] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 08:40:29.955 [http-nio-8082-exec-5] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 08:45:26.450 [http-nio-8082-exec-1] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 08:45:26.603 [http-nio-8082-exec-1] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 08:50:11.453 [http-nio-8082-exec-3] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 08:50:11.465 [http-nio-8082-exec-3] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []
+2025-06-08 08:50:19.353 [http-nio-8082-exec-4] INFO  e.m.x.m.c.StatisticsController - 获取仪表盘统计数据请求
+2025-06-08 08:50:19.366 [http-nio-8082-exec-4] ERROR e.m.x.m.c.StatisticsController - 获取仪表盘统计数据失败: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/StudentMapper.java (best guess)
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'student_number' in 'order clause'
+; bad SQL grammar []

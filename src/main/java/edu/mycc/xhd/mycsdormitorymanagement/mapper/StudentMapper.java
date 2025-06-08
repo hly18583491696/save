@@ -52,7 +52,7 @@ public interface StudentMapper extends BaseMapper<Student> {
     /**
      * 查询所有有效学生
      */
-    @Select("SELECT * FROM sys_user WHERE deleted = 0 ORDER BY student_number")
+    @Select("SELECT * FROM sys_user WHERE deleted = 0 ORDER BY username")
     List<Student> findAllActive();
     
     /**
