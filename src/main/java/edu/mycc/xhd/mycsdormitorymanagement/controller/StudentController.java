@@ -100,26 +100,6 @@ public class StudentController {
     }
     
     /**
-     * 根据性别获取学生
-     */
-    @GetMapping("/gender/{gender}")
-    public ResponseEntity<Map<String, Object>> getStudentsByGender(@PathVariable String gender) {
-        try {
-            List<Student> students = studentService.getStudentsByGender(gender);
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("data", students);
-            response.put("message", "获取学生列表成功");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("message", "获取学生列表失败: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
-        }
-    }
-    
-    /**
      * 搜索学生
      */
     @GetMapping("/search")
@@ -195,22 +175,26 @@ public class StudentController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> deleteStudent(@PathVariable Long id) {
+        log.info("收到删除学生请求，ID: {}", id);
         try {
             boolean success = studentService.deleteStudent(id);
             Map<String, Object> response = new HashMap<>();
             if (success) {
                 response.put("success", true);
                 response.put("message", "删除学生成功");
+                log.info("删除学生成功，ID: {}", id);
                 return ResponseEntity.ok(response);
             } else {
                 response.put("success", false);
                 response.put("message", "删除学生失败");
+                log.error("删除学生失败，ID: {}", id);
                 return ResponseEntity.status(500).body(response);
             }
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "删除学生失败: " + e.getMessage());
+            log.error("删除学生异常，ID: {}, 错误: {}", id, e.getMessage(), e);
             return ResponseEntity.status(500).body(response);
         }
     }

@@ -35,20 +35,15 @@ public class Student {
     
     private String email;
     
-    private String password;
-    
-    private String username; // 用户名
-    
-    private String role; // 用户角色
-    
     private Integer status; // 1-正常, 0-禁用
-    
-    @TableLogic
-    private Integer deleted; // 0-未删除, 1-已删除
     
     @TableField("create_time")
     private LocalDateTime createTime;
     
     @TableField("update_time")
     private LocalDateTime updateTime;
+    
+    @TableLogic
+    @TableField("deleted")
+    private Integer deleted; // 0-未删除, 1-已删除
 }

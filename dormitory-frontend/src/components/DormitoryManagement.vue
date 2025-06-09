@@ -268,6 +268,110 @@
         </div>
       </div>
     </div>
+
+    <!-- 学生管理对话框 -->
+    <div v-if="showStudentManageDialog" class="modal-overlay" @click="closeDialogs">
+      <div class="modal modal-large" @click.stop>
+        <div class="modal-header">
+          <h3>{{ selectedRoom?.buildingName }} - {{ selectedRoom?.roomNumber }} 学生管理</h3>
+          <button class="close-btn" @click="closeDialogs">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="room-info-summary">
+            <div class="info-card">
+              <div class="info-label">房间信息</div>
+              <div class="info-content">
+                <span>{{ selectedRoom?.buildingName }} - {{ selectedRoom?.roomNumber }}</span>
+                <span>{{ selectedRoom?.floor }}楼 · {{ getRoomTypeText(selectedRoom?.roomType) }}</span>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">床位情况</div>
+              <div class="info-content">
+                <span>总床位：{{ selectedRoom?.totalBeds }}个</span>
+                <span>已占用：{{ roomStudents.length }}个</span>
+                <span>可用：{{ (selectedRoom?.totalBeds || 0) - roomStudents.length }}个</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="students-management">
+            <div class="section-header">
+              <h4><i class="fas fa-users"></i> 入住学生列表</h4>
+              <div class="header-actions">
+                <button class="btn btn-sm btn-primary" @click="addStudentToRoom">
+                  <i class="fas fa-plus"></i> 添加学生
+                </button>
+              </div>
+            </div>
+            
+            <div v-if="roomStudents.length === 0" class="empty-state">
+              <i class="fas fa-bed"></i>
+              <p>该房间暂无入住学生</p>
+            </div>
+            
+            <div v-else class="students-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>学生姓名</th>
+                    <th>学号</th>
+                    <th>班级</th>
+                    <th>床位号</th>
+                    <th>入住时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="student in roomStudents" :key="student.id">
+                    <td>
+                      <div class="student-name-cell">
+                        <i class="fas fa-user-circle"></i>
+                        {{ student.studentName }}
+                      </div>
+                    </td>
+                    <td>{{ student.studentNumber }}</td>
+                    <td>{{ student.className || '-' }}</td>
+                    <td>
+                      <span class="bed-number">{{ student.bedNumber }}</span>
+                    </td>
+                    <td>{{ formatDate(student.checkInDate) }}</td>
+                    <td>
+                      <span class="status-badge" :class="getAccommodationStatusClass(student.status)">
+                        {{ getAccommodationStatusText(student.status) }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="btn btn-sm btn-outline" @click="viewStudentDetail(student)" title="查看详情">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline" @click="editStudentAccommodation(student)" title="编辑">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" @click="removeStudentFromRoom(student)" title="退宿">
+                          <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="closeDialogs">
+            关闭
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -285,6 +389,7 @@ export default {
     const showAddDialog = ref(false)
     const showEditDialog = ref(false)
     const showDetailsDialog = ref(false)
+    const showStudentManageDialog = ref(false)
     const selectedRoom = ref(null)
     
     const rooms = ref([])
@@ -579,18 +684,111 @@ export default {
       showDetailsDialog.value = true
     }
     
-    const manageStudents = (room) => {
-      alert(`管理 ${room.buildingName} - ${room.roomNumber} 的学生功能正在开发中...`)
+    const manageStudents = async (room) => {
+      try {
+        console.log('管理房间学生:', room)
+        selectedRoom.value = room
+        
+        // 获取房间的住宿记录
+        const response = await fetch(`http://localhost:8082/api/dorm/accommodations/room/${room.id}`)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const result = await response.json()
+        console.log('房间住宿记录响应:', result)
+        
+        if (result.code === 200) {
+          roomStudents.value = result.data || []
+          showStudentManageDialog.value = true
+        } else {
+          console.error('获取房间学生信息失败:', result.message)
+          alert('获取房间学生信息失败: ' + result.message)
+        }
+      } catch (error) {
+        console.error('获取房间学生信息异常:', error)
+        alert('获取房间学生信息失败: ' + error.message)
+      }
     }
     
     const viewStudent = (student) => {
       alert(`查看学生 ${student.studentName} 的详细信息功能正在开发中...`)
     }
     
+    // 学生管理相关方法
+    const addStudentToRoom = () => {
+      alert('添加学生到房间功能正在开发中...')
+    }
+    
+    const viewStudentDetail = (student) => {
+      alert(`查看学生 ${student.studentName} 详细信息功能正在开发中...`)
+    }
+    
+    const editStudentAccommodation = (student) => {
+      alert(`编辑学生 ${student.studentName} 住宿信息功能正在开发中...`)
+    }
+    
+    const removeStudentFromRoom = async (student) => {
+      if (!confirm(`确定要让学生 ${student.studentName} 退宿吗？`)) {
+        return
+      }
+      
+      try {
+        const response = await fetch(`http://localhost:8082/api/dorm/accommodations/checkout/student/${student.studentId}`, {
+          method: 'PUT'
+        })
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const result = await response.json()
+        
+        if (result.code === 200) {
+          alert('学生退宿成功')
+          // 重新加载房间学生信息
+          manageStudents(selectedRoom.value)
+          // 刷新房间列表
+          loadRooms()
+        } else {
+          alert('学生退宿失败: ' + result.message)
+        }
+      } catch (error) {
+        console.error('学生退宿异常:', error)
+        alert('学生退宿失败: ' + error.message)
+      }
+    }
+    
+    // 格式化日期
+    const formatDate = (dateString) => {
+      if (!dateString) return '-'
+      const date = new Date(dateString)
+      return date.toLocaleDateString('zh-CN')
+    }
+    
+    // 获取住宿状态样式类
+    const getAccommodationStatusClass = (status) => {
+      switch (status) {
+        case 0: return 'status-active'
+        case 1: return 'status-inactive'
+        default: return 'status-unknown'
+      }
+    }
+    
+    // 获取住宿状态文本
+    const getAccommodationStatusText = (status) => {
+      switch (status) {
+        case 0: return '在住'
+        case 1: return '已退宿'
+        default: return '未知'
+      }
+    }
+    
     const closeDialogs = () => {
       showAddDialog.value = false
       showEditDialog.value = false
       showDetailsDialog.value = false
+      showStudentManageDialog.value = false
       selectedRoom.value = null
       roomStudents.value = []
       resetForm()
@@ -610,6 +808,7 @@ export default {
       showAddDialog,
       showEditDialog,
       showDetailsDialog,
+      showStudentManageDialog,
       selectedRoom,
       rooms,
       buildings,
@@ -629,6 +828,13 @@ export default {
       viewRoomDetails,
       manageStudents,
       viewStudent,
+      addStudentToRoom,
+      viewStudentDetail,
+      editStudentAccommodation,
+      removeStudentFromRoom,
+      formatDate,
+      getAccommodationStatusClass,
+      getAccommodationStatusText,
       closeDialogs
     }
   }
@@ -1090,6 +1296,179 @@ export default {
 .student-actions {
   display: flex;
   gap: 10px;
+}
+
+/* 学生管理对话框样式 */
+.room-info-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.info-card {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #3498db;
+}
+
+.info-label {
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-content span {
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.students-management {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.section-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.students-table {
+  overflow-x: auto;
+}
+
+.students-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-table th,
+.students-table td {
+  padding: 15px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.students-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.students-table td {
+  font-size: 14px;
+  color: #495057;
+}
+
+.student-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.student-name-cell i {
+  color: #3498db;
+  font-size: 16px;
+}
+
+.bed-number {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.action-buttons .btn {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.status-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-unknown {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.modal-footer {
+  padding: 20px;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c82333;
 }
 
 /* 响应式设计 */

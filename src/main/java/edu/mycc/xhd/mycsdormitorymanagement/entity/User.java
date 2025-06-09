@@ -33,9 +33,6 @@ public class User {
     
     private Integer status; // 1-启用, 0-禁用
     
-    @TableField("student_id")
-    private String studentId;
-    
     private String avatar;
     
     @TableField("create_time")

@@ -94,18 +94,6 @@ public class UserService {
     }
     
     /**
-     * 根据学号获取用户
-     */
-    public User getUserByStudentId(String studentId) {
-        User user = userMapper.findByStudentId(studentId);
-        if (user != null) {
-            // 不返回密码
-            user.setPassword(null);
-        }
-        return user;
-    }
-    
-    /**
      * 根据角色获取用户列表
      */
     public java.util.List<User> getUsersByRole(String role) {

@@ -1,6 +1,6 @@
 package edu.mycc.xhd.mycsdormitorymanagement.service;
 
-import edu.mycc.xhd.mycsdormitorymanagement.entity.Room;
+import edu.mycc.xhd.mycsdormitorymanagement.entity.DormRoom;
 import edu.mycc.xhd.mycsdormitorymanagement.common.PageRequest;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.List;
@@ -19,7 +19,7 @@ public interface RoomService {
      * @param id 房间ID
      * @return 房间信息
      */
-    Room getById(Long id);
+    DormRoom getById(Long id);
 
     /**
      * 根据房间号查询房间
@@ -27,7 +27,7 @@ public interface RoomService {
      * @param roomNumber 房间号
      * @return 房间信息
      */
-    Room getByRoomNumber(String roomNumber);
+    DormRoom getByRoomNumber(String roomNumber);
 
     /**
      * 根据楼栋ID查询房间列表
@@ -35,7 +35,7 @@ public interface RoomService {
      * @param buildingId 楼栋ID
      * @return 房间列表
      */
-    List<Room> getByBuildingId(Long buildingId);
+    List<DormRoom> getByBuildingId(Long buildingId);
 
     /**
      * 根据房间状态查询房间列表
@@ -43,14 +43,14 @@ public interface RoomService {
      * @param roomStatus 房间状态
      * @return 房间列表
      */
-    List<Room> getByRoomStatus(String roomStatus);
+    List<DormRoom> getByRoomStatus(String roomStatus);
 
     /**
      * 查询可用房间列表
      * 
      * @return 可用房间列表
      */
-    List<Room> getAvailableRooms();
+    List<DormRoom> getAvailableRooms();
 
     /**
      * 根据楼栋ID查询可用房间列表
@@ -58,7 +58,7 @@ public interface RoomService {
      * @param buildingId 楼栋ID
      * @return 可用房间列表
      */
-    List<Room> getAvailableRoomsByBuildingId(Long buildingId);
+    List<DormRoom> getAvailableRoomsByBuildingId(Long buildingId);
 
     /**
      * 分页查询房间
@@ -66,14 +66,14 @@ public interface RoomService {
      * @param pageRequest 分页请求参数
      * @return 分页结果
      */
-    IPage<Room> getPage(PageRequest pageRequest);
+    IPage<DormRoom> getPage(PageRequest pageRequest);
 
     /**
      * 获取所有房间列表
      * 
      * @return 房间列表
      */
-    List<Room> getAll();
+    List<DormRoom> getAll();
 
     /**
      * 创建房间
@@ -81,7 +81,7 @@ public interface RoomService {
      * @param room 房间信息
      * @return 创建的房间
      */
-    Room create(Room room);
+    DormRoom create(DormRoom room);
 
     /**
      * 更新房间信息
@@ -90,7 +90,7 @@ public interface RoomService {
      * @param room 房间信息
      * @return 更新后的房间
      */
-    Room update(Long id, Room room);
+    DormRoom update(Long id, DormRoom room);
 
     /**
      * 删除房间

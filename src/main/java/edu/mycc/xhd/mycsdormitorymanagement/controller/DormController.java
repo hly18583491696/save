@@ -249,6 +249,23 @@ public class DormController {
     }
     
     /**
+     * 根据ID获取单个住宿记录
+     */
+    @GetMapping("/accommodations/{id}")
+    public Result<DormAccommodation> getAccommodationById(@PathVariable Long id) {
+        try {
+            DormAccommodation accommodation = dormAccommodationService.getAccommodationById(id);
+            if (accommodation != null) {
+                return Result.success(accommodation);
+            } else {
+                return Result.error("住宿记录不存在");
+            }
+        } catch (Exception e) {
+            return Result.error("获取住宿记录失败: " + e.getMessage());
+        }
+    }
+
+    /**
      * 根据学生ID获取住宿记录
      */
     @GetMapping("/accommodations/student/{studentId}")
@@ -291,6 +308,24 @@ public class DormController {
         }
     }
     
+    /**
+     * 更新住宿记录
+     */
+    @PutMapping("/accommodations/{id}")
+    public Result<String> updateAccommodation(@PathVariable Long id, @RequestBody DormAccommodation accommodation) {
+        try {
+            accommodation.setId(id);
+            boolean success = dormAccommodationService.updateAccommodation(accommodation);
+            if (success) {
+                return Result.success("更新住宿记录成功");
+            } else {
+                return Result.error("更新住宿记录失败");
+            }
+        } catch (Exception e) {
+            return Result.error("更新住宿记录失败: " + e.getMessage());
+        }
+    }
+
     /**
      * 学生退宿
      */

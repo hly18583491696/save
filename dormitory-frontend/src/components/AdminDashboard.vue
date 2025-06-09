@@ -28,9 +28,9 @@
             </router-link>
           </div>
           <div class="nav-item">
-            <router-link to="/dashboard/students" class="nav-link">
-              <i class="fas fa-user-graduate"></i>
-              <span v-if="!sidebarCollapsed">学生管理</span>
+            <router-link to="/dashboard/accommodations" class="nav-link">
+              <i class="fas fa-bed"></i>
+              <span v-if="!sidebarCollapsed">住宿记录管理</span>
             </router-link>
           </div>
           <div class="nav-item">

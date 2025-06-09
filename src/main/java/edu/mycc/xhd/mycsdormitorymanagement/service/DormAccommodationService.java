@@ -2,6 +2,7 @@ package edu.mycc.xhd.mycsdormitorymanagement.service;
 
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormAccommodation;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormRoom;
+import edu.mycc.xhd.mycsdormitorymanagement.entity.Student;
 import edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -165,6 +166,46 @@ public class DormAccommodationService {
     }
     
     /**
+     * 同步更新住宿记录中的学生信息
+     */
+    @Transactional
+    public boolean updateStudentInfoInAccommodations(Student student) {
+        try {
+            log.info("开始同步更新住宿记录中的学生信息，学生ID: {}", student.getId());
+            
+            // 查找该学生的所有住宿记录
+            List<DormAccommodation> accommodations = accommodationMapper.findByStudentId(student.getId());
+            
+            if (accommodations.isEmpty()) {
+                log.info("学生没有住宿记录，无需同步更新，学生ID: {}", student.getId());
+                return true;
+            }
+            
+            // 更新每条住宿记录中的学生信息
+            for (DormAccommodation accommodation : accommodations) {
+                accommodation.setStudentName(student.getStudentName());
+                accommodation.setStudentNumber(student.getStudentNumber());
+                accommodation.setClassName(student.getClassName());
+                accommodation.setIdCard(student.getIdCard());
+                accommodation.setUpdateTime(LocalDateTime.now());
+                
+                int updateResult = accommodationMapper.updateById(accommodation);
+                if (updateResult <= 0) {
+                    log.error("更新住宿记录失败，住宿记录ID: {}", accommodation.getId());
+                    throw new RuntimeException("更新住宿记录失败");
+                }
+            }
+            
+            log.info("成功同步更新{}条住宿记录中的学生信息，学生ID: {}", accommodations.size(), student.getId());
+            return true;
+            
+        } catch (Exception e) {
+            log.error("同步更新住宿记录中的学生信息失败，学生ID: {}, 错误: {}", student.getId(), e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
      * 删除住宿记录（逻辑删除）
      */
     public boolean deleteAccommodation(Long id) {
@@ -179,13 +220,9 @@ public class DormAccommodationService {
         
         log.info("找到住宿记录，学生: {}, 当前状态: deleted={}", existing.getStudentName(), existing.getDeleted());
         
-        DormAccommodation accommodation = new DormAccommodation();
-        accommodation.setId(id);
-        accommodation.setDeleted(1);
-        accommodation.setUpdateTime(LocalDateTime.now());
-        
-        int result = accommodationMapper.updateById(accommodation);
-        log.info("数据库更新结果: {}, 受影响行数: {}", result > 0 ? "成功" : "失败", result);
+        // 使用MyBatis-Plus的逻辑删除方法
+        int result = accommodationMapper.deleteById(id);
+        log.info("数据库删除结果: {}, 受影响行数: {}", result > 0 ? "成功" : "失败", result);
         
         return result > 0;
     }
@@ -195,5 +232,36 @@ public class DormAccommodationService {
      */
     public int getOccupiedRoomsCount() {
         return accommodationMapper.countOccupiedRooms();
+    }
+    
+    /**
+     * 根据学生ID删除住宿记录（逻辑删除）
+     */
+    @Transactional
+    public boolean deleteAccommodationsByStudentId(Long studentId) {
+        log.info("开始删除学生ID为{}的所有住宿记录", studentId);
+        
+        // 查找该学生的所有住宿记录
+        List<DormAccommodation> accommodations = accommodationMapper.findByStudentId(studentId);
+        
+        if (accommodations.isEmpty()) {
+            log.info("学生ID为{}的住宿记录不存在", studentId);
+            return true; // 没有记录也算成功
+        }
+        
+        // 逻辑删除所有住宿记录
+        for (DormAccommodation accommodation : accommodations) {
+            accommodation.setDeleted(1);
+            accommodation.setUpdateTime(LocalDateTime.now());
+            int result = accommodationMapper.updateById(accommodation);
+            if (result <= 0) {
+                log.error("删除住宿记录失败，记录ID: {}", accommodation.getId());
+                return false;
+            }
+            log.info("成功删除住宿记录，记录ID: {}, 学生: {}", accommodation.getId(), accommodation.getStudentName());
+        }
+        
+        log.info("成功删除学生ID为{}的所有住宿记录，共{}条", studentId, accommodations.size());
+        return true;
     }
 }

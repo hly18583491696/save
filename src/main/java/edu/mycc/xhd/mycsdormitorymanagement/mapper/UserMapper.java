@@ -22,12 +22,6 @@ public interface UserMapper extends BaseMapper<User> {
     User findByUsername(String username);
     
     /**
-     * 根据学号查找用户
-     */
-    @Select("SELECT * FROM sys_user WHERE student_id = #{studentId} AND deleted = 0")
-    User findByStudentId(String studentId);
-    
-    /**
      * 根据角色查找用户
      */
     @Select("SELECT * FROM sys_user WHERE role = #{role} AND deleted = 0")
@@ -36,8 +30,8 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * 插入新用户
      */
-    @Insert("INSERT INTO sys_user (username, password, real_name, email, phone, role, status, student_id, avatar, create_time, update_time, deleted) " +
-            "VALUES (#{username}, #{password}, #{realName}, #{email}, #{phone}, #{role}, #{status}, #{studentId}, #{avatar}, #{createTime}, #{updateTime}, #{deleted})")
+    @Insert("INSERT INTO sys_user (username, password, real_name, email, phone, role, status, avatar, create_time, update_time, deleted) " +
+            "VALUES (#{username}, #{password}, #{realName}, #{email}, #{phone}, #{role}, #{status}, #{avatar}, #{createTime}, #{updateTime}, #{deleted})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(User user);
 }

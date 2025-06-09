@@ -44,6 +44,12 @@ public interface DormAccommodationMapper extends BaseMapper<DormAccommodation> {
     List<DormAccommodation> findByStatus(String status);
     
     /**
+     * 根据ID查找住宿记录
+     */
+    @Select("SELECT * FROM dorm_accommodation WHERE id = #{id} AND deleted = 0")
+    DormAccommodation selectById(Long id);
+    
+    /**
      * 查询所有有效的住宿记录
      */
     @Select("SELECT * FROM dorm_accommodation WHERE deleted = 0 ORDER BY check_in_date DESC")

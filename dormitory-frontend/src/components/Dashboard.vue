@@ -140,13 +140,13 @@
           </div>
         </div>
         
-        <div class="action-card" @click="$router.push('/dashboard/students')">
+        <div class="action-card" @click="$router.push('/dashboard/accommodations')">
           <div class="action-icon">
-            <i class="fas fa-user-plus"></i>
+            <i class="fas fa-bed"></i>
           </div>
           <div class="action-content">
-            <div class="action-title">添加学生</div>
-            <div class="action-description">录入新学生信息</div>
+            <div class="action-title">住宿记录管理</div>
+            <div class="action-description">管理学生住宿记录</div>
           </div>
         </div>
         

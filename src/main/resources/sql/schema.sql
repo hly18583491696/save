@@ -80,26 +80,8 @@ CREATE TABLE `dorm_room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='宿舍房间表';
 
 -- ----------------------------
--- 学生表
+-- 学生表已删除，学生信息现在存储在住宿记录表中
 -- ----------------------------
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE `student` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '学生ID',
-  `student_number` varchar(20) NOT NULL COMMENT '学号',
-  `student_name` varchar(50) NOT NULL COMMENT '学生姓名',
-  `class_name` varchar(50) DEFAULT NULL COMMENT '班级',
-  `id_card` varchar(18) DEFAULT NULL COMMENT '身份证号',
-  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
-  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
-  `status` tinyint DEFAULT '1' COMMENT '状态：1-正常，0-禁用',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_student_number` (`student_number`),
-  KEY `idx_student_name` (`student_name`),
-  KEY `idx_class_name` (`class_name`),
-  KEY `idx_status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学生信息表';
 
 -- ----------------------------
 -- 住宿记录表
@@ -112,6 +94,8 @@ CREATE TABLE `dorm_accommodation` (
   `student_number` varchar(20) DEFAULT NULL COMMENT '学号',
   `class_name` varchar(50) DEFAULT NULL COMMENT '班级',
   `id_card` varchar(18) DEFAULT NULL COMMENT '身份证号',
+  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `room_id` bigint NOT NULL COMMENT '房间ID',
   `room_number` varchar(20) DEFAULT NULL COMMENT '房间号',
   `building_id` bigint DEFAULT NULL COMMENT '楼栋ID',
@@ -125,11 +109,14 @@ CREATE TABLE `dorm_accommodation` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted` int NOT NULL DEFAULT '0' COMMENT '删除标志(0-未删除,1-已删除)',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_student_number` (`student_number`),
   KEY `idx_student_id` (`student_id`),
   KEY `idx_room_id` (`room_id`),
   KEY `idx_building_id` (`building_id`),
   KEY `idx_status` (`status`),
   KEY `idx_check_in_date` (`check_in_date`),
+  KEY `idx_student_name` (`student_name`),
+  KEY `idx_class_name` (`class_name`),
   CONSTRAINT `fk_accommodation_room` FOREIGN KEY (`room_id`) REFERENCES `dorm_room` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_accommodation_building` FOREIGN KEY (`building_id`) REFERENCES `dorm_building` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='住宿记录表';
