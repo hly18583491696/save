@@ -3940,3 +3940,148 @@ org.springframework.web.HttpRequestMethodNotSupportedException: Request method '
 2025-06-09 19:48:09.333 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-09 19:48:09.341 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-09 19:48:10.168 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:56:05.033 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:56:05.035 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:56:31.405 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:56:31.406 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:51.013 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:51.013 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:51.804 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:51.805 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:56.246 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:57.570 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:57:58.671 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:04.664 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:07.012 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:07.870 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:31.870 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:34.810 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:35.983 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:54.946 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:57.412 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:58:58.282 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:01:59.362 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:00.881 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:01.998 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:29.553 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:29.553 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:55.432 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:57.028 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:57.908 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:59.255 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:02:59.255 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:31.804 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:31.805 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:32.654 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:33.697 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:33.697 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:33.851 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:03:33.852 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:04:31.275 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:04:40.183 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:04:41.546 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:19.816 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:19.816 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:19.946 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:19.946 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:41.476 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:43.282 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:44.092 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:46.513 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:05:46.515 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:06:22.751 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:06:24.849 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:06:25.675 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:06:26.924 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:06:26.925 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:07:35.716 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:07:56.582 [http-nio-8082-exec-9] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormAccommodationService.assignAccommodation]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-09 20:07:56.584 [http-nio-8082-exec-9] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@403054765 wrapping com.mysql.cj.jdbc.ConnectionImpl@159424e2] for JDBC transaction
+2025-06-09 20:07:56.585 [http-nio-8082-exec-9] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@403054765 wrapping com.mysql.cj.jdbc.ConnectionImpl@159424e2] to manual commit
+2025-06-09 20:07:56.634 [http-nio-8082-exec-9] DEBUG o.s.j.support.SQLErrorCodesFactory - Looking up default SQLErrorCodes for DataSource [com.zaxxer.hikari.HikariDataSource@e7b265e]
+2025-06-09 20:07:56.635 [http-nio-8082-exec-9] DEBUG o.s.j.support.SQLErrorCodesFactory - SQL error codes for 'MySQL' found
+2025-06-09 20:07:56.635 [http-nio-8082-exec-9] DEBUG o.s.j.support.SQLErrorCodesFactory - Caching SQL error codes for DataSource [com.zaxxer.hikari.HikariDataSource@e7b265e]: database product name is 'MySQL'
+2025-06-09 20:07:56.637 [http-nio-8082-exec-9] DEBUG o.s.j.s.SQLErrorCodeSQLExceptionTranslator - Translating SQLException with SQL state 'HY000', error code '1364', message [Field 'student_id' doesn't have a default value] for task [
+### Error updating database.  Cause: java.sql.SQLException: Field 'student_id' doesn't have a default value
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/DormAccommodationMapper.java (best guess)
+### The error may involve edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO dorm_accommodation  ( student_name, student_number, class_name, id_card, room_id, room_number, building_id, building_name, check_in_date,  status, bed_number, remarks, create_time, update_time, deleted )  VALUES (  ?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?  )
+### Cause: java.sql.SQLException: Field 'student_id' doesn't have a default value
+]
+2025-06-09 20:07:56.637 [http-nio-8082-exec-9] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction rollback
+2025-06-09 20:07:56.637 [http-nio-8082-exec-9] DEBUG o.s.j.support.JdbcTransactionManager - Rolling back JDBC transaction on Connection [HikariProxyConnection@403054765 wrapping com.mysql.cj.jdbc.ConnectionImpl@159424e2]
+2025-06-09 20:07:56.638 [http-nio-8082-exec-9] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@403054765 wrapping com.mysql.cj.jdbc.ConnectionImpl@159424e2] after transaction
+2025-06-09 20:15:30.023 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:30.027 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:30.028 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:30.036 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:30.042 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:30.045 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:30.050 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:56.860 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:15:56.861 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:21:45.323 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:21:45.323 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:21:47.002 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:21:47.002 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:21:47.161 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:21:47.161 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:18.162 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:20.758 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:21.821 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:25.648 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:27.611 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:28.678 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:29:59.344 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:30:04.710 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormAccommodationService.assignAccommodation]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-09 20:30:04.712 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@658670117 wrapping com.mysql.cj.jdbc.ConnectionImpl@45f6c803] for JDBC transaction
+2025-06-09 20:30:04.712 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@658670117 wrapping com.mysql.cj.jdbc.ConnectionImpl@45f6c803] to manual commit
+2025-06-09 20:30:04.717 [http-nio-8082-exec-7] DEBUG o.s.j.s.SQLErrorCodeSQLExceptionTranslator - Translating SQLException with SQL state 'HY000', error code '1364', message [Field 'student_id' doesn't have a default value] for task [
+### Error updating database.  Cause: java.sql.SQLException: Field 'student_id' doesn't have a default value
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/DormAccommodationMapper.java (best guess)
+### The error may involve edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO dorm_accommodation  ( student_name, student_number, class_name, id_card, room_id, room_number, building_id, building_name, check_in_date,  status, bed_number, remarks, create_time, update_time, deleted )  VALUES (  ?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?  )
+### Cause: java.sql.SQLException: Field 'student_id' doesn't have a default value
+]
+2025-06-09 20:30:04.717 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction rollback
+2025-06-09 20:30:04.718 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Rolling back JDBC transaction on Connection [HikariProxyConnection@658670117 wrapping com.mysql.cj.jdbc.ConnectionImpl@45f6c803]
+2025-06-09 20:30:04.718 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@658670117 wrapping com.mysql.cj.jdbc.ConnectionImpl@45f6c803] after transaction
+2025-06-09 20:47:42.316 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:47:42.906 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:47:44.338 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:47:44.342 [http-nio-8082-exec-5] DEBUG o.s.j.s.SQLErrorCodeSQLExceptionTranslator - Translating SQLException with SQL state '23000', error code '1062', message [Duplicate entry '2021001' for key 'dorm_accommodation.uk_student_number'] for task [
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '2021001' for key 'dorm_accommodation.uk_student_number'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/DormAccommodationMapper.java (best guess)
+### The error may involve edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.updateById-Inline
+### The error occurred while setting parameters
+### SQL: UPDATE dorm_accommodation  SET student_id=?, student_name=?, student_number=?, class_name=?, id_card=?, room_id=?, room_number=?, building_id=?, building_name=?, check_in_date=?,  status=?, bed_number=?, remarks=?,  update_time=?  WHERE id=? AND deleted=0
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '2021001' for key 'dorm_accommodation.uk_student_number'
+]
+2025-06-09 20:48:56.803 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:48:56.806 [http-nio-8082-exec-8] DEBUG o.s.j.s.SQLErrorCodeSQLExceptionTranslator - Translating SQLException with SQL state '23000', error code '1062', message [Duplicate entry '2021001' for key 'dorm_accommodation.uk_student_number'] for task [
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '2021001' for key 'dorm_accommodation.uk_student_number'
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/DormAccommodationMapper.java (best guess)
+### The error may involve edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.updateById-Inline
+### The error occurred while setting parameters
+### SQL: UPDATE dorm_accommodation  SET student_id=?, student_name=?, student_number=?, class_name=?, id_card=?, room_id=?, room_number=?, building_id=?, building_name=?, check_in_date=?,  status=?, bed_number=?, remarks=?,  update_time=?  WHERE id=? AND deleted=0
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '2021001' for key 'dorm_accommodation.uk_student_number'
+]
+2025-06-09 20:50:49.808 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:50:50.925 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:51:24.842 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 20:51:31.319 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormAccommodationService.assignAccommodation]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-09 20:51:31.320 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@27954547 wrapping com.mysql.cj.jdbc.ConnectionImpl@40caa43b] for JDBC transaction
+2025-06-09 20:51:31.320 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@27954547 wrapping com.mysql.cj.jdbc.ConnectionImpl@40caa43b] to manual commit
+2025-06-09 20:51:31.325 [http-nio-8082-exec-4] DEBUG o.s.j.s.SQLErrorCodeSQLExceptionTranslator - Translating SQLException with SQL state 'HY000', error code '1364', message [Field 'student_id' doesn't have a default value] for task [
+### Error updating database.  Cause: java.sql.SQLException: Field 'student_id' doesn't have a default value
+### The error may exist in edu/mycc/xhd/mycsdormitorymanagement/mapper/DormAccommodationMapper.java (best guess)
+### The error may involve edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO dorm_accommodation  ( student_name, student_number, class_name, id_card, room_id, room_number, building_id, building_name, check_in_date,  status, bed_number, remarks, create_time, update_time, deleted )  VALUES (  ?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?  )
+### Cause: java.sql.SQLException: Field 'student_id' doesn't have a default value
+]
+2025-06-09 20:51:31.326 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction rollback
+2025-06-09 20:51:31.326 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Rolling back JDBC transaction on Connection [HikariProxyConnection@27954547 wrapping com.mysql.cj.jdbc.ConnectionImpl@40caa43b]
+2025-06-09 20:51:31.327 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@27954547 wrapping com.mysql.cj.jdbc.ConnectionImpl@40caa43b] after transaction

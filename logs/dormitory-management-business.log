@@ -911,3 +911,44 @@
 2025-06-09 19:48:09.336 [http-nio-8082-exec-5] INFO  e.m.x.m.s.DormAccommodationService - 找到住宿记录，学生: 王五, 当前状态: deleted=0
 2025-06-09 19:48:09.344 [http-nio-8082-exec-5] INFO  e.m.x.m.s.DormAccommodationService - 数据库删除结果: 成功, 受影响行数: 1
 2025-06-09 19:48:09.345 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 成功删除住宿记录，ID: 3
+2025-06-09 19:56:05.034 [http-nio-8082-exec-7] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 19:56:05.036 [http-nio-8082-exec-7] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 19:56:31.405 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 19:56:31.407 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 19:57:51.013 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 19:57:51.014 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 19:57:51.804 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 19:57:51.806 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:02:29.553 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:02:29.555 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:02:59.255 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:02:59.256 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:03:31.803 [http-nio-8082-exec-4] INFO  e.m.x.m.controller.DormController - 删除住宿记录请求，ID: 4
+2025-06-09 20:03:31.804 [http-nio-8082-exec-4] INFO  e.m.x.m.s.DormAccommodationService - 开始删除住宿记录，ID: 4
+2025-06-09 20:03:31.805 [http-nio-8082-exec-4] INFO  e.m.x.m.s.DormAccommodationService - 找到住宿记录，学生: 赵六六, 当前状态: deleted=0
+2025-06-09 20:03:31.808 [http-nio-8082-exec-4] INFO  e.m.x.m.s.DormAccommodationService - 数据库删除结果: 成功, 受影响行数: 1
+2025-06-09 20:03:31.808 [http-nio-8082-exec-4] INFO  e.m.x.m.controller.DormController - 成功删除住宿记录，ID: 4
+2025-06-09 20:03:33.697 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:03:33.698 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:03:33.851 [http-nio-8082-exec-8] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:03:33.852 [http-nio-8082-exec-8] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:05:19.816 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:05:19.818 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:05:19.945 [http-nio-8082-exec-8] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:05:19.947 [http-nio-8082-exec-8] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:05:46.513 [http-nio-8082-exec-9] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:05:46.516 [http-nio-8082-exec-9] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:06:26.924 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:06:26.925 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:15:30.022 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:15:30.025 [http-nio-8082-exec-6] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:15:30.027 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:15:30.031 [http-nio-8082-exec-3] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:15:56.860 [http-nio-8082-exec-9] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:15:56.862 [http-nio-8082-exec-9] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:21:45.323 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:21:45.324 [http-nio-8082-exec-5] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:21:47.002 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:21:47.003 [http-nio-8082-exec-2] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录
+2025-06-09 20:21:47.160 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.DormController - 获取所有楼栋列表请求
+2025-06-09 20:21:47.162 [http-nio-8082-exec-1] INFO  e.m.x.m.controller.DormController - 成功获取楼栋列表，共5条记录

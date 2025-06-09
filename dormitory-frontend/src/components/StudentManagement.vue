@@ -537,7 +537,7 @@ export default {
     
     const loadAccommodations = async () => {
       try {
-        const response = await fetch('/api/dorm/accommodations')
+        const response = await fetch('http://localhost:8082/api/dorm/accommodations')
         const result = await response.json()
         
         console.log('API响应:', result)
@@ -557,7 +557,7 @@ export default {
     const loadBuildings = async () => {
       try {
         console.log('开始加载楼栋数据...')
-        const response = await fetch('/api/dorm/buildings')
+        const response = await fetch('http://localhost:8082/api/dorm/buildings')
         console.log('API响应状态:', response.status)
         const result = await response.json()
         console.log('API响应结果:', result)
@@ -587,7 +587,7 @@ export default {
       
       try {
         console.log('开始加载房间数据，楼栋ID:', targetBuildingId)
-        const response = await fetch(`/api/dorm/rooms/available/${targetBuildingId}`)
+        const response = await fetch(`http://localhost:8082/api/dorm/rooms/available/${targetBuildingId}`)
         console.log('房间API响应状态:', response.status)
         const result = await response.json()
         console.log('房间API响应结果:', result)
@@ -609,7 +609,7 @@ export default {
       if (accommodationForm.buildingId) {
         try {
           console.log('开始加载房间数据，楼栋ID:', accommodationForm.buildingId)
-          const response = await fetch(`/api/dorm/buildings/${accommodationForm.buildingId}/rooms`)
+          const response = await fetch(`http://localhost:8082/api/dorm/buildings/${accommodationForm.buildingId}/rooms`)
           console.log('房间API响应状态:', response.status)
           const result = await response.json()
           console.log('房间API响应结果:', result)
@@ -723,7 +723,7 @@ export default {
       try {
         console.log('正在获取学生详细信息，学生ID:', accommodation.studentId)
         // 调用学生详细信息API
-        const response = await fetch(`/api/dorm/accommodations/${accommodation.id}`)
+        const response = await fetch(`http://localhost:8082/api/dorm/accommodations/${accommodation.id}`)
         const result = await response.json()
         
         console.log('API响应:', result)
@@ -842,7 +842,7 @@ export default {
             remarks: accommodationForm.remarks
           }
           
-          response = await fetch('/api/dorm/accommodations', {
+          response = await fetch('http://localhost:8082/api/dorm/accommodations', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -869,7 +869,7 @@ export default {
             remarks: accommodationForm.remarks
           }
           
-          response = await fetch(`/api/dorm/accommodations/${accommodationForm.id}`, {
+          response = await fetch(`http://localhost:8082/api/dorm/accommodations/${accommodationForm.id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -897,7 +897,7 @@ export default {
     const deleteAccommodation = async (accommodation) => {
       if (confirm(`确定要删除 ${accommodation.studentName} 的住宿记录吗？`)) {
         try {
-          const response = await fetch(`/api/dorm/accommodations/${accommodation.id}`, {
+          const response = await fetch(`http://localhost:8082/api/dorm/accommodations/${accommodation.id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
@@ -940,7 +940,7 @@ export default {
           status: 'ACTIVE'
         }
         
-        const response = await fetch('/api/dorm/accommodations', {
+        const response = await fetch('http://localhost:8082/api/dorm/accommodations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

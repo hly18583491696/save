@@ -4,6 +4,7 @@ import edu.mycc.xhd.mycsdormitorymanagement.entity.DormAccommodation;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormRoom;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.Student;
 import edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper;
+import edu.mycc.xhd.mycsdormitorymanagement.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class DormAccommodationService {
     
     @Autowired
     private DormRoomService dormRoomService;
+    
+    @Autowired
+    private StudentService studentService;
     
     /**
      * 获取所有住宿记录
@@ -80,6 +84,19 @@ public class DormAccommodationService {
         DormAccommodation existingAccommodation = accommodationMapper.findActiveByStudentId(accommodation.getStudentId());
         if (existingAccommodation != null) {
             throw new RuntimeException("学生已有住宿记录，请先退宿");
+        }
+        
+        // 根据studentId获取学生信息并设置相关字段
+        if (accommodation.getStudentId() != null) {
+            Student student = studentService.getStudentById(accommodation.getStudentId());
+            if (student != null) {
+                accommodation.setStudentNumber(student.getStudentNumber());
+                accommodation.setStudentName(student.getStudentName());
+                accommodation.setClassName(student.getClassName());
+                accommodation.setIdCard(student.getIdCard());
+            } else {
+                throw new RuntimeException("学生信息不存在");
+            }
         }
         
         // 检查床位是否被占用

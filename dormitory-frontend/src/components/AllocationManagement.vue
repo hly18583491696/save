@@ -20,8 +20,8 @@
         
         <select v-model="statusFilter" @change="handleSearch" class="filter-select">
           <option value="">全部状态</option>
-          <option value="1">已入住</option>
-          <option value="0">已退宿</option>
+          <option value="ACTIVE">已入住</option>
+          <option value="CHECKED_OUT">已退宿</option>
         </select>
         
         <select v-model="buildingFilter" @change="handleSearch" class="filter-select">
@@ -90,8 +90,8 @@
             </div>
             
             <div class="status">
-              <span :class="['status-badge', allocation.status === 1 ? 'status-active' : 'status-inactive']">
-                {{ allocation.status === 1 ? '已入住' : '已退宿' }}
+              <span :class="['status-badge', allocation.status === 'ACTIVE' ? 'status-active' : 'status-inactive']">
+                {{ allocation.status === 'ACTIVE' ? '已入住' : '已退宿' }}
               </span>
             </div>
             
@@ -103,7 +103,7 @@
                 <i class="fas fa-eye"></i>
               </button>
               <button 
-                v-if="allocation.status === 1"
+                v-if="allocation.status === 'ACTIVE'"
                 class="btn-icon btn-danger" 
                 @click="handleCheckOut(allocation)" 
                 title="退宿"
@@ -160,7 +160,7 @@
           <form @submit.prevent="handleSubmit">
             <div class="form-group">
               <label>学生</label>
-              <select v-model="formData.studentId" required :disabled="isEditing">
+              <select v-model="formData.studentId" @change="onStudentChange" required :disabled="isEditing">
                 <option value="">请选择学生</option>
                 <option v-for="student in availableStudents" :key="student.id" :value="student.id">
                   {{ student.studentName }} ({{ student.studentNumber }})
@@ -170,7 +170,7 @@
             
             <div class="form-group">
               <label>楼栋</label>
-              <select v-model="formData.buildingId" @change="loadRooms" required>
+              <select v-model="formData.buildingId" @change="onBuildingChange" required>
                 <option value="">请选择楼栋</option>
                 <option v-for="building in buildings" :key="building.id" :value="building.id">
                   {{ building.name }}
@@ -180,7 +180,7 @@
             
             <div class="form-group">
               <label>房间</label>
-              <select v-model="formData.roomId" @change="loadBeds" required :disabled="!formData.buildingId">
+              <select v-model="formData.roomId" @change="onRoomChange" required :disabled="!formData.buildingId">
                 <option value="">请选择房间</option>
                 <option v-for="room in availableRooms" :key="room.id" :value="room.id">
                   {{ room.roomNumber }}室 ({{ room.roomType }})
@@ -210,7 +210,7 @@
             <div class="form-group">
               <label>备注</label>
               <textarea 
-                v-model="formData.remark" 
+                v-model="formData.remarks" 
                 placeholder="请输入备注信息"
                 rows="3"
               ></textarea>
@@ -276,13 +276,13 @@
             </div>
             <div class="detail-item">
               <label>状态</label>
-              <span :class="['status-badge', selectedAllocation?.status === 1 ? 'status-active' : 'status-inactive']">
-                {{ selectedAllocation?.status === 1 ? '已入住' : '已退宿' }}
+              <span :class="['status-badge', selectedAllocation?.status === 'ACTIVE' ? 'status-active' : 'status-inactive']">
+                {{ selectedAllocation?.status === 'ACTIVE' ? '已入住' : '已退宿' }}
               </span>
             </div>
             <div class="detail-item full-width">
               <label>备注</label>
-              <span>{{ selectedAllocation?.remark || '无' }}</span>
+              <span>{{ selectedAllocation?.remarks || '无' }}</span>
             </div>
           </div>
         </div>
@@ -319,17 +319,24 @@ export default {
     const formData = reactive({
       id: null,
       studentId: '',
+      studentName: '',
+      studentNumber: '',
+      className: '',
+      idCard: '',
       buildingId: '',
+      buildingName: '',
       roomId: '',
+      roomNumber: '',
       bedNumber: '',
       checkInDate: '',
-      remark: ''
+      status: 'ACTIVE',
+      remarks: ''
     })
     
     const loadAllocations = async () => {
       loading.value = true
       try {
-        const response = await fetch('/api/dorm/accommodations')
+        const response = await fetch('http://localhost:8082/api/dorm/accommodations')
         const result = await response.json()
         
         console.log('API响应:', result)
@@ -354,7 +361,7 @@ export default {
     
     const loadBuildings = async () => {
       try {
-        const response = await fetch('/api/dorm/buildings')
+        const response = await fetch('http://localhost:8082/api/dorm/buildings')
         const result = await response.json()
         
         if (result.code === 200) {
@@ -373,13 +380,68 @@ export default {
       try {
         // 模拟API调用 - 获取未分配住宿的学生
         availableStudents.value = [
-          { id: 4, name: '赵六', studentCode: '2021004' },
-          { id: 5, name: '钱七', studentCode: '2021005' },
-          { id: 6, name: '孙八', studentCode: '2021006' }
+          { 
+            id: 4, 
+            studentName: '赵六', 
+            studentNumber: '2021004',
+            className: '计算机科学与技术1班',
+            idCard: '123456789012345678'
+          },
+          { 
+            id: 5, 
+            studentName: '钱七', 
+            studentNumber: '2021005',
+            className: '软件工程1班',
+            idCard: '123456789012345679'
+          },
+          { 
+            id: 6, 
+            studentName: '孙八', 
+            studentNumber: '2021006',
+            className: '网络工程1班',
+            idCard: '123456789012345680'
+          }
         ]
       } catch (error) {
         console.error('加载学生失败:', error)
       }
+    }
+    
+    const onStudentChange = () => {
+      if (formData.studentId) {
+        const selectedStudent = availableStudents.value.find(s => s.id == formData.studentId)
+        if (selectedStudent) {
+          formData.studentName = selectedStudent.studentName
+          formData.studentNumber = selectedStudent.studentNumber
+          formData.className = selectedStudent.className
+          formData.idCard = selectedStudent.idCard
+        }
+      }
+    }
+    
+    const onBuildingChange = () => {
+      if (formData.buildingId) {
+        const selectedBuilding = buildings.value.find(b => b.id == formData.buildingId)
+        if (selectedBuilding) {
+          formData.buildingName = selectedBuilding.name
+        }
+      }
+      loadRooms()
+      formData.roomId = ''
+      formData.roomNumber = ''
+      formData.bedNumber = ''
+      availableBeds.value = []
+    }
+    
+    const onRoomChange = () => {
+      if (formData.roomId) {
+        const selectedRoom = availableRooms.value.find(r => r.id == formData.roomId)
+        if (selectedRoom) {
+          formData.roomNumber = selectedRoom.roomNumber
+        }
+      }
+      loadBeds()
+      formData.bedNumber = ''
     }
     
     const loadRooms = async () => {
@@ -389,15 +451,18 @@ export default {
       }
       
       try {
-        // 模拟API调用 - 获取指定楼栋的房间
-        availableRooms.value = [
-          { id: 1, roomNumber: '101', roomType: '四人间' },
-          { id: 2, roomNumber: '102', roomType: '四人间' },
-          { id: 3, roomNumber: '201', roomType: '四人间' },
-          { id: 4, roomNumber: '202', roomType: '四人间' }
-        ]
+        const response = await fetch(`http://localhost:8082/api/dorm/buildings/${formData.buildingId}/rooms`)
+        const result = await response.json()
+        
+        if (result.code === 200) {
+          availableRooms.value = result.data
+        } else {
+          console.error(result.message || '加载房间数据失败')
+          availableRooms.value = []
+        }
       } catch (error) {
         console.error('加载房间失败:', error)
+        availableRooms.value = []
       }
     }
     
@@ -408,10 +473,18 @@ export default {
       }
       
       try {
-        // 模拟API调用 - 获取指定房间的可用床位
-        availableBeds.value = [1, 2, 3, 4] // 假设都是四人间
+        const response = await fetch(`http://localhost:8082/api/dorm/rooms/${formData.roomId}/available-beds`)
+        const result = await response.json()
+        
+        if (result.code === 200) {
+          availableBeds.value = result.data
+        } else {
+          console.error(result.message || '加载床位数据失败')
+          availableBeds.value = []
+        }
       } catch (error) {
         console.error('加载床位失败:', error)
+        availableBeds.value = []
       }
     }
     
@@ -433,11 +506,18 @@ export default {
       Object.assign(formData, {
         id: allocation.id,
         studentId: allocation.studentId,
+        studentName: allocation.studentName,
+        studentNumber: allocation.studentNumber,
+        className: allocation.className,
+        idCard: allocation.idCard,
         buildingId: allocation.buildingId,
+        buildingName: allocation.buildingName,
         roomId: allocation.roomId,
+        roomNumber: allocation.roomNumber,
         bedNumber: allocation.bedNumber,
         checkInDate: allocation.checkInDate,
-        remark: allocation.remark
+        status: allocation.status || 'ACTIVE',
+        remarks: allocation.remarks || ''
       })
       loadRooms()
       loadBeds()
@@ -463,11 +543,18 @@ export default {
       Object.assign(formData, {
         id: null,
         studentId: '',
+        studentName: '',
+        studentNumber: '',
+        className: '',
+        idCard: '',
         buildingId: '',
+        buildingName: '',
         roomId: '',
+        roomNumber: '',
         bedNumber: '',
         checkInDate: '',
-        remark: ''
+        status: 'ACTIVE',
+        remarks: ''
       })
       availableRooms.value = []
       availableBeds.value = []
@@ -476,19 +563,42 @@ export default {
     const handleSubmit = async () => {
       submitting.value = true
       try {
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        
+        let response
         if (isEditing.value) {
-          console.log('更新住宿分配:', formData)
+          // 更新住宿分配
+          response = await fetch(`http://localhost:8082/api/dorm/accommodations/${formData.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
         } else {
-          console.log('添加住宿分配:', formData)
+          // 添加住宿分配
+          response = await fetch('http://localhost:8082/api/dorm/accommodations', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
         }
         
-        closeDialog()
-        loadAllocations()
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const result = await response.json()
+        if (result.success) {
+          console.log(isEditing.value ? '更新成功' : '添加成功')
+          closeDialog()
+          loadAllocations()
+        } else {
+          throw new Error(result.message || '操作失败')
+        }
       } catch (error) {
         console.error('保存失败:', error)
+        alert('保存失败: ' + error.message)
       } finally {
         submitting.value = false
       }
@@ -497,12 +607,27 @@ export default {
     const handleCheckOut = async (allocation) => {
       if (confirm(`确定要为学生 ${allocation.studentName} 办理退宿吗？`)) {
         try {
-          // 模拟API调用
-          await new Promise(resolve => setTimeout(resolve, 500))
-          console.log('退宿:', allocation.id)
-          loadAllocations()
+          const response = await fetch(`http://localhost:8082/api/dorm/accommodations/checkout/student/${allocation.studentId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const result = await response.json()
+          if (result.success) {
+            console.log('退宿成功')
+            loadAllocations()
+          } else {
+            throw new Error(result.message || '退宿失败')
+          }
         } catch (error) {
           console.error('退宿失败:', error)
+          alert('退宿失败: ' + error.message)
         }
       }
     }
@@ -510,12 +635,27 @@ export default {
     const handleDelete = async (allocation) => {
       if (confirm(`确定要删除学生 ${allocation.studentName} 的住宿分配记录吗？`)) {
         try {
-          // 模拟API调用
-          await new Promise(resolve => setTimeout(resolve, 500))
-          console.log('删除住宿分配:', allocation.id)
-          loadAllocations()
+          const response = await fetch(`http://localhost:8082/api/dorm/accommodations/${allocation.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const result = await response.json()
+          if (result.success) {
+            console.log('删除成功')
+            loadAllocations()
+          } else {
+            throw new Error(result.message || '删除失败')
+          }
         } catch (error) {
           console.error('删除失败:', error)
+          alert('删除失败: ' + error.message)
         }
       }
     }
@@ -565,6 +705,9 @@ export default {
       handleDelete,
       changePage,
       formatDate,
+      onStudentChange,
+      onBuildingChange,
+      onRoomChange,
       loadRooms,
       loadBeds
     }
