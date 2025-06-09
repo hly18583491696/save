@@ -3796,3 +3796,147 @@ org.springframework.web.HttpRequestMethodNotSupportedException: Request method '
 2025-06-09 19:11:37.709 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-09 19:11:37.713 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-09 19:11:37.718 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:32:12.413 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-09 19:32:12.459 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 31436 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-09 19:32:12.460 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-09 19:32:13.294 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-09 19:32:13.300 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:32:13.302 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-09 19:32:13.302 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-09 19:32:13.385 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-09 19:32:13.390 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 893 ms
+2025-06-09 19:32:13.437 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-09 19:32:13.540 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@261bd7b
+2025-06-09 19:32:13.541 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-09 19:32:13.571 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2025-06-09 19:32:13.577 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.40.215 network interface 
+2025-06-09 19:32:13.577 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-09 19:32:13.582 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:20
+2025-06-09 19:32:13.661 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-09 19:32:13.729 [main] WARN  c.b.m.c.injector.methods.SelectById - [edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.selectById] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.SelectById]
+2025-06-09 19:32:13.933 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-09 19:32:14.025 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:32:14.039 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-09 19:32:14.043 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.958 seconds (process running for 2.253)
+2025-06-09 19:32:32.229 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-09 19:32:32.234 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-09 19:32:33.961 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-09 19:32:34.058 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp v0.0.1-SNAPSHOT using Java 21.0.7 with PID 26908 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\mycs-dormitory-management-0.0.1-SNAPSHOT.jar started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-09 19:32:34.059 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-09 19:32:35.528 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-09 19:32:35.535 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:32:35.541 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-09 19:32:35.541 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-09 19:32:35.638 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-09 19:32:35.639 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1531 ms
+2025-06-09 19:32:35.784 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-09 19:32:36.037 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37d3d232
+2025-06-09 19:32:36.039 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-09 19:32:36.120 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2025-06-09 19:32:36.132 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.40.215 network interface 
+2025-06-09 19:32:36.133 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-09 19:32:36.154 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:24
+2025-06-09 19:32:36.414 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-09 19:32:36.518 [main] WARN  c.b.m.c.injector.methods.SelectById - [edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.selectById] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.SelectById]
+2025-06-09 19:32:36.992 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-09 19:32:37.247 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:32:37.291 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-09 19:32:37.305 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 3.766 seconds (process running for 4.299)
+2025-06-09 19:32:48.164 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-09 19:32:48.170 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-09 19:33:06.803 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-09 19:33:06.841 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 30956 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-09 19:33:06.842 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-09 19:33:07.677 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-09 19:33:07.684 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:33:07.687 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-09 19:33:07.688 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-09 19:33:07.776 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-09 19:33:07.778 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 898 ms
+2025-06-09 19:33:07.828 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-09 19:33:07.936 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@159424e2
+2025-06-09 19:33:07.942 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-09 19:33:07.975 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2025-06-09 19:33:07.979 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.40.215 network interface 
+2025-06-09 19:33:07.980 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-09 19:33:07.984 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:24
+2025-06-09 19:33:08.078 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-09 19:33:08.146 [main] WARN  c.b.m.c.injector.methods.SelectById - [edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.selectById] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.SelectById]
+2025-06-09 19:33:08.351 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-09 19:33:08.442 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:33:08.457 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-09 19:33:08.462 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.963 seconds (process running for 2.245)
+2025-06-09 19:40:52.079 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-09 19:40:52.125 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 2304 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-09 19:40:52.125 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-09 19:40:53.059 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-09 19:40:53.065 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:40:53.067 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-09 19:40:53.068 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-09 19:40:53.156 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-09 19:40:53.156 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 994 ms
+2025-06-09 19:40:53.207 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-09 19:40:53.323 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@159424e2
+2025-06-09 19:40:53.325 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-09 19:40:53.352 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2025-06-09 19:40:53.358 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.40.215 network interface 
+2025-06-09 19:40:53.358 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-09 19:40:53.363 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:10
+2025-06-09 19:40:53.462 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-09 19:40:53.537 [main] WARN  c.b.m.c.injector.methods.SelectById - [edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper.selectById] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.SelectById]
+2025-06-09 19:40:53.752 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-09 19:40:53.871 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-09 19:40:53.890 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-09 19:40:53.896 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 2.173 seconds (process running for 2.48)
+2025-06-09 19:41:31.526 [http-nio-8082-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-09 19:41:31.526 [http-nio-8082-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-09 19:41:31.527 [http-nio-8082-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-06-09 19:41:46.602 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:41:46.644 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:41:46.648 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:41:46.653 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:29.949 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:29.951 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:29.953 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:29.957 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:31.596 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:31.597 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:33.346 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:33.346 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.193 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.194 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.580 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.586 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.594 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.609 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.614 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.621 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.627 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.915 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.917 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.920 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:42:35.924 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.058 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.063 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.063 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.068 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.073 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.077 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:06.082 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:09.290 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:11.000 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:11.001 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:16.233 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:18.152 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:21.217 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:25.364 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:26.691 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:27.613 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:34.919 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:36.323 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:43:37.366 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:48:06.690 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:48:06.691 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:48:09.333 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:48:09.341 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-09 19:48:10.168 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
