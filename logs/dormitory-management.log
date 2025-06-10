@@ -3566,3 +3566,5 @@ Identify and stop the process that's listening on port 8082 or configure this ap
 2025-06-10 16:17:49.296 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-10 16:17:49.299 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-10 16:17:50.765 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:19:52.921 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-10 16:19:52.925 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
