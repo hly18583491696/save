@@ -4368,3 +4368,22 @@ Identify and stop the process that's listening on port 8082 or configure this ap
 2025-06-10 18:29:41.470 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-10 18:32:56.872 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-06-10 18:32:56.876 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-10 18:34:08.346 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 18:34:08.382 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 40008 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 18:34:08.383 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 18:34:09.172 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 18:34:09.177 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 18:34:09.179 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 18:34:09.179 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 18:34:09.252 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 18:34:09.253 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 835 ms
+2025-06-10 18:34:09.300 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 18:34:09.329 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 18:34:09.333 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 18:34:09.334 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 18:34:09.341 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:23
+2025-06-10 18:34:09.502 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 18:34:09.670 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 18:34:09.777 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 18:34:09.795 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 18:34:09.800 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.799 seconds (process running for 2.091)
