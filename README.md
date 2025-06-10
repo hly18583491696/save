@@ -1,10 +1,10 @@
-# 学生宿舍管理系统
+# 🏠 学生宿舍管理系统
 
-基于 Spring Boot 3 + MySQL 8 + Vue 3 + Vite 的前后端分离学生宿舍管理系统。
+基于 Spring Boot 3.1.5 + MySQL 8 + Vue 3 + Vite 的前后端分离学生宿舍管理系统。
 
 ## 项目简介
 
-本系统是一个完整的学生宿舍管理解决方案，包含用户管理、宿舍楼管理、房间管理、住宿记录、维修申请、访客管理等核心功能。
+本系统是一个完整的学生宿舍管理解决方案，采用前后端分离架构，提供用户管理、宿舍楼管理、房间管理、住宿分配、维修申请、访客管理、系统配置等核心功能。系统支持多角色权限管理，界面友好，操作便捷。
 
 ## 👥 项目分工
 
@@ -122,6 +122,7 @@ mycs-dormitory-management/
 │   │   │   ├── AdminDashboard.vue   # 管理员仪表板
 │   │   │   ├── AllocationManagement.vue # 住宿分配管理
 │   │   │   ├── Dashboard.vue        # 数据统计面板
+│   │   │   ├── DeleteDiagnostic.vue # 删除诊断组件
 │   │   │   ├── DormitoryManagement.vue # 宿舍管理
 │   │   │   ├── Login.vue            # 登录组件
 │   │   │   ├── Maintenance.vue      # 维修管理
@@ -145,6 +146,12 @@ mycs-dormitory-management/
 ├── mysql-init.sql                   # 数据库初始化脚本
 ├── pom.xml                          # Maven项目配置
 ├── query                            # 查询相关文件
+├── start-simple.bat                 # 简单启动脚本
+├── start.bat                        # Windows启动脚本
+├── stop.bat                         # Windows停止脚本
+├── 启动故障排除.md                    # 启动故障排除指南
+├── 快速启动指南.md                    # 快速启动指南
+├── 角色权限验证说明.md                # 角色权限验证说明
 ├── src/                             # 后端源码目录
 │   ├── main/                        # 主要源码
 │   │   ├── java/                    # Java源码
@@ -161,6 +168,7 @@ mycs-dormitory-management/
 │   │   │       ├── config/          # 配置类
 │   │   │       │   └── MybatisPlusConfig.java # MyBatis-Plus配置
 │   │   │       ├── controller/      # 控制器层
+│   │   │       │   ├── AccommodationController.java # 住宿分配控制器
 │   │   │       │   ├── AuthController.java # 认证控制器
 │   │   │       │   ├── DataConsistencyController.java # 数据一致性控制器
 │   │   │       │   ├── DormController.java # 宿舍控制器
@@ -169,6 +177,7 @@ mycs-dormitory-management/
 │   │   │       │   ├── SimpleTestController.java # 简单测试控制器
 │   │   │       │   ├── StatisticsController.java # 统计控制器
 │   │   │       │   ├── StudentController.java # 学生控制器
+│   │   │       │   ├── SystemConfigController.java # 系统配置控制器
 │   │   │       │   └── TestController.java # 测试控制器
 │   │   │       ├── dto/             # 数据传输对象
 │   │   │       │   ├── LoginRequest.java # 登录请求DTO
@@ -180,6 +189,7 @@ mycs-dormitory-management/
 │   │   │       │   ├── DormRoom.java # 宿舍房间实体
 │   │   │       │   ├── DormVisitor.java # 访客实体
 │   │   │       │   ├── Student.java # 学生实体
+│   │   │       │   ├── SystemConfig.java # 系统配置实体
 │   │   │       │   └── User.java    # 用户实体
 │   │   │       ├── exception/       # 异常处理
 │   │   │       │   └── GlobalExceptionHandler.java # 全局异常处理器
@@ -190,6 +200,7 @@ mycs-dormitory-management/
 │   │   │       │   ├── DormRoomMapper.java # 房间Mapper
 │   │   │       │   ├── DormVisitorMapper.java # 访客Mapper
 │   │   │       │   ├── StudentMapper.java # 学生Mapper
+│   │   │       │   ├── SystemConfigMapper.java # 系统配置Mapper
 │   │   │       │   └── UserMapper.java # 用户Mapper
 │   │   │       ├── service/         # 业务逻辑层
 │   │   │       │   ├── DataConsistencyService.java # 数据一致性服务
@@ -198,8 +209,10 @@ mycs-dormitory-management/
 │   │   │       │   ├── DormMaintenanceService.java # 维修服务
 │   │   │       │   ├── DormRoomService.java # 房间服务
 │   │   │       │   ├── DormVisitorService.java # 访客服务
+│   │   │       │   ├── deletediagnosticservice.java # 删除诊断服务
 │   │   │       │   ├── RoomService.java # 房间服务接口
 │   │   │       │   ├── StudentService.java # 学生服务
+│   │   │       │   ├── SystemConfigService.java # 系统配置服务
 │   │   │       │   ├── UserService.java # 用户服务
 │   │   │       │   └── impl/        # 服务实现类目录
 │   │   │       └── utils/           # 工具类
@@ -230,20 +243,25 @@ mycs-dormitory-management/
 
 ### 后端技术
 - **Java 21** - 编程语言
-- **Spring Boot 3.5.0** - 应用框架
-- **Spring Security** - 安全框架
-- **MyBatis-Plus 3.5.5** - ORM框架
-- **MySQL 8.0.41** - 数据库
-- **Redis** - 缓存
-- **JWT** - 身份认证
-- **Swagger 3** - API文档
-- **Maven 3.8.8** - 项目管理
+- **Spring Boot 3.1.5** - 应用框架
+- **Spring Data JPA** - 数据访问框架
+- **MyBatis-Plus 3.5.7** - ORM框架
+- **MySQL 8** - 数据库
+- **JWT 0.12.3** - 身份认证
+- **Maven** - 项目管理
+- **Logback** - 日志框架
 
 ### 前端技术
-- **Vue 3** - 前端框架
-- **Vite** - 构建工具
-- **Node.js 22.14.0** - 运行环境
-- **npm 11.3.0** - 包管理器
+- **Vue 3.5.16** - 前端框架
+- **Vite 6.3.5** - 构建工具
+- **Vue Router 4.5.1** - 路由管理
+- **Axios 1.9.0** - HTTP客户端
+- **npm** - 包管理器
+
+### 开发工具
+- **Maven Wrapper** - 构建工具包装器
+- **Git** - 版本控制
+- **Windows启动脚本** - 支持Windows平台
 
 ## 功能模块
 
@@ -298,12 +316,11 @@ mycs-dormitory-management/
 - ✅ 后端Mapper接口已实现 (`DormVisitorMapper.java`)
 - ✅ 后端Service层已实现 (`DormVisitorService.java`)
 - ✅ 后端Controller层已实现 (`DormVisitorController.java`)
-- ✅ 前端界面已实现 (`VisitorManagement.vue`)
-- ✅ 导航菜单已集成
+- ✅ 前端界面完整实现 (`VisitorManagement.vue`)
 
 ### ⚙️ 7. 系统配置与优化 `已完成 100%`
 > 🔧 **系统参数配置与性能优化**
-- ✅ 数据库表结构设计 (`system_config`表)
+- ✅ 数据库表结构设计 (`sys_config`表)
 - ✅ 后端实体类已实现 (`SystemConfig.java`)
 - ✅ 后端Mapper接口已实现 (`SystemConfigMapper.java`)
 - ✅ 后端Service层已实现 (`SystemConfigService.java`)
@@ -333,11 +350,13 @@ mycs-dormitory-management/
 | 模块 | 实体层 | 数据层 | 服务层 | 控制层 | 完成度 |
 |------|--------|--------|--------|--------|---------|
 | 👥 用户管理 | ✅ `User.java` | ✅ `UserMapper.java` | ✅ `UserService.java` | ✅ `UserController.java` | 🟢 100% |
-| 👨‍🎓 学生管理 | ✅ 集成在User | ✅ 集成在UserMapper | ✅ 集成在UserService | ✅ 集成在UserController | 🟢 100% |
+| 👨‍🎓 学生管理 | ✅ `Student.java` | ✅ `StudentMapper.java` | ✅ `StudentService.java` | ✅ `StudentController.java` | 🟢 100% |
 | 📈 统计报表 | ✅ 无独立实体 | ✅ 复用其他Mapper | ✅ 逻辑在Controller | ✅ `StatisticsController.java` | 🟢 100% |
-| 🏢 宿舍楼管理 | ✅ `Building.java` | ✅ `BuildingMapper.java` | ✅ `BuildingService.java` | ✅ 集成在其他Controller | 🟢 100% |
-| 🏠 房间管理 | ✅ `Room.java` | ✅ `RoomMapper.java` | ✅ `RoomService.java` | ✅ 集成在其他Controller | 🟢 100% |
-| 🛏️ 住宿分配 | ✅ `Accommodation.java` | ✅ `AccommodationMapper.java` | ✅ `AccommodationService.java` | ✅ 集成在其他Controller | 🟢 100% |
+| 🔐 用户认证 | ✅ `User.java` | ✅ `UserMapper.java` | ✅ `UserService.java` | ✅ `AuthController.java` | 🟢 100% |
+| 🔍 数据一致性 | ✅ 无独立实体 | ✅ 复用其他Mapper | ✅ `DataConsistencyService.java` | ✅ `DataConsistencyController.java` | 🟢 100% |
+| 🏢 宿舍楼管理 | ✅ `DormBuilding.java` | ✅ `DormBuildingMapper.java` | ✅ `DormBuildingService.java` | ✅ `DormController.java` | 🟢 100% |
+| 🏠 房间管理 | ✅ `DormRoom.java` | ✅ `DormRoomMapper.java` | ✅ `DormRoomService.java` | ✅ `DormController.java` | 🟢 100% |
+| 🛏️ 住宿分配 | ✅ `DormAccommodation.java` | ✅ `DormAccommodationMapper.java` | ✅ `DormAccommodationService.java` | ✅ `AccommodationController.java` | 🟢 100% |
 
 #### ✅ **已实现的模块（续）**
 
@@ -369,6 +388,7 @@ mycs-dormitory-management/
 |------|----------|----------|----------|
 | 🚪 访客管理 | `VisitorManagement.vue` | 访客登记管理、状态跟踪、统计展示 | 🟢 100% |
 | ⚙️ 系统配置 | `SystemSettings.vue` | 系统参数配置、备份恢复、统计信息 | 🟢 100% |
+| 🔍 删除诊断 | `DeleteDiagnostic.vue` | 数据删除诊断和恢复功能 | 🟢 100% |
 
 ### 📈 **整体完成度统计**
 
@@ -381,130 +401,185 @@ mycs-dormitory-management/
 
 | 模块分类 | 完成状态 | 数量 | 占比 |
 |----------|----------|------|------|
-| 🟢 完全实现 | 用户管理、学生管理、宿舍管理、住宿分配、统计报表、维修管理、访客管理、系统配置 | 8个 | 100% |
+| 🟢 完全实现 | 用户管理、学生管理、宿舍管理、住宿分配、统计报表、维修管理、访客管理、用户认证、数据一致性、删除诊断、系统配置 | 11个 | 100% |
+| 🟡 部分实现 | 无 | 0个 | 0% |
 | 🔴 待开发 | 无 | 0个 | 0% |
+
+### 🎉 **项目完成情况**
+
+#### ✅ **所有核心模块已完成开发**
+> 🎯 **状态**: 项目所有核心功能模块已完成100%开发
+
+**已完成的核心模块**:
+1. ✅ 用户管理模块 - 完整的用户认证和权限管理
+2. ✅ 学生管理模块 - 学生信息的全生命周期管理
+3. ✅ 宿舍管理模块 - 宿舍楼和房间的完整管理
+4. ✅ 住宿分配模块 - 智能分配和调换管理
+5. ✅ 维修管理模块 - 维修申请和状态跟踪
+6. ✅ 访客管理模块 - 访客登记和审核系统
+7. ✅ 系统配置模块 - 系统参数配置和优化
+8. ✅ 统计报表模块 - 数据统计和可视化
+9. ✅ 数据一致性模块 - 数据完整性保障
+10. ✅ 删除诊断模块 - 数据删除诊断和恢复
+
+#### 🔧 **其他待优化功能**
+
+**安全性增强**:
+- 🟡 JWT令牌机制需要完善（当前为简化实现）
+- 🟡 密码加密存储（当前使用明文）
+- 🟡 权限控制细化
+
+**数据完整性**:
+- 🟡 数据库外键约束完善
+- 🟡 前后端数据验证规则统一
+- 🟡 业务规则验证加强
+
+**用户体验**:
+- 🟡 前端加载状态指示器
+- 🟡 数据分页优化
+- 🟡 移动端响应式设计
 
 ### 🎯 **开发优先级建议**
 
-#### 🎉 **已完成 - 访客管理模块（核心功能）**
-> ✅ **目标达成**: 已完成系统最后一个核心业务模块，实现100%功能覆盖
+#### 🎉 **已完成 - 所有核心模块开发**
+> ✅ **目标达成**: 已完成系统所有核心业务模块，实现100%功能覆盖
+
+**最近完成的模块**:
+- ✅ 系统配置模块 - 系统参数配置与性能优化
+- ✅ 访客管理模块 - 访客登记与审核系统
+
+#### 🎉 **系统配置模块（已完成）**
+> ✅ **目标达成**: 系统配置功能的完整实现
 
 **已完成的后端开发**:
-1. ✅ 访客管理实体类 (`DormVisitor.java`)
-   - 完整的访客基本信息字段
-   - 访问时间、离开时间等关键字段
-   - 与宿舍、学生的关联关系
+1. ✅ 系统配置实体类 (`SystemConfig.java`)
+   - 完整的配置项字段定义
+   - 配置分类和类型管理
+   - 系统配置和用户配置区分
+   - 配置状态和时间戳管理
 
-2. ✅ 访客管理数据访问层 (`DormVisitorMapper.java`)
+2. ✅ 系统配置数据访问层 (`SystemConfigMapper.java`)
    - 完整的CRUD操作
-   - 按时间范围查询访客记录
-   - 按宿舍楼/房间查询访客
-   - 访客状态统计查询
+   - 按配置键和类型查询
+   - 批量更新配置值
+   - 系统配置和用户配置分离查询
 
-3. ✅ 访客管理业务逻辑层 (`DormVisitorService.java`)
-   - 访客登记业务逻辑
-   - 访客离开登记
-   - 访客记录查询和筛选
-   - 访客统计分析
+3. ✅ 系统配置业务逻辑层 (`SystemConfigService.java`)
+   - 配置项管理业务逻辑
+   - 默认配置初始化
+   - 配置验证和应用
+   - 系统配置重置功能
 
-4. ✅ 访客管理控制器 (`DormVisitorController.java`)
+4. ✅ 系统配置控制器 (`SystemConfigController.java`)
    - RESTful API接口
-   - 访客CRUD操作接口
-   - 访客统计数据接口
-   - 数据导出接口
+   - 配置CRUD操作接口
+   - 批量配置更新接口
+   - 配置重置和初始化接口
 
 **已完成的前端开发**:
-5. ✅ 前端访客管理界面 (`VisitorManagement.vue`)
-   - 访客登记表单
-   - 访客记录列表和搜索
-   - 访客状态管理
-   - 统计图表展示
+5. ✅ 前端系统设置界面 (`SystemSettings.vue`)
+   - 基本设置配置表单
+   - 宿舍设置参数管理
+   - 通知设置配置
+   - 安全设置和备份配置
 
-6. ✅ 导航菜单和路由集成
-   - 在`AdminDashboard.vue`中已添加访客管理菜单项
-   - 路由配置已完成
-   - 权限控制已集成
+6. ✅ 数据库表结构
+   - `sys_config`表完整设计
+   - 默认配置数据初始化
+   - 配置分类和约束定义
 
-#### 🔧 **优先级2 - 系统功能增强**
-> 🎯 **目标**: 提升系统易用性和管理效率
+#### 🔧 **优先级1 - 系统功能增强**
+> 🎯 **目标**: 在完整核心功能基础上，提升系统易用性和管理效率
+> 📈 **当前状态**: 核心功能100%完成，可开始功能增强开发
 
-1. 📊 **统计报表增强**
-   - 添加更多维度的数据统计
-   - 实现数据可视化图表
-   - 支持自定义时间范围统计
-   - 添加数据对比分析功能
+1. 📊 **统计报表增强** `🟡 推荐优先开发`
+   - ✅ 基础统计功能已实现
+   - 🔄 添加更多维度的数据统计
+   - 🔄 实现高级数据可视化图表
+   - 🔄 支持自定义时间范围统计
+   - 🔄 添加数据对比分析功能
 
-2. 📤 **数据导入导出功能**
-   - Excel格式数据导出
-   - 批量数据导入功能
-   - 数据模板下载
-   - 导入数据验证和错误提示
+2. 📤 **数据导入导出功能** `🟡 推荐优先开发`
+   - 🔄 Excel格式数据导出
+   - 🔄 批量数据导入功能
+   - 🔄 数据模板下载
+   - 🔄 导入数据验证和错误提示
 
-3. 🔔 **系统通知功能**
-   - 维修申请状态变更通知
-   - 住宿费用到期提醒
-   - 系统公告发布
-   - 邮件/短信通知集成
+3. 🔔 **系统通知功能** `🟢 可选开发`
+   - 🔄 维修申请状态变更通知
+   - 🔄 住宿费用到期提醒
+   - 🔄 系统公告发布
+   - 🔄 邮件/短信通知集成
 
-4. 🔍 **高级搜索和筛选**
-   - 多条件组合搜索
-   - 搜索历史记录
-   - 快速筛选标签
-   - 搜索结果导出
+4. 🔍 **高级搜索和筛选** `🟢 可选开发`
+   - ✅ 基础搜索功能已实现
+   - 🔄 多条件组合搜索
+   - 🔄 搜索历史记录
+   - 🔄 快速筛选标签
+   - 🔄 搜索结果导出
 
-#### 🎨 **优先级3 - 用户体验优化**
-> 🎯 **目标**: 提升系统用户体验和性能
+#### 🎨 **优先级2 - 用户体验优化**
+> 🎯 **目标**: 在稳定功能基础上，提升系统用户体验和性能
+> 📈 **当前状态**: 基础功能完善，可进行体验优化
 
-1. 📱 **移动端适配优化**
-   - 响应式设计完善
-   - 移动端专用界面
-   - 触摸操作优化
-   - 移动端性能优化
+1. 📱 **移动端适配优化** `🟡 推荐优先开发`
+   - ✅ 基础响应式设计已实现
+   - 🔄 响应式设计完善
+   - 🔄 移动端专用界面
+   - 🔄 触摸操作优化
+   - 🔄 移动端性能优化
 
-2. 🔐 **安全性增强**
-   - 密码强度验证
-   - 登录失败次数限制
-   - 操作日志记录
-   - 数据加密传输
+2. 🔐 **安全性增强** `🟡 推荐优先开发`
+   - ✅ 基础用户认证已实现
+   - 🔄 密码强度验证
+   - 🔄 登录失败次数限制
+   - 🔄 操作日志记录
+   - 🔄 数据加密传输
 
-3. ⚡ **性能优化**
-   - 数据库查询优化
-   - 前端页面加载优化
-   - 缓存机制完善
-   - 大数据量处理优化
+3. ⚡ **性能优化** `🟢 可选开发`
+   - ✅ 基础性能已满足需求
+   - 🔄 数据库查询优化
+   - 🔄 前端页面加载优化
+   - 🔄 缓存机制完善
+   - 🔄 大数据量处理优化
 
-4. 🎭 **界面美化**
-   - UI组件库升级
-   - 动画效果增强
-   - 主题切换功能
-   - 个性化设置
+4. 🎭 **界面美化** `🟢 可选开发`
+   - ✅ 基础UI界面已完成
+   - 🔄 UI组件库升级
+   - 🔄 动画效果增强
+   - 🔄 主题切换功能
+   - 🔄 个性化设置
 
-#### 🚀 **优先级4 - 高级功能扩展**
-> 🎯 **目标**: 扩展系统功能边界，提供更多价值
+#### 🚀 **优先级3 - 高级功能扩展**
+> 🎯 **目标**: 在完善系统基础上，扩展功能边界，提供更多价值
+> 📈 **当前状态**: 核心功能稳定，可考虑高级功能扩展
 
-1. 📈 **智能分析功能**
-   - 住宿趋势分析
-   - 维修频率预测
-   - 资源利用率分析
-   - 异常数据检测
+1. 📈 **智能分析功能** `🟢 长期规划`
+   - ✅ 基础统计分析已实现
+   - 🔄 住宿趋势分析
+   - 🔄 维修频率预测
+   - 🔄 资源利用率分析
+   - 🔄 异常数据检测
 
-2. 🔗 **第三方集成**
-   - 校园卡系统对接
-   - 教务系统数据同步
-   - 财务系统集成
-   - 微信小程序开发
+2. 🔗 **第三方集成** `🟢 长期规划`
+   - 🔄 校园卡系统对接
+   - 🔄 教务系统数据同步
+   - 🔄 财务系统集成
+   - 🔄 微信小程序开发
 
-3. 🛡️ **系统管理增强**
-   - 数据备份和恢复
-   - 系统监控面板
-   - 性能指标监控
-   - 自动化运维脚本
+3. 🛡️ **系统管理增强** `🟡 中期规划`
+   - ✅ 基础系统配置已实现
+   - 🔄 数据备份和恢复
+   - 🔄 系统监控面板
+   - 🔄 性能指标监控
+   - 🔄 自动化运维脚本
 
-4. 🌐 **多租户支持**
-   - 多校区管理
-   - 数据隔离机制
-   - 权限分级管理
-   - 个性化配置
+4. 🌐 **多租户支持** `🟢 长期规划`
+   - ✅ 单租户架构已完善
+   - 🔄 多校区管理
+   - 🔄 数据隔离机制
+   - 🔄 权限分级管理
+   - 🔄 个性化配置
 
 ## 环境要求
 
@@ -1430,3 +1505,83 @@ ENTRYPOINT ["java","-jar","/app.jar"]
    - 去中心化身份认证
 
 这些建议可以根据实际需求和资源情况，分阶段实施，逐步完善系统功能和用户体验。
+
+## 🚀 快速启动
+
+### 环境要求
+- Java 21+
+- MySQL 8.0+
+- Node.js 16+
+- Maven 3.6+
+
+### 启动步骤
+1. **数据库初始化**
+   ```bash
+   mysql -u root -p < mysql-init.sql
+   ```
+
+2. **后端启动**
+   ```bash
+   # Windows
+   start.bat
+   ```
+
+3. **前端启动**
+   ```bash
+   cd dormitory-frontend
+   npm install
+   npm run dev
+   ```
+
+4. **访问系统**
+   - 前端地址：http://localhost:5173
+   - 后端API：http://localhost:8082
+
+### 默认账户
+- 管理员：admin / admin123
+- 学生：student / student123
+
+## 📝 开发说明
+
+### 项目结构说明
+- `src/main/java` - 后端Java源码
+- `dormitory-frontend` - 前端Vue项目
+- `sql` - 数据库脚本
+- `logs` - 系统日志文件
+- `docs` - 项目文档
+
+### 开发规范
+- 遵循RESTful API设计规范
+- 使用统一的响应格式
+- 完善的异常处理机制
+- 详细的日志记录
+
+## 🤝 贡献指南
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开 Pull Request
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 👥 团队成员
+
+- **项目负责人**：负责整体架构设计和项目管理
+- **后端开发**：Spring Boot应用开发和数据库设计
+- **前端开发**：Vue.js界面开发和用户体验优化
+- **测试工程师**：系统测试和质量保证
+
+---
+
+**📞 联系我们**
+
+如有问题或建议，请通过以下方式联系：
+- 📧 Email: [项目邮箱]
+- 🐛 Issues: [GitHub Issues](https://github.com/your-repo/issues)
+- 📖 Wiki: [项目Wiki](https://github.com/your-repo/wiki)
+
+感谢您对学生宿舍管理系统的关注和支持！ 🎉

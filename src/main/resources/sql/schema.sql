@@ -216,4 +216,48 @@ CREATE TABLE `dorm_visitor` (
   CONSTRAINT `fk_visitor_building` FOREIGN KEY (`building_id`) REFERENCES `dorm_building` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='访客记录表';
 
+-- ----------------------------
+-- 系统配置表
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `config_key` varchar(100) NOT NULL COMMENT '配置键',
+  `config_value` text COMMENT '配置值',
+  `config_type` varchar(50) NOT NULL DEFAULT 'STRING' COMMENT '配置类型(STRING-字符串,NUMBER-数字,BOOLEAN-布尔值,JSON-JSON对象)',
+  `description` varchar(500) DEFAULT NULL COMMENT '配置描述',
+  `system_flag` tinyint NOT NULL DEFAULT '0' COMMENT '系统配置标识：1-系统配置，0-用户配置',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态：1-启用，0-禁用',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_config_key` (`config_key`),
+  KEY `idx_config_type` (`config_type`),
+  KEY `idx_system_flag` (`system_flag`),
+  KEY `idx_status` (`status`),
+  KEY `idx_deleted` (`deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统配置表';
+
+-- 插入默认系统配置数据
+INSERT INTO `sys_config` (`config_key`, `config_value`, `config_type`, `description`, `system_flag`, `status`) VALUES
+('system.name', '宿舍管理系统', 'STRING', '系统名称', 1, 1),
+('system.school.name', '某某大学', 'STRING', '学校名称', 1, 1),
+('system.admin.email', 'admin@example.com', 'STRING', '管理员邮箱', 1, 1),
+('system.contact.phone', '400-123-4567', 'STRING', '联系电话', 1, 1),
+('dorm.default.room.type', 'QUAD', 'STRING', '默认房间类型', 1, 1),
+('dorm.max.occupancy', '4', 'NUMBER', '最大入住人数', 1, 1),
+('dorm.mixed.gender', 'false', 'BOOLEAN', '是否允许混合性别', 1, 1),
+('dorm.auto.assignment', 'true', 'BOOLEAN', '是否自动分配', 1, 1),
+('notification.email.enabled', 'true', 'BOOLEAN', '邮件通知开关', 1, 1),
+('notification.sms.enabled', 'false', 'BOOLEAN', '短信通知开关', 1, 1),
+('notification.system.enabled', 'true', 'BOOLEAN', '系统通知开关', 1, 1),
+('notification.maintenance.enabled', 'true', 'BOOLEAN', '维修提醒开关', 1, 1),
+('security.password.min.length', '6', 'NUMBER', '密码最小长度', 1, 1),
+('security.max.login.attempts', '5', 'NUMBER', '最大登录尝试次数', 1, 1),
+('security.session.timeout', '30', 'NUMBER', '会话超时时间(分钟)', 1, 1),
+('security.password.complexity', 'false', 'BOOLEAN', '密码复杂度要求', 1, 1),
+('backup.auto.enabled', 'true', 'BOOLEAN', '自动备份开关', 1, 1),
+('backup.frequency', 'DAILY', 'STRING', '备份频率', 1, 1);
+
 SET FOREIGN_KEY_CHECKS = 1;

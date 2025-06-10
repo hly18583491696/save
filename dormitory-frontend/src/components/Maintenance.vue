@@ -221,7 +221,6 @@
                 </div>
                 <div class="user-details">
                   <span class="name">{{ request.applicant }}</span>
-                  <small class="contact">{{ request.contact }}</small>
                 </div>
               </td>
               <td>
@@ -453,6 +452,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
 
 export default {
   name: 'Maintenance',
@@ -481,15 +481,15 @@ export default {
     
     // 统计数据
     const stats = ref({
-      pending: 12,
-      inProgress: 8,
-      completed: 45,
-      urgent: 3,
-      total: 65,
-      avgRating: 4.2,
-      pendingTrend: 2,
-      inProgressTrend: -1,
-      completedTrend: 8
+      pending: 0,
+      inProgress: 0,
+      completed: 0,
+      urgent: 0,
+      total: 0,
+      avgRating: 0,
+      pendingTrend: 0,
+      inProgressTrend: 0,
+      completedTrend: 0
     })
     
     // 新增申请表单数据
@@ -507,56 +507,71 @@ export default {
     const currentRequest = ref(null)
     
     // 维修申请列表
-    const maintenanceRequests = ref([
-      {
-        id: 'MR2024001',
-        roomNumber: '101',
-        building: 'A',
-        applicant: '张三',
-        contact: '13800138001',
-        type: '水电维修',
-        urgency: '紧急',
-        description: '水龙头漏水严重，影响正常使用，需要紧急处理',
-        createdAt: '2024-01-15 09:30:00',
-        status: 'pending',
-        assignee: '',
-        completedAt: '',
-        rating: 0,
-        feedback: ''
-      },
-      {
-        id: 'MR2024002',
-        roomNumber: '203',
-        building: 'B',
-        applicant: '李四',
-        contact: '13800138002',
-        type: '家具维修',
-        urgency: '普通',
-        description: '床铺松动，需要加固螺丝',
-        createdAt: '2024-01-14 14:20:00',
-        status: 'in_progress',
-        assignee: '维修师傅A',
-        completedAt: '',
-        rating: 0,
-        feedback: ''
-      },
-      {
-        id: 'MR2024003',
-        roomNumber: '305',
-        building: 'C',
-        applicant: '王五',
-        contact: '13800138003',
-        type: '门窗维修',
-        urgency: '普通',
-        description: '窗户关不严，需要调整合页',
-        createdAt: '2024-01-13 16:45:00',
-        status: 'completed',
-        assignee: '维修师傅B',
-        completedAt: '2024-01-14 10:30:00',
-        rating: 5,
-        feedback: '维修及时，质量很好'
+    const maintenanceRequests = ref([])
+    
+    // API基础URL
+    const API_BASE_URL = 'http://localhost:8082/api/maintenance'
+    
+    // 获取维修申请列表
+    const fetchMaintenanceRequests = async () => {
+      try {
+        loading.value = true
+        const response = await axios.get(`${API_BASE_URL}/list`)
+        if (response.data.code === 200 && response.data.data) {
+          maintenanceRequests.value = response.data.data.map(item => ({
+            id: item.requestNumber,
+            roomNumber: item.roomNumber,
+            building: item.buildingName,
+            applicant: item.applicantName,
+            contact: '',
+            type: item.maintenanceType,
+            urgency: item.urgencyLevel,
+            description: item.description,
+            createdAt: item.createTime,
+            status: item.status,
+            assignee: item.assignedTo || '',
+            completedAt: item.completedTime || '',
+            rating: item.rating || 0,
+            feedback: item.feedback || ''
+          }))
+        }
+      } catch (error) {
+        console.error('获取维修申请列表失败:', error)
+      } finally {
+        loading.value = false
       }
-    ])
+    }
+    
+    // 获取统计数据
+    const fetchStatistics = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/statistics`)
+        if (response.data.code === 200 && response.data.data) {
+          const data = response.data.data
+          const statusStats = data.statusStatistics || []
+          
+          // 从状态统计数组中提取各状态的数量
+          const pendingItem = statusStats.find(item => item.status === 'PENDING')
+          const inProgressItem = statusStats.find(item => item.status === 'IN_PROGRESS')
+          const completedItem = statusStats.find(item => item.status === 'COMPLETED')
+          const urgentItem = statusStats.find(item => item.urgency_level === 'URGENT')
+          
+          stats.value = {
+            pending: pendingItem ? pendingItem.count : 0,
+            inProgress: inProgressItem ? inProgressItem.count : 0,
+            completed: completedItem ? completedItem.count : 0,
+            urgent: urgentItem ? urgentItem.count : 0,
+            total: data.totalCount || 0,
+            avgRating: data.averageRating || 0,
+            pendingTrend: 0,
+            inProgressTrend: 0,
+            completedTrend: 0
+          }
+        }
+      } catch (error) {
+        console.error('获取统计数据失败:', error)
+      }
+    }
     
     // 计算属性
     const filteredRequests = computed(() => {
@@ -787,10 +802,35 @@ export default {
       }
     }
     
-    const submitRequest = () => {
-      // 这里应该调用API提交申请
-      console.log('提交申请:', newRequest.value)
-      closeModal()
+    // 提交维修申请
+    const submitRequest = async () => {
+      try {
+        loading.value = true
+        const requestData = {
+          roomNumber: newRequest.value.roomNumber,
+          buildingName: newRequest.value.building,
+          applicantName: newRequest.value.applicant,
+          contactPhone: newRequest.value.contact,
+          maintenanceType: newRequest.value.type,
+          urgencyLevel: newRequest.value.urgency,
+          description: newRequest.value.description
+        }
+        
+        const response = await axios.post(`${API_BASE_URL}/create`, requestData)
+        if (response.data.code === 200) {
+          alert('维修申请提交成功！')
+          closeModal()
+          await fetchMaintenanceRequests()
+          await fetchStatistics()
+        } else {
+          alert('提交失败：' + response.data.message)
+        }
+      } catch (error) {
+        console.error('提交维修申请失败:', error)
+        alert('提交失败，请稍后重试')
+      } finally {
+        loading.value = false
+      }
     }
     
     const viewRequest = (request) => {
@@ -798,28 +838,76 @@ export default {
       showDetailModal.value = true
     }
     
-    const editRequest = (request) => {
-      console.log('编辑申请:', request)
+    // 编辑维修申请
+    const editRequest = async (request) => {
+      // 这里可以实现编辑功能，暂时只是查看
+      viewRequest(request)
     }
     
-    const deleteRequest = (request) => {
+    // 删除维修申请
+    const deleteRequest = async (request) => {
       if (confirm('确定要删除这个维修申请吗？')) {
-        const index = maintenanceRequests.value.findIndex(item => item.id === request.id)
-        if (index > -1) {
-          maintenanceRequests.value.splice(index, 1)
+        try {
+          loading.value = true
+          const response = await axios.delete(`${API_BASE_URL}/delete/${request.id}`)
+          if (response.data.code === 200) {
+            alert('删除成功！')
+            await fetchMaintenanceRequests()
+            await fetchStatistics()
+          } else {
+            alert('删除失败：' + response.data.message)
+          }
+        } catch (error) {
+          console.error('删除维修申请失败:', error)
+          alert('删除失败，请稍后重试')
+        } finally {
+          loading.value = false
         }
       }
     }
     
-    const processRequest = (request) => {
-      console.log('处理申请:', request)
-      request.status = 'in_progress'
+    // 处理维修申请
+    const processRequest = async (request) => {
+      try {
+        loading.value = true
+        const response = await axios.put(`${API_BASE_URL}/update-status/${request.id}`, {
+          status: 'in_progress'
+        })
+        if (response.data.code === 200) {
+          alert('申请已开始处理！')
+          await fetchMaintenanceRequests()
+          await fetchStatistics()
+        } else {
+          alert('操作失败：' + response.data.message)
+        }
+      } catch (error) {
+        console.error('处理维修申请失败:', error)
+        alert('操作失败，请稍后重试')
+      } finally {
+        loading.value = false
+      }
     }
     
-    const completeRequest = (request) => {
-      console.log('完成申请:', request)
-      request.status = 'completed'
-      request.completedAt = new Date().toISOString().slice(0, 19).replace('T', ' ')
+    // 完成维修申请
+    const completeRequest = async (request) => {
+      try {
+        loading.value = true
+        const response = await axios.put(`${API_BASE_URL}/complete/${request.id}`, {
+          actualCost: 0 // 可以添加实际费用输入
+        })
+        if (response.data.code === 200) {
+          alert('维修已完成！')
+          await fetchMaintenanceRequests()
+          await fetchStatistics()
+        } else {
+          alert('操作失败：' + response.data.message)
+        }
+      } catch (error) {
+        console.error('完成维修申请失败:', error)
+        alert('操作失败，请稍后重试')
+      } finally {
+        loading.value = false
+      }
     }
     
     const exportData = () => {
@@ -827,16 +915,16 @@ export default {
       // 这里实现数据导出功能
     }
     
-    const refreshData = () => {
-      loading.value = true
-      setTimeout(() => {
-        loading.value = false
-      }, 1000)
+    // 刷新数据
+    const refreshData = async () => {
+      await fetchMaintenanceRequests()
+      await fetchStatistics()
     }
     
-    onMounted(() => {
+    onMounted(async () => {
       // 组件挂载时获取数据
-      console.log('维修管理组件已挂载')
+      await fetchMaintenanceRequests()
+      await fetchStatistics()
     })
     
     return {

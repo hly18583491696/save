@@ -393,79 +393,192 @@ export default {
     
     const loadSettings = async () => {
       try {
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 500))
+        // 获取系统配置
+        const configResponse = await fetch('/api/system-config/grouped')
+        if (configResponse.ok) {
+          const configData = await configResponse.json()
+          if (configData.success) {
+            const configs = configData.data
+            
+            // 基础设置
+            if (configs.basic) {
+              settings.systemName = configs.basic['system.name'] || settings.systemName
+              settings.schoolName = configs.basic['system.school.name'] || settings.schoolName
+              settings.adminEmail = configs.basic['system.admin.email'] || settings.adminEmail
+              settings.contactPhone = configs.basic['system.contact.phone'] || settings.contactPhone
+            }
+            
+            // 宿舍设置
+            if (configs.dormitory) {
+              settings.defaultRoomType = configs.dormitory['dorm.default.room.type'] || settings.defaultRoomType
+              settings.maxOccupancy = parseInt(configs.dormitory['dorm.max.occupancy']) || settings.maxOccupancy
+              settings.allowMixedGender = configs.dormitory['dorm.mixed.gender'] === 'true'
+              settings.autoAssignment = configs.dormitory['dorm.auto.assignment'] === 'true'
+            }
+            
+            // 通知设置
+            if (configs.notification) {
+              settings.emailNotification = configs.notification['notification.email.enabled'] === 'true'
+              settings.smsNotification = configs.notification['notification.sms.enabled'] === 'true'
+              settings.systemAnnouncement = configs.notification['notification.system.enabled'] === 'true'
+              settings.maintenanceReminder = configs.notification['notification.maintenance.enabled'] === 'true'
+            }
+            
+            // 安全设置
+            if (configs.security) {
+              settings.minPasswordLength = parseInt(configs.security['security.password.min.length']) || settings.minPasswordLength
+              settings.maxLoginAttempts = parseInt(configs.security['security.max.login.attempts']) || settings.maxLoginAttempts
+              settings.sessionTimeout = parseInt(configs.security['security.session.timeout']) || settings.sessionTimeout
+              settings.enforcePasswordComplexity = configs.security['security.password.complexity'] === 'true'
+            }
+            
+            // 备份设置
+            if (configs.backup) {
+              settings.autoBackup = configs.backup['backup.auto.enabled'] === 'true'
+              settings.backupFrequency = configs.backup['backup.frequency'] || settings.backupFrequency
+            }
+          }
+        }
         
-        // 模拟加载系统信息
-        lastBackupTime.value = '2024-01-15 02:00:00'
-        backupSize.value = '125.6 MB'
-        onlineUsers.value = 23
-        totalStudents.value = 1250
-        totalRooms.value = 320
+        // 获取系统信息
+        const infoResponse = await fetch('/api/system-config/system-info')
+        if (infoResponse.ok) {
+          const infoData = await infoResponse.json()
+          if (infoData.success) {
+            const info = infoData.data
+            lastBackupTime.value = info.lastBackupTime || '未备份'
+            backupSize.value = info.backupSize || '0 MB'
+            onlineUsers.value = info.onlineUsers || 0
+            totalStudents.value = info.totalStudents || 0
+            totalRooms.value = info.totalRooms || 0
+          }
+        }
         
         console.log('设置加载完成')
       } catch (error) {
         console.error('加载设置失败:', error)
+        alert('加载设置失败，请检查网络连接！')
       }
     }
     
     const saveSettings = async () => {
       saving.value = true
       try {
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        // 构建配置更新数据
+        const configUpdates = [
+          // 基础设置
+          { key: 'system.name', value: settings.systemName, type: 'STRING' },
+          { key: 'system.school.name', value: settings.schoolName, type: 'STRING' },
+          { key: 'system.admin.email', value: settings.adminEmail, type: 'STRING' },
+          { key: 'system.contact.phone', value: settings.contactPhone, type: 'STRING' },
+          
+          // 宿舍设置
+          { key: 'dorm.default.room.type', value: settings.defaultRoomType, type: 'STRING' },
+          { key: 'dorm.max.occupancy', value: settings.maxOccupancy.toString(), type: 'NUMBER' },
+          { key: 'dorm.mixed.gender', value: settings.allowMixedGender.toString(), type: 'BOOLEAN' },
+          { key: 'dorm.auto.assignment', value: settings.autoAssignment.toString(), type: 'BOOLEAN' },
+          
+          // 通知设置
+          { key: 'notification.email.enabled', value: settings.emailNotification.toString(), type: 'BOOLEAN' },
+          { key: 'notification.sms.enabled', value: settings.smsNotification.toString(), type: 'BOOLEAN' },
+          { key: 'notification.system.enabled', value: settings.systemAnnouncement.toString(), type: 'BOOLEAN' },
+          { key: 'notification.maintenance.enabled', value: settings.maintenanceReminder.toString(), type: 'BOOLEAN' },
+          
+          // 安全设置
+          { key: 'security.password.min.length', value: settings.minPasswordLength.toString(), type: 'NUMBER' },
+          { key: 'security.max.login.attempts', value: settings.maxLoginAttempts.toString(), type: 'NUMBER' },
+          { key: 'security.session.timeout', value: settings.sessionTimeout.toString(), type: 'NUMBER' },
+          { key: 'security.password.complexity', value: settings.enforcePasswordComplexity.toString(), type: 'BOOLEAN' },
+          
+          // 备份设置
+          { key: 'backup.auto.enabled', value: settings.autoBackup.toString(), type: 'BOOLEAN' },
+          { key: 'backup.frequency', value: settings.backupFrequency, type: 'STRING' }
+        ]
+        
+        // 批量更新配置
+        const response = await fetch('/api/system-config/batch', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(configUpdates)
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          if (result.success) {
+            alert('设置保存成功！')
+          } else {
+            throw new Error(result.message || '保存失败')
+          }
+        } else {
+          throw new Error('网络请求失败')
+        }
         
         console.log('保存设置:', settings)
-        alert('设置保存成功！')
       } catch (error) {
         console.error('保存设置失败:', error)
-        alert('保存设置失败，请重试！')
+        alert('保存设置失败：' + error.message)
       } finally {
         saving.value = false
       }
     }
     
-    const resetSettings = () => {
+    const resetSettings = async () => {
       if (confirm('确定要重置所有设置吗？此操作不可撤销。')) {
-        // 重置为默认值
-        Object.assign(settings, {
-          systemName: '学生宿舍管理系统',
-          schoolName: '某某大学',
-          adminEmail: 'admin@university.edu',
-          contactPhone: '400-123-4567',
-          defaultRoomType: 'quad',
-          maxOccupancy: 4,
-          allowMixedGender: false,
-          autoAssignment: true,
-          emailNotification: true,
-          smsNotification: false,
-          systemAnnouncement: true,
-          maintenanceReminder: true,
-          minPasswordLength: 8,
-          maxLoginAttempts: 5,
-          sessionTimeout: 120,
-          enforcePasswordComplexity: true,
-          autoBackup: true,
-          backupFrequency: 'weekly'
-        })
-        
-        alert('设置已重置为默认值！')
+        try {
+          const response = await fetch('/api/system-config/reset', {
+            method: 'POST'
+          })
+          
+          if (response.ok) {
+            const result = await response.json()
+            if (result.success) {
+              alert('设置已重置为默认值！')
+              // 重新加载设置
+              await loadSettings()
+            } else {
+              throw new Error(result.message || '重置失败')
+            }
+          } else {
+            throw new Error('网络请求失败')
+          }
+        } catch (error) {
+          console.error('重置设置失败:', error)
+          alert('重置设置失败：' + error.message)
+        }
       }
     }
     
     const createBackup = async () => {
       backupLoading.value = true
       try {
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 2000))
+        const response = await fetch('/api/system-config/backup', {
+          method: 'POST'
+        })
         
-        lastBackupTime.value = new Date().toLocaleString('zh-CN')
-        backupSize.value = '126.8 MB'
-        
-        alert('备份创建成功！')
+        if (response.ok) {
+          const result = await response.json()
+          if (result.success) {
+            lastBackupTime.value = new Date().toLocaleString('zh-CN')
+            alert('备份创建成功！')
+            // 重新获取系统信息
+            const infoResponse = await fetch('/api/system-config/system-info')
+            if (infoResponse.ok) {
+              const infoData = await infoResponse.json()
+              if (infoData.success) {
+                backupSize.value = infoData.data.backupSize || backupSize.value
+              }
+            }
+          } else {
+            throw new Error(result.message || '备份失败')
+          }
+        } else {
+          throw new Error('网络请求失败')
+        }
       } catch (error) {
         console.error('创建备份失败:', error)
-        alert('创建备份失败，请重试！')
+        alert('创建备份失败：' + error.message)
       } finally {
         backupLoading.value = false
       }
@@ -500,15 +613,29 @@ export default {
       
       restoreLoading.value = true
       try {
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 3000))
+        const formData = new FormData()
+        formData.append('file', selectedFile.value)
         
-        alert('备份恢复成功！系统将重新加载。')
-        closeRestoreDialog()
-        loadSettings()
+        const response = await fetch('/api/system-config/restore', {
+          method: 'POST',
+          body: formData
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          if (result.success) {
+            alert('备份恢复成功！系统将重新加载。')
+            closeRestoreDialog()
+            await loadSettings()
+          } else {
+            throw new Error(result.message || '恢复失败')
+          }
+        } else {
+          throw new Error('网络请求失败')
+        }
       } catch (error) {
         console.error('恢复备份失败:', error)
-        alert('恢复备份失败，请检查文件格式！')
+        alert('恢复备份失败：' + error.message)
       } finally {
         restoreLoading.value = false
       }
