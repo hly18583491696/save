@@ -41,19 +41,9 @@
             ></i>
           </div>
           
-          <div class="role-selection">
-            <label>选择角色</label>
-            <div class="role-options">
-              <div 
-                v-for="role in roles" 
-                :key="role.value"
-                :class="['role-option', { active: loginForm.role === role.value }]"
-                @click="selectRole(role.value)"
-              >
-                <i :class="role.icon"></i>
-                <span>{{ role.label }}</span>
-              </div>
-            </div>
+          <!-- 登录说明 -->
+          <div class="login-notice">
+            <p><i class="fas fa-info-circle"></i> 请使用管理员或教师账号登录</p>
           </div>
           
           <div class="form-options">
@@ -99,21 +89,11 @@ export default {
     const loginForm = reactive({
       username: '',
       password: '',
-      role: 'admin',
       rememberMe: false
     })
     
-    const roles = reactive([
-      { value: 'admin', label: '管理员', icon: 'fas fa-user-shield' },
-      { value: 'teacher', label: '教师', icon: 'fas fa-chalkboard-teacher' }
-    ])
-    
     const togglePassword = () => {
       showPassword.value = !showPassword.value
-    }
-    
-    const selectRole = (role) => {
-      loginForm.role = role
     }
     
     const handleLogin = async () => {
@@ -133,8 +113,7 @@ export default {
           },
           body: JSON.stringify({
             username: loginForm.username,
-            password: loginForm.password,
-            role: loginForm.role
+            password: loginForm.password
           })
         })
         
@@ -184,9 +163,7 @@ export default {
       loading,
       showPassword,
       loginForm,
-      roles,
       togglePassword,
-      selectRole,
       handleLogin,
       showRegister
     }
@@ -311,48 +288,26 @@ export default {
   color: #667eea;
 }
 
-.role-selection {
+/* 登录说明样式 */
+.login-notice {
   margin-bottom: 25px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+  border: 1px solid #bbdefb;
+  border-radius: 8px;
+  text-align: center;
 }
 
-.role-selection label {
-  display: block;
-  margin-bottom: 12px;
-  color: #555;
+.login-notice p {
+  margin: 0;
+  color: #1976d2;
+  font-size: 14px;
   font-weight: 500;
 }
 
-.role-options {
-  display: flex;
-  gap: 10px;
-}
-
-.role-option {
-  flex: 1;
-  padding: 12px;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: #f8f9fa;
-}
-
-.role-option:hover {
-  border-color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
-}
-
-.role-option.active {
-  border-color: #667eea;
-  background: #667eea;
-  color: white;
-}
-
-.role-option i {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 5px;
+.login-notice i {
+  margin-right: 8px;
+  color: #1976d2;
 }
 
 .form-options {

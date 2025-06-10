@@ -96,13 +96,41 @@ public class AuthController {
                 return Result.unauthorized("无效的token格式");
             }
             
-            // 临时简化实现，直接返回模拟用户信息
-            Map<String, Object> user = new HashMap<>();
-            user.put("username", "admin");
-            user.put("role", "ADMIN");
+            // 从token中提取用户名（简化实现，实际应该解析JWT）
+            String tokenValue = token.substring(7); // 移除"Bearer "
+            String username = null;
+            if (tokenValue.startsWith("login_success_")) {
+                username = tokenValue.substring("login_success_".length());
+            }
             
-            log.info("成功获取用户信息: username=admin");
-            return Result.success(user);
+            if (username == null) {
+                log.warn("无法从token中提取用户名: {}", token);
+                return Result.unauthorized("无效的token");
+            }
+            
+            // 根据用户名获取用户信息
+            User user = userService.getUserByUsername(username);
+            if (user == null) {
+                log.warn("用户不存在: {}", username);
+                return Result.unauthorized("用户不存在");
+            }
+            
+            // 检查用户角色权限（只允许ADMIN和TEACHER登录）
+            if (!"ADMIN".equals(user.getRole()) && !"TEACHER".equals(user.getRole())) {
+                log.warn("用户角色权限不足: username={}, role={}", username, user.getRole());
+                return Result.unauthorized("权限不足，只允许管理员和教师登录");
+            }
+            
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("id", user.getId());
+            userData.put("username", user.getUsername());
+            userData.put("realName", user.getRealName());
+            userData.put("email", user.getEmail());
+            userData.put("role", user.getRole());
+            userData.put("status", user.getStatus());
+            
+            log.info("成功获取用户信息: username={}, role={}", username, user.getRole());
+            return Result.success(userData);
         } catch (Exception e) {
             log.error("获取用户信息失败: {}", e.getMessage());
             return Result.error("获取用户信息失败: " + e.getMessage());

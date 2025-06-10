@@ -41,6 +41,11 @@ public class UserService {
             throw new RuntimeException("用户已被禁用");
         }
         
+        // 检查用户角色权限（只允许ADMIN和TEACHER登录）
+        if (!"ADMIN".equals(user.getRole()) && !"TEACHER".equals(user.getRole())) {
+            throw new RuntimeException("权限不足，只允许管理员和教师登录系统");
+        }
+        
         // 生成JWT令牌 (暂时简化)
         return "login_success_" + user.getUsername();
     }
@@ -70,8 +75,8 @@ public class UserService {
         newUser.setRealName(realName);
         newUser.setEmail(email);
         newUser.setPhone(phone);
-        newUser.setRole("STUDENT"); // 默认角色为学生
-        newUser.setStatus(1); // 默认状态为启用
+        newUser.setRole("USER"); // 默认角色为普通用户（注意：普通用户无法登录系统）
+        newUser.setStatus(0); // 默认状态为禁用，需要管理员激活
         newUser.setCreateTime(LocalDateTime.now());
         newUser.setUpdateTime(LocalDateTime.now());
         newUser.setDeleted(0); // 默认未删除

@@ -182,9 +182,13 @@ export default {
     
     const getRoleText = (role) => {
       const roles = {
-        admin: '系统管理员',
-        teacher: '宿管老师',
-        student: '学生'
+        'ADMIN': '系统管理员',
+        'TEACHER': '宿管老师',
+        'USER': '学生',
+        // 兼容小写格式
+        'admin': '系统管理员',
+        'teacher': '宿管老师',
+        'student': '学生'
       }
       return roles[role] || '未知角色'
     }

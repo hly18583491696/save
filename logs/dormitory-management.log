@@ -3568,3 +3568,801 @@ Identify and stop the process that's listening on port 8082 or configure this ap
 2025-06-10 16:17:50.765 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
 2025-06-10 16:19:52.921 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-06-10 16:19:52.925 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-10 16:23:06.063 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 16:23:06.101 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 33992 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 16:23:06.104 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 16:23:06.964 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 16:23:06.969 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:23:06.972 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 16:23:06.972 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 16:23:07.054 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 16:23:07.055 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 918 ms
+2025-06-10 16:23:07.106 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 16:23:07.139 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 16:23:07.143 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 16:23:07.144 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 16:23:07.151 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:13
+2025-06-10 16:23:07.338 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 16:23:07.511 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 16:23:07.605 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:23:07.625 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 16:23:07.629 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.875 seconds (process running for 2.142)
+2025-06-10 16:25:40.754 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-10 16:25:40.756 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-10 16:25:40.756 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-06-10 16:25:40.791 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:40.792 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-10 16:25:40.888 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4ccda067
+2025-06-10 16:25:40.888 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-10 16:25:40.923 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:40.926 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:40.932 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:42.341 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:42.341 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.236 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.244 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.254 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.267 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.272 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.276 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:43.281 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:44.594 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:46.963 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:50.311 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:50.313 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:54.941 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:54.941 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:54.941 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:54.944 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:59.597 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:59.597 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:59.598 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:25:59.600 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:26:12.825 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:26:12.825 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:01.095 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormAccommodationService.deleteAccommodation]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 16:27:01.100 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@925254334 wrapping com.mysql.cj.jdbc.ConnectionImpl@4ccda067] for JDBC transaction
+2025-06-10 16:27:01.102 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@925254334 wrapping com.mysql.cj.jdbc.ConnectionImpl@4ccda067] to manual commit
+2025-06-10 16:27:01.115 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 16:27:01.116 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@925254334 wrapping com.mysql.cj.jdbc.ConnectionImpl@4ccda067]
+2025-06-10 16:27:01.118 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@925254334 wrapping com.mysql.cj.jdbc.ConnectionImpl@4ccda067] after transaction
+2025-06-10 16:27:01.118 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:01.129 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:03.264 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:03.266 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:03.681 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:03.682 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:05.140 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:05.141 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:09.639 [http-nio-8082-exec-2] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormAccommodationService.deleteAccommodation]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 16:27:09.640 [http-nio-8082-exec-2] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@1947011407 wrapping com.mysql.cj.jdbc.ConnectionImpl@35619851] for JDBC transaction
+2025-06-10 16:27:09.641 [http-nio-8082-exec-2] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@1947011407 wrapping com.mysql.cj.jdbc.ConnectionImpl@35619851] to manual commit
+2025-06-10 16:27:09.645 [http-nio-8082-exec-2] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 16:27:09.646 [http-nio-8082-exec-2] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@1947011407 wrapping com.mysql.cj.jdbc.ConnectionImpl@35619851]
+2025-06-10 16:27:09.647 [http-nio-8082-exec-2] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@1947011407 wrapping com.mysql.cj.jdbc.ConnectionImpl@35619851] after transaction
+2025-06-10 16:27:09.647 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:09.655 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:11.465 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:11.466 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:12.195 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:12.193 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:35.773 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:35.774 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:47.069 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:47.069 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:54.773 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:54.773 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:56.829 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:27:56.830 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:03.739 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:03.740 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:03.741 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:03.742 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:03.744 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:03.746 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:06.473 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:07.208 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:28:07.712 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:34.306 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:34.306 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:34.654 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:34.654 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.155 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.155 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.160 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.165 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.171 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.175 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.179 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.709 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:35.709 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:41.052 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:41.053 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:41.499 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:41.500 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:42.652 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:42.661 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:53.101 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:54.232 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:57.167 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:57.168 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:58.089 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:31:58.090 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:26.467 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:26.467 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:28.902 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:28.920 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:34.463 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:35.627 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:40.101 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:40.109 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:44.459 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:45.235 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:46.685 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:46.686 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:48.130 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:48.130 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.870 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.871 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.879 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.887 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.892 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.897 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:32:58.901 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:01.920 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:01.921 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.276 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.276 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.282 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.287 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.294 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.299 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:05.304 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:10.642 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:10.643 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:11.899 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:11.900 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:15.975 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:15.974 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.204 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.204 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.212 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.217 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.223 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.227 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:18.232 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:26.310 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:31.926 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:31.928 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:31.957 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:31.960 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:31.963 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:31.965 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:38.591 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:38.595 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:38.604 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:38.605 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:38.608 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:38.612 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:42.561 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:42.562 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:42.572 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:42.574 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:42.576 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:42.579 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:56.651 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:56.652 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:58.622 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:58.624 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:58.627 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:58.629 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.544 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.544 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.551 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.556 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.561 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.565 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:33:59.569 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:00.695 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:00.697 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:00.699 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:00.701 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:03.428 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:03.431 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:03.433 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:03.436 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:04.560 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:04.560 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:34.016 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 16:34:34.056 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 28548 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 16:34:34.058 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 16:34:34.926 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 16:34:34.933 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:34:34.935 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 16:34:34.935 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 16:34:35.023 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 16:34:35.023 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 930 ms
+2025-06-10 16:34:35.084 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 16:34:35.115 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 16:34:35.121 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 16:34:35.122 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 16:34:35.130 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:14
+2025-06-10 16:34:35.323 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 16:34:35.503 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 16:34:35.601 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:34:35.618 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 16:34:35.624 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.92 seconds (process running for 2.194)
+2025-06-10 16:34:41.039 [http-nio-8082-exec-4] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-10 16:34:41.040 [http-nio-8082-exec-4] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-10 16:34:41.040 [http-nio-8082-exec-4] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-06-10 16:34:41.075 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:41.076 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-10 16:34:41.084 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:41.174 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@518f5c26
+2025-06-10 16:34:41.175 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-10 16:34:41.208 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:41.209 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:41.211 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:41.213 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:34:44.102 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.updateExpiredVisitors]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 16:34:44.104 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@1154078218 wrapping com.mysql.cj.jdbc.ConnectionImpl@518f5c26] for JDBC transaction
+2025-06-10 16:34:44.105 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@1154078218 wrapping com.mysql.cj.jdbc.ConnectionImpl@518f5c26] to manual commit
+2025-06-10 16:34:44.108 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 16:34:44.108 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@1154078218 wrapping com.mysql.cj.jdbc.ConnectionImpl@518f5c26]
+2025-06-10 16:34:44.110 [http-nio-8082-exec-7] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@1154078218 wrapping com.mysql.cj.jdbc.ConnectionImpl@518f5c26] after transaction
+2025-06-10 16:35:04.640 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:04.641 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:04.643 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:04.644 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:04.646 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:04.647 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.078 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.078 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.079 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.080 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.082 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.083 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.925 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.925 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.926 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.928 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.929 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:05.930 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:31.282 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:31.281 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:31.284 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:31.285 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:31.287 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:31.288 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:33.570 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:33.571 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:33.572 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:33.573 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:33.575 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:35:33.576 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:39:45.759 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-10 16:39:45.768 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-10 16:39:59.531 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 16:39:59.571 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 9416 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 16:39:59.572 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 16:40:00.434 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 16:40:00.440 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:40:00.442 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 16:40:00.443 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 16:40:00.537 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 16:40:00.538 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 931 ms
+2025-06-10 16:40:00.603 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 16:40:00.642 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 16:40:00.647 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 16:40:00.647 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 16:40:00.657 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:5
+2025-06-10 16:40:00.849 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 16:40:01.029 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 16:40:01.145 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:40:01.165 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 16:40:01.170 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.969 seconds (process running for 2.258)
+2025-06-10 16:52:58.976 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 16:52:59.013 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 28116 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 16:52:59.014 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 16:52:59.834 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 16:52:59.840 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:52:59.843 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 16:52:59.843 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 16:52:59.920 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 16:52:59.920 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 869 ms
+2025-06-10 16:52:59.974 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 16:53:00.003 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 16:53:00.008 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 16:53:00.009 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 16:53:00.017 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:11
+2025-06-10 16:53:00.195 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 16:53:00.373 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 16:53:00.464 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:53:00.482 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 16:53:00.485 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.825 seconds (process running for 2.128)
+2025-06-10 16:54:27.609 [http-nio-8082-exec-6] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-10 16:54:27.610 [http-nio-8082-exec-6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-10 16:54:27.612 [http-nio-8082-exec-6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-06-10 16:54:27.655 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:27.656 [http-nio-8082-exec-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-10 16:54:27.663 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:27.771 [http-nio-8082-exec-6] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@78ae97d5
+2025-06-10 16:54:27.772 [http-nio-8082-exec-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-10 16:54:27.799 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:27.802 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:27.802 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:27.804 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:30.133 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:30.133 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:31.552 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:31.552 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:32.140 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:32.140 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:32.142 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:32.143 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:32.145 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:32.147 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:35.508 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:35.508 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:35.509 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:35.511 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:35.513 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:35.514 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:44.949 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:44.951 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:44.954 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:44.956 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:45.934 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:45.934 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:45.934 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:45.935 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:45.936 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:54:45.936 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 16:58:38.831 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-10 16:58:38.836 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-10 16:59:46.480 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 16:59:46.521 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 19464 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 16:59:46.522 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 16:59:47.321 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 16:59:47.326 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:59:47.328 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 16:59:47.328 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 16:59:47.408 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 16:59:47.409 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 855 ms
+2025-06-10 16:59:47.458 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 16:59:47.487 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 16:59:47.492 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 16:59:47.493 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 16:59:47.502 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:5
+2025-06-10 16:59:47.673 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 16:59:47.831 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 16:59:47.926 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 16:59:47.942 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 16:59:47.946 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.775 seconds (process running for 2.041)
+2025-06-10 17:01:45.615 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 17:01:45.653 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 24764 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 17:01:45.654 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 17:01:46.507 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 17:01:46.513 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 17:01:46.516 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 17:01:46.516 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 17:01:46.595 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 17:01:46.595 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 901 ms
+2025-06-10 17:01:46.647 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 17:01:46.675 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 17:01:46.679 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 17:01:46.680 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 17:01:46.689 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:14
+2025-06-10 17:01:46.869 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 17:01:47.049 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 17:01:47.153 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 17:01:47.171 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 17:01:47.176 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.894 seconds (process running for 2.167)
+2025-06-10 17:03:31.136 [http-nio-8082-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-10 17:03:31.137 [http-nio-8082-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-10 17:03:31.138 [http-nio-8082-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-06-10 17:03:31.171 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:31.171 [http-nio-8082-exec-3] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-10 17:03:31.182 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:31.266 [http-nio-8082-exec-3] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2c44eab4
+2025-06-10 17:03:31.268 [http-nio-8082-exec-3] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-10 17:03:31.294 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:31.295 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:31.296 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:31.296 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:38.178 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:45.066 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:45.070 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:45.075 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:45.081 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:46.611 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:46.611 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:47.397 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:47.397 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:47.400 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:47.401 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:47.402 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:03:47.403 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:11.245 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:11.247 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:11.250 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:11.254 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:12.873 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:12.874 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:12.875 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:12.876 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:12.877 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:12.878 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:19.360 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:19.360 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:19.361 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:19.363 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:19.365 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:04:19.366 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:05:45.965 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:05:45.965 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:05:45.967 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:05:45.968 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:05:45.969 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:05:45.970 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:12:54.752 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:12:54.752 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:12:54.755 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:12:54.756 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:12:54.758 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:12:54.758 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:35.542 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:35.544 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:35.545 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:35.550 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:36.961 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:36.962 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:36.963 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:36.963 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:36.964 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:36.965 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:40.608 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:40.609 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:40.611 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:40.612 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:40.613 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:19:40.616 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.882 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.882 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.883 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.883 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.884 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.885 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.887 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.887 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.887 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.888 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.888 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:21:49.889 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.071 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.072 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.071 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.072 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.073 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.073 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.074 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.074 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.074 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.075 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.075 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:23:11.076 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:13.345 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:13.345 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:13.346 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:13.347 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:13.348 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:13.349 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:52.057 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.updateVisitor]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 17:24:52.060 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@2094575076 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835] for JDBC transaction
+2025-06-10 17:24:52.062 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@2094575076 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835] to manual commit
+2025-06-10 17:24:52.085 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 17:24:52.086 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@2094575076 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835]
+2025-06-10 17:24:52.090 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@2094575076 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835] after transaction
+2025-06-10 17:24:53.656 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:53.656 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:53.658 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:53.659 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:53.661 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:24:53.661 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:31.699 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.deleteVisitor]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 17:25:31.700 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@2072739354 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] for JDBC transaction
+2025-06-10 17:25:31.700 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@2072739354 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] to manual commit
+2025-06-10 17:25:31.702 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 17:25:31.702 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@2072739354 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4]
+2025-06-10 17:25:31.704 [http-nio-8082-exec-4] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@2072739354 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] after transaction
+2025-06-10 17:25:32.278 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:32.279 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:32.279 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:32.280 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:32.281 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:32.281 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:33.900 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:33.900 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:33.901 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:33.902 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:33.902 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:33.903 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:36.205 [http-nio-8082-exec-1] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.deleteVisitor]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 17:25:36.207 [http-nio-8082-exec-1] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@1890825934 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] for JDBC transaction
+2025-06-10 17:25:36.207 [http-nio-8082-exec-1] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@1890825934 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] to manual commit
+2025-06-10 17:25:36.208 [http-nio-8082-exec-1] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 17:25:36.208 [http-nio-8082-exec-1] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@1890825934 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4]
+2025-06-10 17:25:36.211 [http-nio-8082-exec-1] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@1890825934 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] after transaction
+2025-06-10 17:25:36.972 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:36.972 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:36.973 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:36.974 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:36.974 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:36.975 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:39.963 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:39.963 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:39.964 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:39.964 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:39.966 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:39.967 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:42.964 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.deleteVisitor]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 17:25:42.965 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@2068850809 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] for JDBC transaction
+2025-06-10 17:25:42.965 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@2068850809 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] to manual commit
+2025-06-10 17:25:42.967 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 17:25:42.967 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@2068850809 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4]
+2025-06-10 17:25:42.969 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@2068850809 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] after transaction
+2025-06-10 17:25:44.101 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:44.101 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:44.102 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:44.103 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:44.105 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:44.105 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:49.765 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:49.765 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:49.766 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:49.767 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:49.768 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:49.769 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:50.367 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:50.367 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:50.368 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:50.369 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:50.369 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:50.371 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:57.928 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:57.929 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:57.930 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:57.930 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:57.932 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:25:57.932 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:26:08.182 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.deleteVisitor]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 17:26:08.182 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@1303131870 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] for JDBC transaction
+2025-06-10 17:26:08.182 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@1303131870 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] to manual commit
+2025-06-10 17:26:08.183 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 17:26:08.184 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@1303131870 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4]
+2025-06-10 17:26:08.186 [http-nio-8082-exec-6] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@1303131870 wrapping com.mysql.cj.jdbc.ConnectionImpl@2c44eab4] after transaction
+2025-06-10 17:26:09.299 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:26:09.299 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:26:09.300 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:26:09.300 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:26:09.301 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:26:09.301 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:41.476 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Creating new transaction with name [edu.mycc.xhd.mycsdormitorymanagement.service.DormVisitorService.updateVisitor]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2025-06-10 17:27:41.477 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Acquired Connection [HikariProxyConnection@1741875214 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835] for JDBC transaction
+2025-06-10 17:27:41.477 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Switching JDBC Connection [HikariProxyConnection@1741875214 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835] to manual commit
+2025-06-10 17:27:41.479 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Initiating transaction commit
+2025-06-10 17:27:41.480 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Committing JDBC transaction on Connection [HikariProxyConnection@1741875214 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835]
+2025-06-10 17:27:41.482 [http-nio-8082-exec-10] DEBUG o.s.j.support.JdbcTransactionManager - Releasing JDBC Connection [HikariProxyConnection@1741875214 wrapping com.mysql.cj.jdbc.ConnectionImpl@2074835] after transaction
+2025-06-10 17:27:42.453 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:42.455 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:42.456 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:42.456 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:42.456 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:42.458 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:55.688 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:27:56.458 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:29:34.004 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:29:34.005 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:29:34.006 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:29:34.007 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:29:34.008 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:29:34.008 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:30:04.909 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:30:04.909 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:30:04.910 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:30:04.911 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:30:04.911 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:30:04.912 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 17:36:05.918 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 17:36:05.954 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 21048 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 17:36:05.955 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 17:36:06.781 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 17:36:06.787 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 17:36:06.789 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 17:36:06.789 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 17:36:06.865 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 17:36:06.866 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 874 ms
+2025-06-10 17:36:06.920 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 17:36:06.950 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 17:36:06.955 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 17:36:06.956 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 17:36:06.964 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:16
+2025-06-10 17:36:07.145 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 17:36:07.327 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 17:36:07.436 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 17:36:07.454 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 17:36:07.460 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.865 seconds (process running for 2.161)
+2025-06-10 18:09:45.445 [http-nio-8082-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-10 18:09:45.446 [http-nio-8082-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-10 18:09:45.448 [http-nio-8082-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-06-10 18:09:45.497 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.498 [http-nio-8082-exec-2] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-10 18:09:45.509 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.615 [http-nio-8082-exec-2] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a3527b2
+2025-06-10 18:09:45.617 [http-nio-8082-exec-2] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-10 18:09:45.644 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.646 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.647 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.648 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.667 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:45.667 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:46.332 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:46.332 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:46.334 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:46.336 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:46.339 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:09:46.340 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.562 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.568 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.579 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.596 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.601 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.606 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:32.612 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:36.515 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:36.517 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:36.520 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:15:36.524 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:16:03.815 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:16:03.818 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:16:03.829 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:16:03.832 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:16:03.835 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:16:03.840 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:22:38.284 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-10 18:22:38.290 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-10 18:22:48.124 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 18:22:48.162 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 36936 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 18:22:48.163 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 18:22:49.002 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 18:22:49.007 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 18:22:49.008 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 18:22:49.010 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 18:22:49.085 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 18:22:49.086 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 888 ms
+2025-06-10 18:22:49.142 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 18:22:49.177 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 18:22:49.183 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 18:22:49.183 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 18:22:49.191 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:20
+2025-06-10 18:22:49.405 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 18:22:49.638 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 18:22:49.749 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 18:22:49.770 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 18:22:49.774 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.961 seconds (process running for 2.247)
+2025-06-10 18:24:14.992 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-06-10 18:24:15.033 [main] INFO  e.m.x.m.CleanApp - Starting CleanApp using Java 21.0.7 with PID 36548 (D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management\target\classes started by save in D:\Study\project\JAVAEE\xiangmu\system\mycs-dormitory-management)
+2025-06-10 18:24:15.034 [main] INFO  e.m.x.m.CleanApp - No active profile set, falling back to 1 default profile: "default"
+2025-06-10 18:24:15.892 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8082 (http)
+2025-06-10 18:24:15.898 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+2025-06-10 18:24:15.900 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-10 18:24:15.900 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-06-10 18:24:15.980 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-10 18:24:15.980 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 911 ms
+2025-06-10 18:24:16.034 [main] DEBUG c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration
+2025-06-10 18:24:16.064 [main] WARN  c.b.m.e.s.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was specified but matching resources are not found.
+2025-06-10 18:24:16.070 [main] DEBUG c.b.m.core.toolkit.Sequence - Get /10.102.58.231 network interface 
+2025-06-10 18:24:16.071 [main] DEBUG c.b.m.core.toolkit.Sequence - Get network interface info: name:ethernet_32768 (Realtek PCIe GbE Family Controller)
+2025-06-10 18:24:16.080 [main] DEBUG c.b.m.core.toolkit.Sequence - Initialization Sequence datacenterId:27 workerId:17
+2025-06-10 18:24:16.257 [main] WARN  c.b.m.core.injector.methods.Insert - [edu.mycc.xhd.mycsdormitorymanagement.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2025-06-10 18:24:16.427 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2025-06-10 18:24:16.528 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+2025-06-10 18:24:16.547 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8082 (http) with context path ''
+2025-06-10 18:24:16.551 [main] INFO  e.m.x.m.CleanApp - Started CleanApp in 1.915 seconds (process running for 2.221)
+2025-06-10 18:27:04.900 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-10 18:27:04.900 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-10 18:27:04.901 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-06-10 18:27:04.933 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:04.934 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-10 18:27:05.025 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@698b771c
+2025-06-10 18:27:05.026 [http-nio-8082-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-10 18:27:05.060 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:05.064 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:05.069 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:08.976 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:08.979 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:08.987 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:08.989 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:08.991 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:08.994 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:18.831 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:18.833 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:18.843 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:18.844 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:18.848 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:18.852 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:34.118 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:34.120 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:34.128 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:34.130 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:34.133 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:34.141 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.145 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.145 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.696 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.697 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.698 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.700 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.701 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:35.702 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:36.436 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:36.437 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.228 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.235 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.238 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.253 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.259 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.265 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.272 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.722 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:37.722 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.267 [http-nio-8082-exec-4] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.267 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.681 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.681 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.683 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.685 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.686 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:39.687 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.475 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.474 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.477 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.477 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.479 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.480 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.961 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:41.961 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:42.269 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:42.270 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:42.270 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:42.271 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:42.272 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:27:42.273 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:28:46.692 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:28:46.692 [http-nio-8082-exec-2] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:28:46.693 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:28:46.694 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:28:46.695 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:28:46.695 [http-nio-8082-exec-8] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:18.823 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:18.824 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:18.826 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:18.827 [http-nio-8082-exec-9] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:25.403 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:25.405 [http-nio-8082-exec-10] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:25.413 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:25.415 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:25.417 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:25.420 [http-nio-8082-exec-1] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:36.194 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:36.195 [http-nio-8082-exec-7] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:36.205 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:36.208 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:36.211 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:36.213 [http-nio-8082-exec-5] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:41.452 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:41.454 [http-nio-8082-exec-3] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:41.462 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:41.464 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:41.468 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource
+2025-06-10 18:29:41.470 [http-nio-8082-exec-6] DEBUG o.s.jdbc.datasource.DataSourceUtils - Fetching JDBC Connection from DataSource

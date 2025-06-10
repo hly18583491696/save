@@ -341,25 +341,29 @@ export default {
   methods: {
     async loadVisitors() {
       try {
+        console.log('开始加载访客数据')
         const response = await axios.get('http://localhost:8082/api/visitor/list')
-        console.log('API响应:', response.data) // 添加调试日志
-        if (response.data.success) {
-          this.visitors = response.data.data
-          console.log('访客数据:', this.visitors) // 添加调试日志
+        console.log('API响应:', response.data)
+        if (response.data.code === 200) {
+          console.log('加载成功，更新前访客数量:', this.visitors.length)
+          this.visitors = response.data.data || []
+          console.log('更新后访客数量:', this.visitors.length)
+          console.log('访客数据:', this.visitors)
         } else {
-          alert(response.data.message || '获取访客列表失败')
+          this.visitors = []
+          console.error('加载访客数据失败:', response.data.message)
         }
       } catch (error) {
-        console.error('获取访客列表失败:', error)
-        alert('获取访客列表失败')
+        console.error('加载访客数据失败:', error)
+        this.visitors = []
       }
     },
     async loadStatistics() {
       try {
         const response = await axios.get('http://localhost:8082/api/visitor/statistics')
         console.log('统计API响应:', response.data) // 添加调试日志
-        if (response.data.success) {
-          this.statistics = response.data.data
+        if (response.data.code === 200) {
+          this.statistics = response.data.data || {}
           console.log('统计数据:', this.statistics) // 添加调试日志
         }
       } catch (error) {
@@ -377,8 +381,8 @@ export default {
             visitorName: this.searchKeyword
           }
         })
-        if (response.data.success) {
-          this.visitors = response.data.data
+        if (response.data.code === 200) {
+          this.visitors = response.data.data || []
         }
       } catch (error) {
         console.error('搜索访客失败:', error)
@@ -392,8 +396,8 @@ export default {
       }
       try {
         const response = await axios.get(`http://localhost:8082/api/visitor/status/${this.statusFilter}`)
-        if (response.data.success) {
-          this.visitors = response.data.data
+        if (response.data.code === 200) {
+          this.visitors = response.data.data || []
         }
       } catch (error) {
         console.error('筛选访客失败:', error)
@@ -406,7 +410,7 @@ export default {
         const method = this.showAddDialog ? 'post' : 'put'
         
         const response = await axios[method](url, this.currentVisitor)
-        if (response.data.success) {
+        if (response.data.code === 200) {
           alert(response.data.message || '操作成功')
           this.closeDialog()
           this.loadVisitors()
@@ -422,7 +426,7 @@ export default {
     async markAsLeft(id) {
       try {
         const response = await axios.put(`http://localhost:8082/api/visitor/leave/${id}`)
-        if (response.data.success) {
+        if (response.data.code === 200) {
           alert('访客离开登记成功')
           this.loadVisitors()
           this.loadStatistics()
@@ -435,16 +439,25 @@ export default {
       }
     },
     async deleteVisitor(id) {
+      console.log('开始删除访客，ID:', id)
       if (!confirm('确定要删除这条访客记录吗？')) {
+        console.log('用户取消删除操作')
         return
       }
       try {
+        console.log('发送删除请求到:', `http://localhost:8082/api/visitor/delete/${id}`)
         const response = await axios.delete(`http://localhost:8082/api/visitor/delete/${id}`)
-        if (response.data.success) {
+        console.log('删除请求响应:', response.data)
+        if (response.data.code === 200) {
+          console.log('删除成功，开始重新加载数据')
           alert('删除成功')
-          this.loadVisitors()
-          this.loadStatistics()
+          console.log('调用loadVisitors重新加载访客列表')
+          await this.loadVisitors()
+          console.log('调用loadStatistics重新加载统计数据')
+          await this.loadStatistics()
+          console.log('数据重新加载完成')
         } else {
+          console.log('删除失败，错误信息:', response.data.message)
           alert(response.data.message || '删除失败')
         }
       } catch (error) {
@@ -455,7 +468,7 @@ export default {
     async updateExpiredVisitors() {
       try {
         const response = await axios.put('http://localhost:8082/api/visitor/update-expired')
-        if (response.data.success) {
+        if (response.data.code === 200) {
           alert(response.data.message || '更新成功')
           this.loadVisitors()
           this.loadStatistics()
