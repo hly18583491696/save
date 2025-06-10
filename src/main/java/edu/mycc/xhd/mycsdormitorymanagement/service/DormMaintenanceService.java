@@ -144,6 +144,30 @@ public class DormMaintenanceService {
     }
     
     /**
+     * 物理删除维修记录
+     */
+    @Transactional
+    public boolean deleteMaintenancePhysically(Long id) {
+        return maintenanceMapper.deleteByIdPhysically(id) > 0;
+    }
+    
+    /**
+     * 处理维修申请（审核通过或拒绝）
+     */
+    @Transactional
+    public boolean processMaintenance(Long id, String status, String processRemark) {
+        DormMaintenance maintenance = maintenanceMapper.selectById(id);
+        if (maintenance != null) {
+            maintenance.setStatus(status);
+            maintenance.setProcessRemark(processRemark);
+            maintenance.setUpdateTime(LocalDateTime.now());
+            maintenanceMapper.updateById(maintenance);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * 更新维修状态
      */
     @Transactional

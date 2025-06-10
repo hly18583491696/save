@@ -455,6 +455,220 @@
         </div>
       </div>
     </div>
+    
+    <!-- 详情/编辑模态框 -->
+    <div v-if="showDetailModal" class="modal-overlay" @click="closeDetailModal">
+      <div class="modal-content detail-modal" @click.stop>
+        <div class="modal-header">
+          <h3>{{ isEditing ? '编辑维修申请' : '维修申请详情' }}</h3>
+          <button class="close-btn" @click="closeDetailModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body" v-if="currentRequest">
+          <div v-if="!isEditing" class="detail-view">
+            <div class="detail-section">
+              <h4>基本信息</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <label>申请编号:</label>
+                  <span>{{ currentRequest.requestNumber || currentRequest.id }}</span>
+                </div>
+                <div class="detail-item">
+                  <label>申请时间:</label>
+                  <span>{{ formatDate(currentRequest.createTime || currentRequest.createdAt) }}</span>
+                </div>
+                <div class="detail-item">
+                  <label>状态:</label>
+                  <span :class="['status-badge', currentRequest.status]">
+                    {{ getStatusText(currentRequest.status) }}
+                  </span>
+                </div>
+                <div class="detail-item">
+                  <label>紧急程度:</label>
+                  <span :class="['urgency-badge', currentRequest.urgencyLevel || currentRequest.urgency]">
+                    {{ getUrgencyText(currentRequest.urgencyLevel || currentRequest.urgency) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-section">
+              <h4>房间信息</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <label>宿舍房间:</label>
+                  <span>{{ currentRequest.buildingName || currentRequest.building }}栋 {{ currentRequest.roomNumber }}</span>
+                </div>
+                <div class="detail-item">
+                  <label>申请人:</label>
+                  <span>{{ currentRequest.applicantName || currentRequest.applicant }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-section">
+              <h4>维修信息</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <label>维修类型:</label>
+                  <span>{{ currentRequest.maintenanceType || currentRequest.type }}</span>
+                </div>
+                <div class="detail-item">
+                  <label>问题描述:</label>
+                  <div class="description-content">{{ currentRequest.description }}</div>
+                </div>
+                <div class="detail-item" v-if="currentRequest.assignedTo">
+                  <label>负责人:</label>
+                  <span>{{ currentRequest.assignedTo }}</span>
+                </div>
+                <div class="detail-item" v-if="currentRequest.estimatedCost">
+                  <label>预估费用:</label>
+                  <span>¥{{ currentRequest.estimatedCost }}</span>
+                </div>
+                <div class="detail-item" v-if="currentRequest.actualCost">
+                  <label>实际费用:</label>
+                  <span>¥{{ currentRequest.actualCost }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-section" v-if="currentRequest.feedback">
+              <h4>反馈信息</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <label>反馈内容:</label>
+                  <div class="description-content">{{ currentRequest.feedback }}</div>
+                </div>
+                <div class="detail-item" v-if="currentRequest.rating">
+                  <label>评分:</label>
+                  <div class="rating-display">
+                    <span v-for="i in 5" :key="i" 
+                          :class="['star', i <= currentRequest.rating ? 'filled' : '']">
+                      ★
+                    </span>
+                    <span class="rating-text">({{ currentRequest.rating }}/5)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 编辑表单 -->
+          <div v-else class="edit-form">
+            <form @submit.prevent="saveEdit">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>宿舍房间</label>
+                  <input 
+                    type="text" 
+                    v-model="editForm.roomNumber" 
+                    class="form-input"
+                    required
+                  >
+                </div>
+                <div class="form-group">
+                  <label>申请人</label>
+                  <input 
+                    type="text" 
+                    v-model="editForm.applicantName" 
+                    class="form-input"
+                    required
+                  >
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>维修类型</label>
+                  <select v-model="editForm.maintenanceType" class="form-select" required>
+                    <option value="">请选择维修类型</option>
+                    <option value="水电维修">水电维修</option>
+                    <option value="家具维修">家具维修</option>
+                    <option value="门窗维修">门窗维修</option>
+                    <option value="网络维修">网络维修</option>
+                    <option value="其他维修">其他维修</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>紧急程度</label>
+                  <select v-model="editForm.urgencyLevel" class="form-select" required>
+                    <option value="">请选择紧急程度</option>
+                    <option value="LOW">低</option>
+                    <option value="NORMAL">普通</option>
+                    <option value="HIGH">高</option>
+                    <option value="URGENT">紧急</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>问题描述</label>
+                <textarea 
+                  v-model="editForm.description" 
+                  class="form-textarea"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+              
+              <div class="form-row" v-if="currentRequest.status !== 'PENDING'">
+                <div class="form-group">
+                  <label>负责人</label>
+                  <input 
+                    type="text" 
+                    v-model="editForm.assignedTo" 
+                    class="form-input"
+                  >
+                </div>
+                <div class="form-group">
+                  <label>预估费用</label>
+                  <input 
+                    type="number" 
+                    v-model="editForm.estimatedCost" 
+                    class="form-input"
+                    step="0.01"
+                    min="0"
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <div v-if="!isEditing" class="detail-actions">
+            <button class="btn btn-outline" @click="closeDetailModal">
+              关闭
+            </button>
+            <button v-if="canEdit(currentRequest)" 
+                    class="btn btn-primary" 
+                    @click="startEdit">
+              <i class="fas fa-edit"></i> 编辑
+            </button>
+            <button v-if="currentRequest.status === 'PENDING'" 
+                    class="btn btn-warning" 
+                    @click="processRequest(currentRequest)">
+              <i class="fas fa-play"></i> 开始处理
+            </button>
+            <button v-if="currentRequest.status === 'IN_PROGRESS'" 
+                    class="btn btn-success" 
+                    @click="completeRequest(currentRequest)">
+              <i class="fas fa-check"></i> 完成维修
+            </button>
+          </div>
+          
+          <div v-else class="edit-actions">
+            <button type="button" class="btn btn-outline" @click="cancelEdit">
+              取消
+            </button>
+            <button type="button" class="btn btn-primary" @click="saveEdit" :disabled="loading">
+              <i class="fas fa-save"></i> {{ loading ? '保存中...' : '保存' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -513,6 +727,18 @@ export default {
     
     // 当前查看的申请详情
     const currentRequest = ref(null)
+    
+    // 编辑相关
+    const isEditing = ref(false)
+    const editForm = ref({
+      roomNumber: '',
+      applicantName: '',
+      maintenanceType: '',
+      urgencyLevel: '',
+      description: '',
+      assignedTo: '',
+      estimatedCost: null
+    })
     
     // 维修申请列表
     const maintenanceRequests = ref([])
@@ -843,8 +1069,103 @@ export default {
     
     // 编辑维修申请
     const editRequest = async (request) => {
-      // 这里可以实现编辑功能，暂时只是查看
-      viewRequest(request)
+      currentRequest.value = request
+      isEditing.value = true
+      // 填充编辑表单
+      editForm.value = {
+        roomNumber: request.roomNumber || '',
+        applicantName: request.applicant || '',
+        maintenanceType: request.type || '',
+        urgencyLevel: request.urgency || '',
+        description: request.description || '',
+        assignedTo: request.assignee || '',
+        estimatedCost: request.estimatedCost || null
+      }
+      showDetailModal.value = true
+    }
+    
+    // 开始编辑
+    const startEdit = () => {
+      isEditing.value = true
+      // 填充编辑表单
+      editForm.value = {
+        roomNumber: currentRequest.value.roomNumber || '',
+        applicantName: currentRequest.value.applicant || '',
+        maintenanceType: currentRequest.value.type || '',
+        urgencyLevel: currentRequest.value.urgency || '',
+        description: currentRequest.value.description || '',
+        assignedTo: currentRequest.value.assignee || '',
+        estimatedCost: currentRequest.value.estimatedCost || null
+      }
+    }
+    
+    // 取消编辑
+    const cancelEdit = () => {
+      isEditing.value = false
+      editForm.value = {
+        roomNumber: '',
+        applicantName: '',
+        maintenanceType: '',
+        urgencyLevel: '',
+        description: '',
+        assignedTo: '',
+        estimatedCost: null
+      }
+    }
+    
+    // 保存编辑
+    const saveEdit = async () => {
+      try {
+        loading.value = true
+        const updateData = {
+          id: currentRequest.value.id,
+          roomNumber: editForm.value.roomNumber,
+          applicantName: editForm.value.applicantName,
+          maintenanceType: editForm.value.maintenanceType,
+          urgencyLevel: editForm.value.urgencyLevel,
+          description: editForm.value.description,
+          assignedTo: editForm.value.assignedTo,
+          estimatedCost: editForm.value.estimatedCost
+        }
+        
+        const response = await axios.put(`${API_BASE_URL}/update`, updateData)
+        if (response.data.code === 200) {
+          alert('更新成功！')
+          isEditing.value = false
+          showDetailModal.value = false
+          await fetchMaintenanceRequests()
+          await fetchStatistics()
+        } else {
+          alert('更新失败：' + response.data.message)
+        }
+      } catch (error) {
+        console.error('更新维修申请失败:', error)
+        alert('更新失败，请稍后重试')
+      } finally {
+        loading.value = false
+      }
+    }
+    
+    // 关闭详情模态框
+    const closeDetailModal = () => {
+      showDetailModal.value = false
+      isEditing.value = false
+      currentRequest.value = null
+      editForm.value = {
+        roomNumber: '',
+        applicantName: '',
+        maintenanceType: '',
+        urgencyLevel: '',
+        description: '',
+        assignedTo: '',
+        estimatedCost: null
+      }
+    }
+    
+    // 判断是否可以编辑
+    const canEdit = (request) => {
+      // 只有待处理和处理中的申请可以编辑
+      return request && (request.status === 'PENDING' || request.status === 'IN_PROGRESS')
     }
     
     // 删除维修申请
@@ -949,6 +1270,8 @@ export default {
       stats,
       newRequest,
       currentRequest,
+      isEditing,
+      editForm,
       maintenanceRequests,
       
       // 计算属性
@@ -977,6 +1300,11 @@ export default {
       submitRequest,
       viewRequest,
       editRequest,
+      startEdit,
+      cancelEdit,
+      saveEdit,
+      closeDetailModal,
+      canEdit,
       deleteRequest,
       processRequest,
       completeRequest,
@@ -2052,6 +2380,109 @@ export default {
   background: #f8fafc;
 }
 
+/* 详情模态框样式 */
+.detail-modal {
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.detail-view {
+  padding: 0;
+}
+
+.detail-section {
+  margin-bottom: 32px;
+}
+
+.detail-section h4 {
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-item label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-item span {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.description-content {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.star {
+  color: #d1d5db;
+  font-size: 16px;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.rating-text {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.edit-form {
+  padding: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.detail-actions,
+.edit-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modal-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
 /* 响应式设计 */
 @media (max-width: 1024px) {
   .stats-grid {
@@ -2060,6 +2491,14 @@ export default {
   
   .maintenance-cards {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
   }
 }
 

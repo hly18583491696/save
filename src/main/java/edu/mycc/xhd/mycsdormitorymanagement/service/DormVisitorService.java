@@ -24,7 +24,12 @@ public class DormVisitorService {
      * 获取所有访客记录
      */
     public List<DormVisitor> getAllVisitors() {
-        return dormVisitorMapper.selectList(null);
+        // 使用QueryWrapper过滤已删除的记录
+        return dormVisitorMapper.selectList(
+            new com.baomidou.mybatisplus.core.conditions.query.QueryWrapper<DormVisitor>()
+                .eq("deleted", 0)
+                .orderByDesc("visit_time")
+        );
     }
     
     /**
@@ -121,15 +126,11 @@ public class DormVisitorService {
     }
     
     /**
-     * 删除访客记录（逻辑删除）
+     * 删除访客记录（物理删除）
      */
     @Transactional
     public boolean deleteVisitor(Long id) {
-        DormVisitor visitor = new DormVisitor();
-        visitor.setId(id);
-        visitor.setDeleted(1);
-        visitor.setUpdateTime(LocalDateTime.now());
-        return dormVisitorMapper.updateById(visitor) > 0;
+        return dormVisitorMapper.deleteById(id) > 0;
     }
     
     /**

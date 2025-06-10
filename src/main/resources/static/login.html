@@ -393,13 +393,24 @@
             hideError();
             
             try {
-                // 模拟API调用
-                const response = await mockLogin(username, password, role);
+                // 调用真实API
+                const response = await fetch('http://localhost:8082/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
                 
-                if (response.success) {
+                const result = await response.json();
+                
+                if (result.success) {
                     // 保存用户信息
-                    localStorage.setItem('userToken', response.token);
-                    localStorage.setItem('userInfo', JSON.stringify(response.user));
+                    localStorage.setItem('userToken', result.data.token);
+                    localStorage.setItem('userInfo', JSON.stringify(result.data.user));
                     
                     if (rememberMe) {
                         localStorage.setItem('rememberedUser', username);
@@ -408,7 +419,7 @@
                     // 跳转到主页
                     window.location.href = '/index.html';
                 } else {
-                    showError(response.message || '登录失败，请检查用户名和密码');
+                    showError(result.message || '登录失败，请检查用户名和密码');
                 }
             } catch (error) {
                 console.error('Login error:', error);
@@ -418,36 +429,7 @@
             }
         }
 
-        // 模拟登录API
-        async function mockLogin(username, password, role) {
-            // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // 模拟登录验证
-            const validCredentials = {
-                'admin': { username: 'admin', password: '123456' },
-                'teacher': { username: 'teacher', password: 'teacher123' }
-            };
-            
-            const credential = validCredentials[role];
-            
-            if (credential && username === credential.username && password === credential.password) {
-                return {
-                    success: true,
-                    token: 'mock-jwt-token-' + Date.now(),
-                    user: {
-                        id: 1,
-                        username: username,
-                        role: role,
-                        name: role === 'admin' ? '系统管理员' : '教师用户'
-                    }
-                };
-            } else {
-                return {
-                    success: false,
-                    message: '用户名或密码错误'
-                };
-            }
+        // 登录API已替换为真实接口调用
         }
 
         // 设置加载状态

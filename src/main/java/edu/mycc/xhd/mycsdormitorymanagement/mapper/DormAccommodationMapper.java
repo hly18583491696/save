@@ -2,6 +2,7 @@ package edu.mycc.xhd.mycsdormitorymanagement.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormAccommodation;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -62,4 +63,16 @@ public interface DormAccommodationMapper extends BaseMapper<DormAccommodation> {
      */
     @Select("SELECT bed_number FROM dorm_accommodation WHERE room_id = #{roomId} AND status = 'ACTIVE' AND deleted = 0")
     List<String> findOccupiedBedsByRoomId(Long roomId);
+    
+    /**
+     * 物理删除住宿记录
+     */
+    @Delete("DELETE FROM dorm_accommodation WHERE id = #{id}")
+    int deleteByIdPhysically(Long id);
+    
+    /**
+     * 根据学生ID物理删除住宿记录
+     */
+    @Delete("DELETE FROM dorm_accommodation WHERE student_id = #{studentId}")
+    int deleteByStudentIdPhysically(Long studentId);
 }

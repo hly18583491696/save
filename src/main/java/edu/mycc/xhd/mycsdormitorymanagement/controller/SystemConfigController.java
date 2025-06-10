@@ -2,6 +2,8 @@ package edu.mycc.xhd.mycsdormitorymanagement.controller;
 
 import edu.mycc.xhd.mycsdormitorymanagement.entity.SystemConfig;
 import edu.mycc.xhd.mycsdormitorymanagement.service.SystemConfigService;
+import edu.mycc.xhd.mycsdormitorymanagement.service.StudentService;
+import edu.mycc.xhd.mycsdormitorymanagement.service.DormRoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,12 @@ public class SystemConfigController {
 
     @Autowired
     private SystemConfigService systemConfigService;
+    
+    @Autowired
+    private StudentService studentService;
+    
+    @Autowired
+    private DormRoomService dormRoomService;
 
     /**
      * 获取所有配置
@@ -302,12 +310,17 @@ public class SystemConfigController {
         log.info("获取系统信息请求");
         try {
             Map<String, Object> systemInfo = new HashMap<>();
-            systemInfo.put("version", "v1.0.0");
+            systemInfo.put("version", "v2.0.0");
             systemInfo.put("databaseVersion", "MySQL 8.0");
             systemInfo.put("serverTime", java.time.LocalDateTime.now().toString());
-            systemInfo.put("onlineUsers", 23); // 模拟数据，实际应从缓存或数据库获取
-            systemInfo.put("totalStudents", 1250); // 可以调用其他服务获取
-            systemInfo.put("totalRooms", 320); // 可以调用其他服务获取
+            systemInfo.put("onlineUsers", 0); // 在线用户数，需要实现会话管理
+            
+            // 获取真实的学生数据
+            Map<String, Object> studentStats = studentService.getStudentStatistics();
+            systemInfo.put("totalStudents", studentStats.get("totalStudents"));
+            
+            // 获取真实的房间数据
+            systemInfo.put("totalRooms", dormRoomService.getAllRooms().size());
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);

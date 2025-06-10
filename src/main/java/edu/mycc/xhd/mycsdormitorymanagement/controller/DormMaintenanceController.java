@@ -188,15 +188,15 @@ public class DormMaintenanceController {
     }
     
     /**
-     * 删除维修记录
+     * 删除维修记录（逻辑删除）
      */
     @DeleteMapping("/delete/{id}")
     public Result<Void> deleteMaintenance(@PathVariable Long id) {
-        log.info("删除维修记录请求，ID: {}", id);
+        log.info("逻辑删除维修记录请求，ID: {}", id);
         try {
             boolean success = maintenanceService.deleteMaintenance(id);
             if (success) {
-                log.info("成功删除维修记录，ID: {}", id);
+                log.info("成功逻辑删除维修记录，ID: {}", id);
                 return Result.success(null, "维修记录删除成功");
             } else {
                 log.warn("维修记录不存在或删除失败，ID: {}", id);
@@ -205,6 +205,56 @@ public class DormMaintenanceController {
         } catch (Exception e) {
             log.error("删除维修记录失败，ID: {}, 错误: {}", id, e.getMessage());
             return Result.error("删除维修记录失败: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 物理删除维修记录
+     */
+    @DeleteMapping("/delete-physically/{id}")
+    public Result<Void> deleteMaintenancePhysically(@PathVariable Long id) {
+        log.info("物理删除维修记录请求，ID: {}", id);
+        try {
+            boolean success = maintenanceService.deleteMaintenancePhysically(id);
+            if (success) {
+                log.info("成功物理删除维修记录，ID: {}", id);
+                return Result.success(null, "维修记录已彻底删除");
+            } else {
+                log.warn("维修记录不存在或物理删除失败，ID: {}", id);
+                return Result.error("维修记录不存在或删除失败");
+            }
+        } catch (Exception e) {
+            log.error("物理删除维修记录失败，ID: {}, 错误: {}", id, e.getMessage());
+            return Result.error("物理删除维修记录失败: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 处理维修申请（审核通过或拒绝）
+     */
+    @PutMapping("/process/{id}")
+    public Result<Void> processMaintenance(@PathVariable Long id, 
+                                         @RequestParam String status, 
+                                         @RequestParam(required = false) String processRemark) {
+        log.info("处理维修申请请求，ID: {}, 状态: {}", id, status);
+        try {
+            // 验证状态参数
+            if (!"APPROVED".equals(status) && !"REJECTED".equals(status)) {
+                return Result.badRequest("状态参数无效，只能是APPROVED或REJECTED");
+            }
+            
+            boolean success = maintenanceService.processMaintenance(id, status, processRemark);
+            if (success) {
+                String statusText = "APPROVED".equals(status) ? "审核通过" : "审核拒绝";
+                log.info("成功处理维修申请，ID: {}, 状态: {}", id, statusText);
+                return Result.success(null, "维修申请" + statusText + "成功");
+            } else {
+                log.warn("维修记录不存在或处理失败，ID: {}", id);
+                return Result.error("维修记录不存在或处理失败");
+            }
+        } catch (Exception e) {
+            log.error("处理维修申请失败，ID: {}, 错误: {}", id, e.getMessage());
+            return Result.error("处理维修申请失败: " + e.getMessage());
         }
     }
     

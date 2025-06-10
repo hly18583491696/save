@@ -223,27 +223,27 @@ public class DormAccommodationService {
     }
     
     /**
-     * 删除住宿记录（逻辑删除）
+     * 删除住宿记录（物理删除）
      */
     @Transactional
     public boolean deleteAccommodation(Long id) {
-        log.info("开始删除住宿记录，ID: {}", id);
+        log.info("开始物理删除住宿记录，ID: {}", id);
         
-        // 先查询记录是否存在（使用selectById会忽略逻辑删除标志）
+        // 先查询记录是否存在
         DormAccommodation existing = accommodationMapper.selectById(id);
-        if (existing == null || existing.getDeleted() == 1) {
-            log.warn("要删除的住宿记录不存在或已被删除，ID: {}", id);
+        if (existing == null) {
+            log.warn("要删除的住宿记录不存在，ID: {}", id);
             return false;
         }
         
-        log.info("找到住宿记录，学生: {}, 当前状态: deleted={}", existing.getStudentName(), existing.getDeleted());
+        log.info("找到住宿记录，学生: {}, 准备进行物理删除", existing.getStudentName());
         
-        // 使用MyBatis-Plus的removeById方法触发逻辑删除
-        boolean result = accommodationMapper.deleteById(id) > 0;
-        log.info("数据库删除结果: {}", result ? "成功" : "失败");
+        // 执行物理删除 - 直接从数据库中删除记录
+        boolean result = accommodationMapper.deleteByIdPhysically(id) > 0;
+        log.info("数据库物理删除结果: {}", result ? "成功" : "失败");
         
         if (result) {
-            log.info("成功删除住宿记录，记录ID: {}, 学生: {}", existing.getId(), existing.getStudentName());
+            log.info("成功物理删除住宿记录，记录ID: {}, 学生: {}", existing.getId(), existing.getStudentName());
         }
         
         return result;
@@ -257,13 +257,13 @@ public class DormAccommodationService {
     }
     
     /**
-     * 根据学生ID删除住宿记录（逻辑删除）
+     * 根据学生ID删除住宿记录（物理删除）
      */
     @Transactional
     public boolean deleteAccommodationsByStudentId(Long studentId) {
-        log.info("开始删除学生ID为{}的所有住宿记录", studentId);
+        log.info("开始物理删除学生ID为{}的所有住宿记录", studentId);
         
-        // 查找该学生的所有住宿记录
+        // 查找该学生的所有住宿记录（用于日志记录）
         List<DormAccommodation> accommodations = accommodationMapper.findByStudentId(studentId);
         
         if (accommodations.isEmpty()) {
@@ -271,19 +271,15 @@ public class DormAccommodationService {
             return true; // 没有记录也算成功
         }
         
-        // 逻辑删除所有住宿记录
-        for (DormAccommodation accommodation : accommodations) {
-            accommodation.setDeleted(1);
-            accommodation.setUpdateTime(LocalDateTime.now());
-            int result = accommodationMapper.updateById(accommodation);
-            if (result <= 0) {
-                log.error("删除住宿记录失败，记录ID: {}", accommodation.getId());
-                return false;
-            }
-            log.info("成功删除住宿记录，记录ID: {}, 学生: {}", accommodation.getId(), accommodation.getStudentName());
-        }
+        // 批量物理删除该学生的所有住宿记录
+        int deletedCount = accommodationMapper.deleteByStudentIdPhysically(studentId);
         
-        log.info("成功删除学生ID为{}的所有住宿记录，共{}条", studentId, accommodations.size());
-        return true;
+        if (deletedCount > 0) {
+            log.info("成功物理删除学生ID为{}的所有住宿记录，共{}条", studentId, deletedCount);
+            return true;
+        } else {
+            log.error("物理删除学生ID为{}的住宿记录失败", studentId);
+            return false;
+        }
     }
 }

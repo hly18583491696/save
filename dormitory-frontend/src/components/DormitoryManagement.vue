@@ -292,8 +292,8 @@
               <div class="info-label">床位情况</div>
               <div class="info-content">
                 <span>总床位：{{ selectedRoom?.totalBeds }}个</span>
-                <span>已占用：{{ roomStudents.length }}个</span>
-                <span>可用：{{ (selectedRoom?.totalBeds || 0) - roomStudents.length }}个</span>
+                <span>已占用：{{ selectedRoom?.occupiedBeds || roomStudents.length }}个</span>
+                <span>可用：{{ (selectedRoom?.totalBeds || 0) - (selectedRoom?.occupiedBeds || roomStudents.length) }}个</span>
               </div>
             </div>
           </div>
@@ -659,23 +659,31 @@ export default {
       
       // 加载房间学生信息
       try {
-        await new Promise(resolve => setTimeout(resolve, 300))
-        
-        // 模拟学生数据
-        roomStudents.value = [
-          {
-            id: 1,
-            name: '张三',
-            studentCode: '2021001',
-            bedNumber: 1
-          },
-          {
-            id: 2,
-            name: '李四',
-            studentCode: '2021002',
-            bedNumber: 2
+        // 调用真实API获取房间学生信息
+        const response = await fetch(`http://localhost:8082/api/accommodations/room/${room.id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
           }
-        ]
+        })
+        
+        const result = await response.json()
+        
+        if (result.success) {
+          // 转换数据格式以匹配前端显示
+          roomStudents.value = result.data.map(accommodation => ({
+            id: accommodation.id,
+            studentName: accommodation.studentName,
+            studentNumber: accommodation.studentNumber,
+            bedNumber: accommodation.bedNumber,
+            checkInDate: accommodation.checkInDate,
+            status: accommodation.status
+          }))
+        } else {
+          console.error('获取房间学生信息失败:', result.message)
+          roomStudents.value = []
+        }
       } catch (error) {
         console.error('加载学生信息失败:', error)
         roomStudents.value = []
@@ -700,6 +708,10 @@ export default {
         
         if (result.code === 200) {
           roomStudents.value = result.data || []
+          // 确保selectedRoom包含最新的occupiedBeds信息
+          if (selectedRoom.value) {
+            selectedRoom.value.occupiedBeds = result.data ? result.data.length : 0
+          }
           showStudentManageDialog.value = true
         } else {
           console.error('获取房间学生信息失败:', result.message)

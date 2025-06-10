@@ -2,6 +2,7 @@ package edu.mycc.xhd.mycsdormitorymanagement.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormMaintenance;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -97,4 +98,10 @@ public interface DormMaintenanceMapper extends BaseMapper<DormMaintenance> {
      */
     @Select("SELECT maintenance_type, COUNT(*) as count FROM dorm_maintenance WHERE deleted = 0 GROUP BY maintenance_type")
     List<java.util.Map<String, Object>> countByMaintenanceType();
+    
+    /**
+     * 物理删除维修记录
+     */
+    @Delete("DELETE FROM dorm_maintenance WHERE id = #{id}")
+    int deleteByIdPhysically(Long id);
 }

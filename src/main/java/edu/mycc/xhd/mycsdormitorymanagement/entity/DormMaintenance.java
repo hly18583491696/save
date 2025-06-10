@@ -69,6 +69,9 @@ public class DormMaintenance {
     
     private Integer rating;
     
+    @TableField("process_remark")
+    private String processRemark;
+    
     @TableField("create_time")
     private LocalDateTime createTime;
     

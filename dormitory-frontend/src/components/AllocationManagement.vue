@@ -361,11 +361,12 @@ export default {
     
     const loadBuildings = async () => {
       try {
-        const response = await fetch('http://localhost:8082/api/dorm/buildings')
+        const response = await fetch('/api/dorm/buildings')
         const result = await response.json()
         
         if (result.success) {
           buildings.value = result.data
+          console.log('成功加载楼栋数据:', buildings.value.length, '条记录')
         } else {
           console.error(result.message || '加载楼栋数据失败')
           buildings.value = []
@@ -378,32 +379,27 @@ export default {
     
     const loadStudents = async () => {
       try {
-        // 模拟API调用 - 获取未分配住宿的学生
-        availableStudents.value = [
-          { 
-            id: 4, 
-            studentName: '赵六', 
-            studentNumber: '2021004',
-            className: '计算机科学与技术1班',
-            idCard: '123456789012345678'
-          },
-          { 
-            id: 5, 
-            studentName: '钱七', 
-            studentNumber: '2021005',
-            className: '软件工程1班',
-            idCard: '123456789012345679'
-          },
-          { 
-            id: 6, 
-            studentName: '孙八', 
-            studentNumber: '2021006',
-            className: '网络工程1班',
-            idCard: '123456789012345680'
-          }
-        ]
+        // 调用真实API获取所有学生数据
+        const response = await fetch('/api/students')
+        const result = await response.json()
+        
+        if (result.success && result.data) {
+          // 获取所有学生数据
+          availableStudents.value = result.data.map(student => ({
+            id: student.id,
+            studentName: student.studentName,
+            studentNumber: student.studentNumber,
+            className: student.className,
+            idCard: student.idCard
+          }))
+          console.log('成功加载学生数据:', availableStudents.value.length, '条记录')
+        } else {
+          console.error('获取学生数据失败:', result.message)
+          availableStudents.value = []
+        }
       } catch (error) {
         console.error('加载学生失败:', error)
+        availableStudents.value = []
       }
     }
     
@@ -451,11 +447,12 @@ export default {
       }
       
       try {
-        const response = await fetch(`http://localhost:8082/api/dorm/buildings/${formData.buildingId}/rooms`)
+        const response = await fetch(`/api/dorm/buildings/${formData.buildingId}/rooms`)
         const result = await response.json()
         
         if (result.success) {
           availableRooms.value = result.data
+          console.log('成功加载房间数据:', availableRooms.value.length, '条记录')
         } else {
           console.error(result.message || '加载房间数据失败')
           availableRooms.value = []
@@ -473,11 +470,12 @@ export default {
       }
       
       try {
-        const response = await fetch(`http://localhost:8082/api/dorm/rooms/${formData.roomId}/available-beds`)
+        const response = await fetch(`/api/dorm/rooms/${formData.roomId}/available-beds`)
         const result = await response.json()
         
         if (result.success) {
           availableBeds.value = result.data
+          console.log('成功加载床位数据:', availableBeds.value.length, '条记录')
         } else {
           console.error(result.message || '加载床位数据失败')
           availableBeds.value = []

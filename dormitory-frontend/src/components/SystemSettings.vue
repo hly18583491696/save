@@ -239,7 +239,7 @@
           <div class="info-grid">
             <div class="info-item">
               <label>系统版本</label>
-              <span>v1.0.0</span>
+              <span>v2.0.0</span>
             </div>
             <div class="info-item">
               <label>数据库版本</label>

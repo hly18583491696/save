@@ -137,16 +137,19 @@ mycs-dormitory-management/
 │   ├── README.md                    # 日志说明
 │   ├── dormitory-management.log     # 应用日志
 │   ├── dormitory-management.2025-06-08.0.log # 历史应用日志
+│   ├── dormitory-management.2025-06-09.0.log # 历史应用日志
 │   ├── dormitory-management-business.log # 业务日志
 │   ├── dormitory-management-business.2025-06-08.0.log # 历史业务日志
+│   ├── dormitory-management-business.2025-06-09.0.log # 历史业务日志
 │   ├── dormitory-management-error.log # 错误日志
-│   └── dormitory-management-error.2025-06-08.0.log # 历史错误日志
+│   ├── dormitory-management-error.2025-06-08.0.log # 历史错误日志
+│   └── dormitory-management-error.2025-06-09.0.log # 历史错误日志
 ├── mvnw                             # Maven包装器脚本(Unix)
 ├── mvnw.cmd                         # Maven包装器脚本(Windows)
 ├── mysql-init.sql                   # 数据库初始化脚本
 ├── pom.xml                          # Maven项目配置
 ├── query                            # 查询相关文件
-├── start-simple.bat                 # 简单启动脚本
+├── start-fixed.bat                  # 修复版启动脚本
 ├── start.bat                        # Windows启动脚本
 ├── stop.bat                         # Windows停止脚本
 ├── 启动故障排除.md                    # 启动故障排除指南
@@ -214,7 +217,7 @@ mycs-dormitory-management/
 │   │   │       │   ├── StudentService.java # 学生服务
 │   │   │       │   ├── SystemConfigService.java # 系统配置服务
 │   │   │       │   ├── UserService.java # 用户服务
-│   │   │       │   └── impl/        # 服务实现类目录
+│   │   │       │   └── impl/        # 服务实现类目录（空）
 │   │   │       └── utils/           # 工具类
 │   │   │           └── JwtUtils.java # JWT工具类
 │   │   └── resources/               # 资源文件
@@ -303,10 +306,16 @@ mycs-dormitory-management/
 - ✅ 维修申请管理功能
 - ✅ 状态跟踪和统计展示
 - ✅ 房间维修状态集成
+- ✅ **详情查看和编辑功能** - 统一模态框设计，支持查看详情和在线编辑
+- ✅ **维修申请详情模态框** - 完整的申请信息展示和编辑界面
+- ✅ **编辑状态管理** - 智能切换查看和编辑模式
+- ✅ **权限控制** - 基于申请状态的编辑权限管理
 - ✅ 后端实体类已实现 (`DormMaintenance.java`)
 - ✅ 后端Mapper接口已实现 (`DormMaintenanceMapper.java`)
 - ✅ 后端Service层已实现 (`DormMaintenanceService.java`)
 - ✅ 后端Controller层已实现 (`DormMaintenanceController.java`)
+- ✅ **详情查看API** - 支持根据ID获取维修记录详情
+- ✅ **编辑更新API** - 支持维修申请信息的在线更新
 
 ### 👥 6. 访客管理 `已完成 100%`
 > 🚪 **访客登记与审核系统**
@@ -376,7 +385,7 @@ mycs-dormitory-management/
 | 👨‍🎓 学生管理 | `StudentManagement.vue` | 学生信息增删改查、搜索筛选、导出功能 | 🟢 100% |
 | 🏢 宿舍管理 | `DormitoryManagement.vue` | 宿舍楼和房间管理界面、状态管理 | 🟢 100% |
 | 🛏️ 住宿分配 | `AllocationManagement.vue` | 住宿分配和调换管理、状态跟踪 | 🟢 100% |
-| 🛠️ 维修管理 | `Maintenance.vue` | 维修申请管理、状态跟踪、统计展示 | 🟢 100% |
+| 🛠️ 维修管理 | `Maintenance.vue` | 维修申请管理、详情查看编辑、状态跟踪、统计展示 | 🟢 100% |
 | 📊 统计报表 | `Dashboard.vue` | 数据统计展示、图表可视化 | 🟢 100% |
 | 🏗️ 管理面板 | `AdminDashboard.vue` | 主要布局和导航框架 | 🟢 100% |
 | ⚙️ 系统设置 | `SystemSettings.vue` | 系统配置和参数管理 | 🟢 100% |
@@ -1694,6 +1703,16 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 
 ## 更新日志
 
+### v2.0.0 (2025-06-10)
+- 🔍 **维修管理详情查看功能**: 实现维修申请详情模态框，支持查看完整的维修记录信息
+- ✏️ **维修记录编辑功能**: 在详情模态框中集成编辑功能，支持状态更新和信息修改
+- 🎨 **统一模态框设计**: 采用统一的模态框设计，通过编辑状态切换查看和编辑模式
+- 🔐 **权限控制优化**: 实现基于状态的编辑权限控制，只有特定状态的记录可编辑
+- 🔄 **后端API完善**: 完善维修记录更新API，支持PUT请求更新维修记录
+- 📱 **响应式设计**: 详情模态框支持响应式布局，适配不同屏幕尺寸
+- ✅ **数据验证**: 添加前端表单验证，确保数据完整性和有效性
+- 🎯 **用户体验提升**: 优化交互流程，提供清晰的操作反馈和状态提示
+
 ### v1.9.0 (2025-06-09)
 - 📊 **项目进度全面更新**: 完成项目代码遍历，更新最新的开发进度和技术实现状态
 - 🔍 **代码统计完善**: 统计后端7个实体类、9个控制器、9个服务类，前端10个Vue组件
@@ -2084,7 +2103,12 @@ router.beforeEach((to, from, next) => {
 2. 交互功能：
    - 多条件筛选（状态、类型、紧急程度）
    - 批量操作（批量分配、批量完成）
-   - 详情查看和编辑
+   - **详情查看和编辑**：
+     * 统一模态框设计，支持查看和编辑模式切换
+     * 完整的申请信息展示（基本信息、房间信息、维修详情）
+     * 在线编辑功能，支持修改申请内容和状态
+     * 基于申请状态的编辑权限控制
+     * 实时数据验证和保存功能
    
 3. API调用：
    - 使用Axios进行HTTP请求
@@ -2146,7 +2170,538 @@ DormRoom:
    - 学生管理功能
 ```
 
-### 4. 系统架构设计
+### 4. 宿舍管理模块
+
+#### 后端实现逻辑
+**核心类：** `DormController.java`, `DormBuildingService.java`, `DormRoomService.java`
+
+**关键代码实现：**
+```java
+// 宿舍楼管理核心接口
+@RestController
+@RequestMapping("/api/dorm")
+public class DormController {
+    
+    @Autowired
+    private DormBuildingService dormBuildingService;
+    
+    @Autowired
+    private DormRoomService dormRoomService;
+    
+    // 获取所有楼栋信息
+    @GetMapping("/buildings")
+    public Result<List<DormBuilding>> getAllBuildings() {
+        List<DormBuilding> buildings = dormBuildingService.getAllBuildings();
+        return Result.success(buildings);
+    }
+    
+    // 根据楼栋ID获取房间列表
+    @GetMapping("/buildings/{buildingId}/rooms")
+    public Result<List<DormRoom>> getRoomsByBuildingId(@PathVariable Long buildingId) {
+        List<DormRoom> rooms = dormRoomService.getRoomsByBuildingId(buildingId);
+        return Result.success(rooms);
+    }
+    
+    // 获取可用房间（支持性别筛选）
+    @GetMapping("/rooms/available")
+    public Result<List<DormRoom>> getAvailableRooms(@RequestParam(required = false) String gender) {
+        List<DormRoom> rooms = dormRoomService.getAvailableRooms(gender);
+        return Result.success(rooms);
+    }
+}
+```
+
+**业务逻辑：**
+- 楼栋管理：增删改查、类型分类（男生/女生宿舍）
+- 房间管理：床位统计、状态管理、可用性查询
+- 数据关联：楼栋-房间-床位三级关联管理
+
+#### 前端实现逻辑
+**核心组件：** `DormitoryManagement.vue`
+
+**关键功能实现：**
+```javascript
+// 宿舍管理前端核心逻辑
+export default {
+  data() {
+    return {
+      buildings: [],
+      rooms: [],
+      selectedBuilding: null,
+      searchQuery: '',
+      statusFilter: ''
+    }
+  },
+  
+  methods: {
+    // 加载楼栋数据
+    async loadBuildings() {
+      const response = await axios.get('/api/dorm/buildings')
+      this.buildings = response.data.data
+    },
+    
+    // 根据楼栋加载房间
+    async loadRoomsByBuilding(buildingId) {
+      const response = await axios.get(`/api/dorm/buildings/${buildingId}/rooms`)
+      this.rooms = response.data.data
+    },
+    
+    // 房间状态计算
+    getRoomStatus(room) {
+      if (room.occupiedBeds >= room.totalBeds) return 'full'
+      if (room.occupiedBeds === 0) return 'empty'
+      return 'partial'
+    }
+  }
+}
+```
+
+### 5. 住宿记录管理模块
+
+#### 后端实现逻辑
+**核心类：** `AccommodationController.java`, `DormAccommodationService.java`
+
+**关键代码实现：**
+```java
+// 住宿记录管理控制器
+@RestController
+@RequestMapping("/api/accommodations")
+public class AccommodationController {
+    
+    @Autowired
+    private DormAccommodationService accommodationService;
+    
+    @Autowired
+    private StudentService studentService;
+    
+    // 获取所有住宿记录
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> getAllAccommodations() {
+        List<DormAccommodation> accommodations = accommodationService.getAllAccommodations();
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", accommodations);
+        return ResponseEntity.ok(response);
+    }
+    
+    // 根据学生ID获取住宿记录
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<Map<String, Object>> getAccommodationsByStudentId(@PathVariable Long studentId) {
+        List<DormAccommodation> accommodations = accommodationService.getAccommodationsByStudentId(studentId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", accommodations);
+        return ResponseEntity.ok(response);
+    }
+    
+    // 创建住宿记录
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> createAccommodation(@RequestBody DormAccommodation accommodation) {
+        boolean success = accommodationService.createAccommodation(accommodation);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", success);
+        response.put("message", success ? "住宿记录创建成功" : "住宿记录创建失败");
+        return ResponseEntity.ok(response);
+    }
+}
+```
+
+**业务逻辑：**
+- 住宿记录生命周期管理：入住登记、状态变更、退宿处理
+- 学生住宿历史追踪：支持多次住宿记录查询
+- 数据完整性保证：学生-房间-床位关联验证
+
+#### 前端实现逻辑
+**核心组件：** `AccommodationManagement.vue`（集成在住宿分配管理中）
+
+### 6. 住宿分配管理模块
+
+#### 后端实现逻辑
+**核心业务：** 通过`AccommodationController.java`实现住宿分配逻辑
+
+**关键代码实现：**
+```java
+// 住宿分配核心逻辑
+@PostMapping("/allocate")
+public ResponseEntity<Map<String, Object>> allocateAccommodation(@RequestBody Map<String, Object> request) {
+    Long studentId = Long.valueOf(request.get("studentId").toString());
+    Long roomId = Long.valueOf(request.get("roomId").toString());
+    String bedNumber = request.get("bedNumber").toString();
+    
+    // 1. 验证学生是否已有住宿记录
+    List<DormAccommodation> existingAccommodations = accommodationService.getAccommodationsByStudentId(studentId);
+    boolean hasActiveAccommodation = existingAccommodations.stream()
+        .anyMatch(acc -> "ACTIVE".equals(acc.getStatus()));
+    
+    if (hasActiveAccommodation) {
+        return ResponseEntity.badRequest().body(Map.of("success", false, "message", "学生已有住宿记录"));
+    }
+    
+    // 2. 验证房间床位是否可用
+    DormRoom room = dormRoomService.getRoomById(roomId);
+    if (room.getOccupiedBeds() >= room.getTotalBeds()) {
+        return ResponseEntity.badRequest().body(Map.of("success", false, "message", "房间已满"));
+    }
+    
+    // 3. 创建住宿记录
+    DormAccommodation accommodation = new DormAccommodation();
+    accommodation.setStudentId(studentId);
+    accommodation.setRoomId(roomId);
+    accommodation.setBedNumber(bedNumber);
+    accommodation.setCheckInDate(LocalDateTime.now());
+    accommodation.setStatus("ACTIVE");
+    
+    boolean success = accommodationService.createAccommodation(accommodation);
+    
+    Map<String, Object> response = new HashMap<>();
+    response.put("success", success);
+    response.put("message", success ? "住宿分配成功" : "住宿分配失败");
+    return ResponseEntity.ok(response);
+}
+```
+
+#### 前端实现逻辑
+**核心组件：** `AllocationManagement.vue`
+
+**关键功能实现：**
+```javascript
+// 住宿分配管理前端核心逻辑
+export default {
+  data() {
+    return {
+      allocations: [],
+      students: [],
+      buildings: [],
+      rooms: [],
+      searchQuery: '',
+      statusFilter: '',
+      buildingFilter: ''
+    }
+  },
+  
+  methods: {
+    // 显示分配对话框
+    showAddDialog() {
+      this.loadStudents()
+      this.loadBuildings()
+      this.isAddDialogVisible = true
+    },
+    
+    // 执行住宿分配
+    async allocateAccommodation() {
+      const allocationData = {
+        studentId: this.selectedStudent.id,
+        roomId: this.selectedRoom.id,
+        bedNumber: this.selectedBedNumber
+      }
+      
+      const response = await axios.post('/api/accommodations/allocate', allocationData)
+      
+      if (response.data.success) {
+        this.$message.success('住宿分配成功')
+        this.loadAllocations()
+        this.closeAddDialog()
+      } else {
+        this.$message.error(response.data.message)
+      }
+    },
+    
+    // 处理退宿
+    async handleCheckOut(allocationId) {
+      const response = await axios.put(`/api/accommodations/${allocationId}/checkout`)
+      
+      if (response.data.success) {
+        this.$message.success('退宿处理成功')
+        this.loadAllocations()
+      }
+    }
+  }
+}
+```
+
+### 7. 访客管理模块
+
+#### 后端实现逻辑
+**核心类：** `DormVisitorController.java`, `DormVisitorService.java`
+
+**关键代码实现：**
+```java
+// 访客管理控制器
+@RestController
+@RequestMapping("/api/visitor")
+public class DormVisitorController {
+    
+    @Autowired
+    private DormVisitorService dormVisitorService;
+    
+    // 创建访客记录
+    @PostMapping("/create")
+    public Result<String> createVisitor(@RequestBody DormVisitor visitor) {
+        // 设置访问状态为进行中
+        visitor.setStatus("VISITING");
+        visitor.setVisitTime(LocalDateTime.now());
+        
+        boolean success = dormVisitorService.createVisitor(visitor);
+        return success ? Result.success("访客记录创建成功") : Result.error("访客记录创建失败");
+    }
+    
+    // 访客离开
+    @PutMapping("/leave/{id}")
+    public Result<String> visitorLeave(@PathVariable Long id) {
+        boolean success = dormVisitorService.visitorLeave(id);
+        return success ? Result.success("访客离开记录更新成功") : Result.error("访客离开记录更新失败");
+    }
+    
+    // 获取当前访问中的访客
+    @GetMapping("/current")
+    public Result<List<DormVisitor>> getCurrentVisiting() {
+        List<DormVisitor> visitors = dormVisitorService.getCurrentVisiting();
+        return Result.success(visitors);
+    }
+    
+    // 更新过期访客状态
+    @PutMapping("/update-expired")
+    public Result<String> updateExpiredVisitors() {
+        int count = dormVisitorService.updateExpiredVisitors();
+        return Result.success("已更新" + count + "条过期访客记录");
+    }
+    
+    // 访客统计
+    @GetMapping("/statistics")
+    public Result<Map<String, Object>> getVisitorStatistics() {
+        Map<String, Object> statistics = dormVisitorService.getVisitorStatistics();
+        return Result.success(statistics);
+    }
+}
+```
+
+**业务逻辑：**
+- 访客登记：身份验证、被访学生确认、访问时间记录
+- 状态管理：VISITING（访问中）、LEFT（已离开）、EXPIRED（过期）
+- 自动化处理：定时更新过期访客状态
+- 安全控制：访客信息完整性验证、访问时长监控
+
+#### 前端实现逻辑
+**核心组件：** `VisitorManagement.vue`
+
+**关键功能实现：**
+```javascript
+// 访客管理前端核心逻辑
+export default {
+  data() {
+    return {
+      visitors: [],
+      currentVisitor: {
+        visitorName: '',
+        phone: '',
+        idCard: '',
+        visitedStudentId: null,
+        visitedStudentName: '',
+        roomId: null,
+        visitPurpose: '',
+        expectedLeaveTime: ''
+      },
+      searchKeyword: '',
+      statusFilter: ''
+    }
+  },
+  
+  methods: {
+    // 保存访客记录
+    async saveVisitor() {
+      const url = this.showAddDialog ? '/api/visitor/create' : '/api/visitor/update'
+      const method = this.showAddDialog ? 'post' : 'put'
+      
+      const response = await axios[method](url, this.currentVisitor)
+      
+      if (response.data.code === 200) {
+        this.$message.success(this.showAddDialog ? '访客登记成功' : '访客信息更新成功')
+        this.loadVisitors()
+        this.closeDialog()
+      }
+    },
+    
+    // 标记访客离开
+    async markAsLeft(visitorId) {
+      const response = await axios.put(`/api/visitor/leave/${visitorId}`)
+      
+      if (response.data.code === 200) {
+        this.$message.success('访客离开记录已更新')
+        this.loadVisitors()
+      }
+    },
+    
+    // 更新过期访客
+    async updateExpiredVisitors() {
+      const response = await axios.put('/api/visitor/update-expired')
+      
+      if (response.data.code === 200) {
+        this.$message.success(response.data.data)
+        this.loadVisitors()
+      }
+    },
+    
+    // 访客搜索
+    async searchVisitors() {
+      if (!this.searchKeyword.trim()) {
+        this.loadVisitors()
+        return
+      }
+      
+      const response = await axios.get('/api/visitor/search', {
+        params: { visitorName: this.searchKeyword }
+      })
+      
+      this.visitors = response.data.data || []
+    }
+  }
+}
+```
+
+### 8. 维修管理模块
+
+#### 后端实现逻辑
+**核心类：** `DormMaintenanceController.java`, `DormMaintenanceService.java`
+
+**关键代码实现：**
+```java
+// 维修管理控制器
+@RestController
+@RequestMapping("/api/maintenance")
+public class DormMaintenanceController {
+    
+    @Autowired
+    private DormMaintenanceService maintenanceService;
+    
+    // 创建维修申请
+    @PostMapping("/create")
+    public Result<String> createMaintenance(@RequestBody DormMaintenance maintenance) {
+        // 生成申请单号
+        String requestNumber = "MR" + System.currentTimeMillis();
+        maintenance.setRequestNumber(requestNumber);
+        maintenance.setStatus("PENDING");
+        maintenance.setRequestTime(LocalDateTime.now());
+        
+        boolean success = maintenanceService.createMaintenance(maintenance);
+        return success ? Result.success("维修申请提交成功") : Result.error("维修申请提交失败");
+    }
+    
+    // 更新维修状态
+    @PutMapping("/status/{id}")
+    public Result<String> updateMaintenanceStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        String status = request.get("status");
+        String remark = request.get("remark");
+        
+        boolean success = maintenanceService.updateMaintenanceStatus(id, status, remark);
+        return success ? Result.success("维修状态更新成功") : Result.error("维修状态更新失败");
+    }
+    
+    // 根据状态获取维修记录
+    @GetMapping("/status/{status}")
+    public Result<List<DormMaintenance>> getMaintenancesByStatus(@PathVariable String status) {
+        List<DormMaintenance> maintenances = maintenanceService.getMaintenancesByStatus(status);
+        return Result.success(maintenances);
+    }
+    
+    // 维修统计
+    @GetMapping("/statistics")
+    public Result<Map<String, Object>> getMaintenanceStatistics() {
+        Map<String, Object> statistics = maintenanceService.getMaintenanceStatistics();
+        return Result.success(statistics);
+    }
+    
+    // 批量更新维修状态
+    @PutMapping("/batch-update")
+    public Result<String> batchUpdateStatus(@RequestBody Map<String, Object> request) {
+        List<Long> ids = (List<Long>) request.get("ids");
+        String status = (String) request.get("status");
+        
+        int count = maintenanceService.batchUpdateStatus(ids, status);
+        return Result.success("已更新" + count + "条维修记录");
+    }
+}
+```
+
+**业务逻辑：**
+- 申请流程：问题描述、紧急程度评估、自动分配申请单号
+- 状态流转：PENDING（待处理）→ ASSIGNED（已分配）→ IN_PROGRESS（维修中）→ COMPLETED（已完成）
+- 优先级管理：根据紧急程度（LOW、MEDIUM、HIGH、URGENT）排序处理
+- 批量操作：支持批量状态更新、批量分配等操作
+
+#### 前端实现逻辑
+**核心组件：** `Maintenance.vue`
+
+**关键功能实现：**
+```javascript
+// 维修管理前端核心逻辑
+export default {
+  data() {
+    return {
+      maintenances: [],
+      selectedMaintenances: [],
+      statusFilter: '',
+      typeFilter: '',
+      urgencyFilter: '',
+      currentMaintenance: {},
+      showDetailDialog: false,
+      isEditMode: false
+    }
+  },
+  
+  methods: {
+    // 批量更新状态
+    async batchUpdateStatus(status) {
+      if (this.selectedMaintenances.length === 0) {
+        this.$message.warning('请选择要更新的维修记录')
+        return
+      }
+      
+      const response = await axios.put('/api/maintenance/batch-update', {
+        ids: this.selectedMaintenances.map(m => m.id),
+        status: status
+      })
+      
+      if (response.data.code === 200) {
+        this.$message.success(response.data.data)
+        this.loadMaintenances()
+        this.selectedMaintenances = []
+      }
+    },
+    
+    // 显示详情对话框
+    showDetailDialog(maintenance, editMode = false) {
+      this.currentMaintenance = { ...maintenance }
+      this.isEditMode = editMode
+      this.showDetailDialog = true
+    },
+    
+    // 保存维修记录
+    async saveMaintenance() {
+      const response = await axios.put('/api/maintenance/update', this.currentMaintenance)
+      
+      if (response.data.code === 200) {
+        this.$message.success('维修记录更新成功')
+        this.loadMaintenances()
+        this.closeDetailDialog()
+      }
+    },
+    
+    // 状态文本映射
+    getStatusText(status) {
+      const statusMap = {
+        'PENDING': '待处理',
+        'ASSIGNED': '已分配', 
+        'IN_PROGRESS': '维修中',
+        'COMPLETED': '已完成',
+        'CANCELLED': '已取消'
+      }
+      return statusMap[status] || status
+    }
+  }
+}
+```
+
+### 9. 系统架构设计
 
 #### 后端架构
 **技术栈：** Spring Boot + MyBatis Plus + MySQL
@@ -2270,9 +2825,11 @@ CREATE INDEX idx_maintenance_type ON dorm_maintenance(maintenance_type);
 ### 项目结构说明
 - `src/main/java` - 后端Java源码
 - `dormitory-frontend` - 前端Vue项目
-- `sql` - 数据库脚本
+- `src/main/resources/sql` - 数据库脚本
 - `logs` - 系统日志文件
-- `docs` - 项目文档
+- `*.md` - 项目文档（README.md、快速启动指南.md等）
+- `*.sql` - 数据库相关脚本（mysql-init.sql、clear_database.sql等）
+- `*.bat` - Windows启动脚本
 
 ### 开发规范
 - 遵循RESTful API设计规范
