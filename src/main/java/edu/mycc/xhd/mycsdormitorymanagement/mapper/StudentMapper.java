@@ -36,4 +36,28 @@ public interface StudentMapper extends BaseMapper<Student> {
      */
     @Select("SELECT * FROM student WHERE (student_name LIKE CONCAT('%', #{keyword}, '%') OR student_number LIKE CONCAT('%', #{keyword}, '%') OR phone LIKE CONCAT('%', #{keyword}, '%')) AND status = 1")
     List<Student> searchStudents(String keyword);
+    
+    /**
+     * 根据班级查找学生
+     */
+    @Select("SELECT * FROM student WHERE class_name = #{className} AND status = 1 ORDER BY student_number")
+    List<Student> findByClassName(String className);
+    
+    /**
+     * 统计学生总数
+     */
+    @Select("SELECT COUNT(*) FROM student WHERE status = 1")
+    int countActiveStudents();
+    
+    /**
+     * 根据性别统计学生数量
+     */
+    @Select("SELECT COUNT(*) FROM student WHERE gender = #{gender} AND status = 1")
+    int countByGender(String gender);
+    
+    /**
+     * 统计各班级学生数量
+     */
+    @Select("SELECT class_name, COUNT(*) as count FROM student WHERE status = 1 GROUP BY class_name ORDER BY class_name")
+    List<java.util.Map<String, Object>> countByClass();
 }

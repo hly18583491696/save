@@ -336,13 +336,13 @@ export default {
     const loadAllocations = async () => {
       loading.value = true
       try {
-        const response = await fetch('http://localhost:8082/api/dorm/accommodations')
+        const response = await fetch('http://localhost:8082/api/accommodations')
         const result = await response.json()
         
         console.log('API响应:', result)
         console.log('住宿分配数据:', result.data)
         
-        if (result.code === 200) {
+        if (result.success) {
           allocations.value = result.data
           console.log('allocations.value已更新:', allocations.value)
         } else {
@@ -364,7 +364,7 @@ export default {
         const response = await fetch('http://localhost:8082/api/dorm/buildings')
         const result = await response.json()
         
-        if (result.code === 200) {
+        if (result.success) {
           buildings.value = result.data
         } else {
           console.error(result.message || '加载楼栋数据失败')
@@ -454,7 +454,7 @@ export default {
         const response = await fetch(`http://localhost:8082/api/dorm/buildings/${formData.buildingId}/rooms`)
         const result = await response.json()
         
-        if (result.code === 200) {
+        if (result.success) {
           availableRooms.value = result.data
         } else {
           console.error(result.message || '加载房间数据失败')
@@ -476,7 +476,7 @@ export default {
         const response = await fetch(`http://localhost:8082/api/dorm/rooms/${formData.roomId}/available-beds`)
         const result = await response.json()
         
-        if (result.code === 200) {
+        if (result.success) {
           availableBeds.value = result.data
         } else {
           console.error(result.message || '加载床位数据失败')
@@ -566,7 +566,7 @@ export default {
         let response
         if (isEditing.value) {
           // 更新住宿分配
-          response = await fetch(`http://localhost:8082/api/dorm/accommodations/${formData.id}`, {
+          response = await fetch(`http://localhost:8082/api/accommodations/${formData.id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -575,7 +575,7 @@ export default {
           })
         } else {
           // 添加住宿分配
-          response = await fetch('http://localhost:8082/api/dorm/accommodations', {
+          response = await fetch('http://localhost:8082/api/accommodations', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -607,7 +607,7 @@ export default {
     const handleCheckOut = async (allocation) => {
       if (confirm(`确定要为学生 ${allocation.studentName} 办理退宿吗？`)) {
         try {
-          const response = await fetch(`http://localhost:8082/api/dorm/accommodations/checkout/student/${allocation.studentId}`, {
+          const response = await fetch(`http://localhost:8082/api/accommodations/checkout/student/${allocation.studentId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -635,7 +635,7 @@ export default {
     const handleDelete = async (allocation) => {
       if (confirm(`确定要删除学生 ${allocation.studentName} 的住宿分配记录吗？`)) {
         try {
-          const response = await fetch(`http://localhost:8082/api/dorm/accommodations/${allocation.id}`, {
+          const response = await fetch(`http://localhost:8082/api/accommodations/${allocation.id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'

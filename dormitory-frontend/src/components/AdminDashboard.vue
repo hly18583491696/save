@@ -67,6 +67,12 @@
               <span v-if="!sidebarCollapsed">系统设置</span>
             </router-link>
           </div>
+          <div class="nav-item">
+            <router-link to="/dashboard/diagnostic" class="nav-link">
+              <i class="fas fa-bug"></i>
+              <span v-if="!sidebarCollapsed">删除诊断</span>
+            </router-link>
+          </div>
         </div>
       </nav>
     </aside>

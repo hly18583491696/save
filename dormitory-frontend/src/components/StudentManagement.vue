@@ -3,7 +3,7 @@
     <div class="page-header">
       <h2><i class="fas fa-bed"></i> 住宿记录管理</h2>
       <div class="header-actions">
-        <button class="btn btn-primary" @click="showAddDialog = true">
+        <button class="btn btn-primary" @click="openAddDialog">
           <i class="fas fa-plus"></i> 添加住宿记录
         </button>
         <button class="btn btn-secondary" @click="exportData">
@@ -29,9 +29,9 @@
       <div class="filters">
         <select v-model="filterBuilding" @change="handleFilter">
           <option value="">所有楼栋</option>
-          <option v-for="building in buildings" :key="building.id" :value="building.name">
-            {{ building.name }}
-          </option>
+          <option v-for="building in buildings" :key="building.id" :value="building.buildingName">
+                  {{ building.buildingName }}
+                </option>
         </select>
         <select v-model="filterStatus" @change="handleFilter">
           <option value="">所有状态</option>
@@ -177,7 +177,7 @@
               <select v-model="accommodationForm.buildingId" @change="loadRoomsForBuilding" required>
                 <option value="">请选择楼栋</option>
                 <option v-for="building in buildings" :key="building.id" :value="building.id">
-                  {{ building.name }}
+                  {{ building.buildingName }}
                 </option>
               </select>
             </div>
@@ -357,7 +357,7 @@
               <select v-model="assignForm.buildingId" @change="loadAvailableRooms">
                 <option value="">请选择宿舍楼</option>
                 <option v-for="building in buildings" :key="building.id" :value="building.id">
-                  {{ building.name }}
+                  {{ building.buildingName }}
                 </option>
               </select>
             </div>
@@ -417,7 +417,7 @@
 </template>
 
 <script>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, watch, nextTick } from 'vue'
 
 export default {
   name: 'StudentManagement',
@@ -537,39 +537,52 @@ export default {
     
     const loadAccommodations = async () => {
       try {
-        const response = await fetch('http://localhost:8082/api/dorm/accommodations')
+        const response = await fetch('http://localhost:8082/api/accommodations')
         const result = await response.json()
         
         console.log('API响应:', result)
         console.log('住宿记录数据:', result.data)
         
-        if (result.code === 200) {
-          accommodations.value = result.data
+        // 兼容不同的API响应格式
+        if (result.success || result.code === 200) {
+          accommodations.value = result.data || []
           console.log('accommodations.value已更新:', accommodations.value)
         } else {
           console.error(result.message || '加载住宿记录数据失败')
+          accommodations.value = []
         }
       } catch (error) {
         console.error('加载住宿记录数据失败:', error)
+        accommodations.value = []
       }
     }
     
     const loadBuildings = async () => {
       try {
-        console.log('开始加载楼栋数据...')
+        console.log('开始加载楼栋数据')
         const response = await fetch('http://localhost:8082/api/dorm/buildings')
-        console.log('API响应状态:', response.status)
+        console.log('楼栋API响应状态:', response.status)
         const result = await response.json()
-        console.log('API响应结果:', result)
+        console.log('楼栋API响应结果:', result)
         
-        if (result.code === 200) {
+        if (result.code === 200 && result.data) {
+          // 直接使用宿舍楼表的完整数据结构
           buildings.value = result.data.map(building => ({
             id: building.id,
-            name: building.buildingName || building.name
+            buildingCode: building.buildingCode,
+            buildingName: building.buildingName,
+            buildingType: building.buildingType,
+            floors: building.floors,
+            roomsPerFloor: building.roomsPerFloor,
+            managerName: building.managerName,
+            managerPhone: building.managerPhone,
+            description: building.description,
+            // 保持向后兼容
+            name: building.buildingName
           }))
           console.log('楼栋数据已更新:', buildings.value)
         } else {
-          console.error('API返回错误:', result.message || '加载楼栋数据失败')
+          console.error('楼栋API返回错误:', result.message || '加载楼栋数据失败')
           buildings.value = []
         }
       } catch (error) {
@@ -592,7 +605,7 @@ export default {
         const result = await response.json()
         console.log('房间API响应结果:', result)
         
-        if (result.code === 200) {
+        if (result.success) {
           availableRooms.value = result.data
           console.log('房间数据已更新:', availableRooms.value)
         } else {
@@ -605,7 +618,9 @@ export default {
       }
     }
     
-    const loadRoomsForBuilding = async () => {
+    const loadRoomsForBuilding = async (clearRoomSelection = true) => {
+      console.log('loadRoomsForBuilding 被调用，楼栋ID:', accommodationForm.buildingId, '清空房间选择:', clearRoomSelection)
+      
       if (accommodationForm.buildingId) {
         try {
           console.log('开始加载房间数据，楼栋ID:', accommodationForm.buildingId)
@@ -614,14 +629,14 @@ export default {
           const result = await response.json()
           console.log('房间API响应结果:', result)
           
-          if (result.code === 200) {
+          if (result.code === 200 && result.data) {
             availableRooms.value = result.data
             console.log('房间数据已更新:', availableRooms.value)
             
-            // 更新表单中的楼栋名称
+            // 从宿舍楼表中获取楼栋名称，确保数据一致性
             const selectedBuilding = buildings.value.find(b => b.id == accommodationForm.buildingId)
             if (selectedBuilding) {
-              accommodationForm.buildingName = selectedBuilding.name
+              accommodationForm.buildingName = selectedBuilding.buildingName || selectedBuilding.name
             }
           } else {
             console.error('房间API返回错误:', result.message || '加载房间数据失败')
@@ -632,9 +647,11 @@ export default {
           availableRooms.value = []
         }
         
-        // 清空之前选择的房间
-        accommodationForm.roomId = ''
-        accommodationForm.roomNumber = ''
+        // 只在需要时清空房间选择（比如用户主动更改楼栋）
+        if (clearRoomSelection) {
+          accommodationForm.roomId = ''
+          accommodationForm.roomNumber = ''
+        }
       } else {
         availableRooms.value = []
         accommodationForm.roomId = ''
@@ -645,9 +662,19 @@ export default {
     
     const onRoomChange = () => {
       if (accommodationForm.roomId) {
+        // 从宿舍房间表中获取房间号，确保数据一致性
         const selectedRoom = availableRooms.value.find(room => room.id == accommodationForm.roomId)
         if (selectedRoom) {
           accommodationForm.roomNumber = selectedRoom.roomNumber
+          // 确保楼栋ID与房间所属楼栋一致
+          if (selectedRoom.buildingId && selectedRoom.buildingId !== accommodationForm.buildingId) {
+            accommodationForm.buildingId = selectedRoom.buildingId
+            // 更新楼栋名称
+            const selectedBuilding = buildings.value.find(b => b.id == selectedRoom.buildingId)
+            if (selectedBuilding) {
+              accommodationForm.buildingName = selectedBuilding.buildingName || selectedBuilding.name
+            }
+          }
           console.log('选择的房间:', selectedRoom)
         }
       } else {
@@ -688,7 +715,7 @@ export default {
     const resetForm = () => {
       Object.assign(accommodationForm, {
         id: null,
-        studentId: '',
+        studentId: '', // 学生ID，可为空
         studentNumber: '',
         studentName: '',
         phone: '',
@@ -723,12 +750,12 @@ export default {
       try {
         console.log('正在获取学生详细信息，学生ID:', accommodation.studentId)
         // 调用学生详细信息API
-        const response = await fetch(`http://localhost:8082/api/dorm/accommodations/${accommodation.id}`)
+        const response = await fetch(`http://localhost:8082/api/accommodations/${accommodation.id}`)
         const result = await response.json()
         
         console.log('API响应:', result)
         
-        if (result.code === 200 && result.data) {
+        if (result.success && result.data) {
           // 合并学生信息和住宿信息
           selectedStudent.value = {
             ...result.data, // 学生完整信息（包含phone和email）
@@ -798,7 +825,21 @@ export default {
       }
     }
     
-    const editAccommodation = (accommodation) => {
+    const editAccommodation = async (accommodation) => {
+      // 确保楼栋数据已加载
+      if (buildings.value.length === 0) {
+        await loadBuildings()
+      }
+      
+      // 先设置楼栋ID，以便加载房间数据
+      accommodationForm.buildingId = accommodation.buildingId
+      
+      // 如果有楼栋ID，先加载对应的房间数据（不清空房间选择）
+      if (accommodation.buildingId) {
+        await loadRoomsForBuilding(false)
+      }
+      
+      // 然后设置完整的表单数据（包括roomId）
       Object.assign(accommodationForm, {
         id: accommodation.id,
         studentId: accommodation.studentId,
@@ -818,31 +859,50 @@ export default {
         status: accommodation.status,
         remarks: accommodation.remarks || ''
       })
+      
+      // 打开编辑对话框
       showEditDialog.value = true
+    }
+    
+    const openAddDialog = async () => {
+      resetForm()
+      // 确保楼栋数据已加载
+      if (buildings.value.length === 0) {
+        await loadBuildings()
+      }
+      showAddDialog.value = true
     }
     
     const saveAccommodation = async () => {
       try {
         let response
         if (showAddDialog.value) {
-          // 添加新住宿记录 - 构造正确的住宿记录数据结构
+          // 添加新住宿记录 - 根据数据库表结构构造数据
+          // 确保楼栋和房间信息的一致性
+          const selectedBuilding = buildings.value.find(b => b.id == accommodationForm.buildingId)
+          const selectedRoom = availableRooms.value.find(r => r.id == accommodationForm.roomId)
+          
           const accommodationData = {
             studentId: accommodationForm.studentId,
             studentName: accommodationForm.studentName,
             studentNumber: accommodationForm.studentNumber,
             className: accommodationForm.className,
             idCard: accommodationForm.idCard,
+            phone: accommodationForm.phone,
+            email: accommodationForm.email,
+            // 房间信息：从宿舍房间表获取
             roomId: accommodationForm.roomId,
-            roomNumber: accommodationForm.roomNumber,
+            roomNumber: selectedRoom ? selectedRoom.roomNumber : accommodationForm.roomNumber,
+            // 楼栋信息：从宿舍楼表获取
             buildingId: accommodationForm.buildingId,
-            buildingName: accommodationForm.buildingName,
+            buildingName: selectedBuilding ? selectedBuilding.buildingName : accommodationForm.buildingName,
             bedNumber: accommodationForm.bedNumber,
             checkInDate: accommodationForm.checkInDate || new Date().toISOString().split('T')[0],
             status: accommodationForm.status || 'ACTIVE',
             remarks: accommodationForm.remarks
           }
           
-          response = await fetch('http://localhost:8082/api/dorm/accommodations', {
+          response = await fetch('http://localhost:8082/api/accommodations', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -850,7 +910,11 @@ export default {
             body: JSON.stringify(accommodationData)
           })
         } else {
-          // 编辑住宿记录 - 构造正确的住宿记录数据结构
+          // 编辑住宿记录 - 根据数据库表结构构造数据
+          // 确保楼栋和房间信息的一致性
+          const selectedBuilding = buildings.value.find(b => b.id == accommodationForm.buildingId)
+          const selectedRoom = availableRooms.value.find(r => r.id == accommodationForm.roomId)
+          
           const accommodationData = {
             id: accommodationForm.id,
             studentId: accommodationForm.studentId,
@@ -858,10 +922,14 @@ export default {
             studentNumber: accommodationForm.studentNumber,
             className: accommodationForm.className,
             idCard: accommodationForm.idCard,
+            phone: accommodationForm.phone,
+            email: accommodationForm.email,
+            // 房间信息：从宿舍房间表获取
             roomId: accommodationForm.roomId,
-            roomNumber: accommodationForm.roomNumber,
+            roomNumber: selectedRoom ? selectedRoom.roomNumber : accommodationForm.roomNumber,
+            // 楼栋信息：从宿舍楼表获取
             buildingId: accommodationForm.buildingId,
-            buildingName: accommodationForm.buildingName,
+            buildingName: selectedBuilding ? selectedBuilding.buildingName : accommodationForm.buildingName,
             bedNumber: accommodationForm.bedNumber,
             checkInDate: accommodationForm.checkInDate,
             checkOutDate: accommodationForm.checkOutDate,
@@ -869,7 +937,7 @@ export default {
             remarks: accommodationForm.remarks
           }
           
-          response = await fetch(`http://localhost:8082/api/dorm/accommodations/${accommodationForm.id}`, {
+          response = await fetch(`http://localhost:8082/api/accommodations/${accommodationForm.id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -880,8 +948,8 @@ export default {
         
         const result = await response.json()
         
-        // 修复响应格式检查 - 后端返回的是code字段
-        if (result.code === 200) {
+        // 兼容不同的API响应格式
+        if (result.success || result.code === 200) {
           alert(result.message || '保存住宿记录成功')
           closeDialogs()
           await loadAccommodations() // 重新加载住宿记录列表
@@ -897,7 +965,7 @@ export default {
     const deleteAccommodation = async (accommodation) => {
       if (confirm(`确定要删除 ${accommodation.studentName} 的住宿记录吗？`)) {
         try {
-          const response = await fetch(`http://localhost:8082/api/dorm/accommodations/${accommodation.id}`, {
+          const response = await fetch(`http://localhost:8082/api/accommodations/${accommodation.id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
@@ -906,7 +974,8 @@ export default {
           
           const result = await response.json()
           
-          if (result.code === 200) {
+          // 兼容不同的API响应格式
+          if (result.success || result.code === 200) {
             alert('删除成功')
             await loadAccommodations() // 重新加载住宿记录列表
           } else {
@@ -940,7 +1009,7 @@ export default {
           status: 'ACTIVE'
         }
         
-        const response = await fetch('http://localhost:8082/api/dorm/accommodations', {
+        const response = await fetch('http://localhost:8082/api/accommodations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -950,7 +1019,7 @@ export default {
         
         const result = await response.json()
         
-        if (result.code === 200) {
+        if (result.success) {
           const building = buildings.value.find(b => b.id == assignForm.buildingId)
           const room = availableRooms.value.find(r => r.id == assignForm.roomId)
           
@@ -982,6 +1051,25 @@ export default {
     }
     
     // 生命周期
+    // 监听编辑对话框的打开状态
+    watch(showEditDialog, async (newVal) => {
+      if (newVal && accommodationForm.buildingId) {
+        // 确保在对话框完全渲染后再加载房间数据
+        await nextTick()
+        await loadRoomsForBuilding()
+      }
+    })
+    
+    // 监听添加对话框的打开状态
+    watch(showAddDialog, async (newVal) => {
+      if (newVal) {
+        // 确保楼栋数据已加载
+        if (buildings.value.length === 0) {
+          await loadBuildings()
+        }
+      }
+    })
+    
     onMounted(() => {
       loadAccommodations()
       loadBuildings()
@@ -1016,6 +1104,7 @@ export default {
       refreshData,
       viewAccommodation,
       editAccommodation,
+      openAddDialog,
       saveAccommodation,
       deleteAccommodation,
       changeRoom,

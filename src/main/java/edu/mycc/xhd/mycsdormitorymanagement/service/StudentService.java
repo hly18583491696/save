@@ -54,8 +54,14 @@ public class StudentService {
      * 根据班级获取学生
      */
     public List<Student> getStudentsByClassName(String className) {
-        // TODO: 实现根据班级查询学生的功能
-        return new ArrayList<>();
+        return studentMapper.findByClassName(className);
+    }
+    
+    /**
+     * 根据班级获取学生（别名方法）
+     */
+    public List<Student> getStudentsByClass(String className) {
+        return getStudentsByClassName(className);
     }
     
     /**
@@ -179,5 +185,28 @@ public class StudentService {
             }
         }
         return true;
+    }
+    
+    /**
+     * 获取学生统计信息
+     */
+    public java.util.Map<String, Object> getStudentStatistics() {
+        java.util.Map<String, Object> statistics = new java.util.HashMap<>();
+        
+        // 总学生数
+        int totalStudents = studentMapper.countActiveStudents();
+        statistics.put("totalStudents", totalStudents);
+        
+        // 男女学生数量
+        int maleCount = studentMapper.countByGender("男");
+        int femaleCount = studentMapper.countByGender("女");
+        statistics.put("maleCount", maleCount);
+        statistics.put("femaleCount", femaleCount);
+        
+        // 各班级学生数量
+        List<java.util.Map<String, Object>> classCounts = studentMapper.countByClass();
+        statistics.put("classCounts", classCounts);
+        
+        return statistics;
     }
 }

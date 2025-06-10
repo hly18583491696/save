@@ -225,21 +225,30 @@ public class DormAccommodationService {
     /**
      * 删除住宿记录（逻辑删除）
      */
+    @Transactional
     public boolean deleteAccommodation(Long id) {
         log.info("开始删除住宿记录，ID: {}", id);
         
         // 先查询记录是否存在
         DormAccommodation existing = accommodationMapper.selectById(id);
         if (existing == null) {
-            log.warn("要删除的住宿记录不存在，ID: {}", id);
+            log.warn("要删除的住宿记录不存在或已被删除，ID: {}", id);
             return false;
         }
         
         log.info("找到住宿记录，学生: {}, 当前状态: deleted={}", existing.getStudentName(), existing.getDeleted());
         
-        // 使用MyBatis-Plus的逻辑删除方法
-        int result = accommodationMapper.deleteById(id);
+        // 手动设置逻辑删除标志
+        existing.setDeleted(1);
+        existing.setUpdateTime(LocalDateTime.now());
+        
+        // 使用updateById方法更新记录
+        int result = accommodationMapper.updateById(existing);
         log.info("数据库删除结果: {}, 受影响行数: {}", result > 0 ? "成功" : "失败", result);
+        
+        if (result > 0) {
+            log.info("成功删除住宿记录，记录ID: {}, 学生: {}", existing.getId(), existing.getStudentName());
+        }
         
         return result > 0;
     }

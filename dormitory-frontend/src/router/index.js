@@ -56,6 +56,11 @@ const routes = [
         path: 'visitors',
         name: 'Visitors',
         component: () => import('../components/VisitorManagement.vue')
+      },
+      {
+        path: 'diagnostic',
+        name: 'DeleteDiagnostic',
+        component: () => import('../components/DeleteDiagnostic.vue')
       }
     ]
   }

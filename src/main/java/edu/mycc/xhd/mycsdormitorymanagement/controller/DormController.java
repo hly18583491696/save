@@ -2,10 +2,8 @@ package edu.mycc.xhd.mycsdormitorymanagement.controller;
 
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormBuilding;
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormRoom;
-import edu.mycc.xhd.mycsdormitorymanagement.entity.DormAccommodation;
 import edu.mycc.xhd.mycsdormitorymanagement.service.DormBuildingService;
 import edu.mycc.xhd.mycsdormitorymanagement.service.DormRoomService;
-import edu.mycc.xhd.mycsdormitorymanagement.service.DormAccommodationService;
 import edu.mycc.xhd.mycsdormitorymanagement.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +26,7 @@ public class DormController {
     @Autowired
     private DormRoomService dormRoomService;
     
-    @Autowired
-    private DormAccommodationService dormAccommodationService;
+    // 住宿记录管理功能已迁移到AccommodationController
     
     // ========== 楼栋管理 ==========
     
@@ -233,134 +230,5 @@ public class DormController {
         }
     }
     
-    // ==================== 住宿记录管理 ====================
-    
-    /**
-     * 获取所有住宿记录
-     */
-    @GetMapping("/accommodations")
-    public Result<List<DormAccommodation>> getAllAccommodations() {
-        try {
-            List<DormAccommodation> accommodations = dormAccommodationService.getAllAccommodations();
-            return Result.success(accommodations);
-        } catch (Exception e) {
-            return Result.error("获取住宿记录失败: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * 根据ID获取单个住宿记录
-     */
-    @GetMapping("/accommodations/{id}")
-    public Result<DormAccommodation> getAccommodationById(@PathVariable Long id) {
-        try {
-            DormAccommodation accommodation = dormAccommodationService.getAccommodationById(id);
-            if (accommodation != null) {
-                return Result.success(accommodation);
-            } else {
-                return Result.error("住宿记录不存在");
-            }
-        } catch (Exception e) {
-            return Result.error("获取住宿记录失败: " + e.getMessage());
-        }
-    }
-
-    /**
-     * 根据学生ID获取住宿记录
-     */
-    @GetMapping("/accommodations/student/{studentId}")
-    public Result<List<DormAccommodation>> getAccommodationsByStudentId(@PathVariable Long studentId) {
-        try {
-            List<DormAccommodation> accommodations = dormAccommodationService.getAccommodationsByStudentId(studentId);
-            return Result.success(accommodations);
-        } catch (Exception e) {
-            return Result.error("获取学生住宿记录失败: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * 根据房间ID获取住宿记录
-     */
-    @GetMapping("/accommodations/room/{roomId}")
-    public Result<List<DormAccommodation>> getAccommodationsByRoomId(@PathVariable Long roomId) {
-        try {
-            List<DormAccommodation> accommodations = dormAccommodationService.getAccommodationsByRoomId(roomId);
-            return Result.success(accommodations);
-        } catch (Exception e) {
-            return Result.error("获取房间住宿记录失败: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * 分配宿舍
-     */
-    @PostMapping("/accommodations")
-    public Result<String> assignAccommodation(@RequestBody DormAccommodation accommodation) {
-        try {
-            boolean success = dormAccommodationService.assignAccommodation(accommodation);
-            if (success) {
-                return Result.success("分配宿舍成功");
-            } else {
-                return Result.error("分配宿舍失败");
-            }
-        } catch (Exception e) {
-            return Result.error("分配宿舍失败: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * 更新住宿记录
-     */
-    @PutMapping("/accommodations/{id}")
-    public Result<String> updateAccommodation(@PathVariable Long id, @RequestBody DormAccommodation accommodation) {
-        try {
-            accommodation.setId(id);
-            boolean success = dormAccommodationService.updateAccommodation(accommodation);
-            if (success) {
-                return Result.success("更新住宿记录成功");
-            } else {
-                return Result.error("更新住宿记录失败");
-            }
-        } catch (Exception e) {
-            return Result.error("更新住宿记录失败: " + e.getMessage());
-        }
-    }
-
-    /**
-     * 学生退宿
-     */
-    @PutMapping("/accommodations/checkout/student/{studentId}")
-    public Result<String> checkOutByStudentId(@PathVariable Long studentId) {
-        try {
-            boolean success = dormAccommodationService.checkOutByStudentId(studentId);
-            if (success) {
-                return Result.success("退宿成功");
-            } else {
-                return Result.error("退宿失败");
-            }
-        } catch (Exception e) {
-            return Result.error("退宿失败: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * 删除住宿记录
-     */
-    @DeleteMapping("/accommodations/{id}")
-    public Result<String> deleteAccommodation(@PathVariable Long id) {
-        log.info("删除住宿记录请求，ID: {}", id);
-        try {
-            boolean success = dormAccommodationService.deleteAccommodation(id);
-            if (success) {
-                log.info("成功删除住宿记录，ID: {}", id);
-                return Result.success("删除住宿记录成功");
-            } else {
-                log.warn("删除住宿记录失败，ID: {}", id);
-                return Result.error("删除住宿记录失败");
-            }
-        } catch (Exception e) {
-            log.error("删除住宿记录异常，ID: {}, 错误: {}", id, e.getMessage());
-            return Result.error("删除住宿记录失败: " + e.getMessage());
-        }
-    }
+    // 住宿记录管理功能已迁移到AccommodationController
 }

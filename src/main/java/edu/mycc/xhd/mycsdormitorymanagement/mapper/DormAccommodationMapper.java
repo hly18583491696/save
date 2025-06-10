@@ -43,11 +43,7 @@ public interface DormAccommodationMapper extends BaseMapper<DormAccommodation> {
     @Select("SELECT * FROM dorm_accommodation WHERE status = #{status} AND deleted = 0")
     List<DormAccommodation> findByStatus(String status);
     
-    /**
-     * 根据ID查找住宿记录
-     */
-    @Select("SELECT * FROM dorm_accommodation WHERE id = #{id} AND deleted = 0")
-    DormAccommodation selectById(Long id);
+    // selectById方法由MyBatis-Plus的BaseMapper提供，不需要重复定义
     
     /**
      * 查询所有有效的住宿记录

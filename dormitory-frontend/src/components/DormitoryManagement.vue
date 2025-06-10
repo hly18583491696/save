@@ -690,7 +690,7 @@ export default {
         selectedRoom.value = room
         
         // 获取房间的住宿记录
-        const response = await fetch(`http://localhost:8082/api/dorm/accommodations/room/${room.id}`)
+        const response = await fetch(`http://localhost:8082/api/accommodations/room/${room.id}`)
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
@@ -734,7 +734,7 @@ export default {
       }
       
       try {
-        const response = await fetch(`http://localhost:8082/api/dorm/accommodations/checkout/student/${student.studentId}`, {
+        const response = await fetch(`http://localhost:8082/api/accommodations/checkout/student/${student.studentId}`, {
           method: 'PUT'
         })
         

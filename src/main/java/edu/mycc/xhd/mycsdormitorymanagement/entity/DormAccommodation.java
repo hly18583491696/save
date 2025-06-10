@@ -35,6 +35,12 @@ public class DormAccommodation {
     @TableField("id_card")
     private String idCard;
     
+    @TableField("phone")
+    private String phone;
+    
+    @TableField("email")
+    private String email;
+    
     @TableField("room_id")
     private Long roomId;
     

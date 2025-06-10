@@ -499,27 +499,61 @@ mycs-dormitory-management/
 - Node.js 18+
 - npm 8+
 
-## 快速开始
+## 🚀 快速启动
 
-### 1. 克隆项目
+### 🎯 一键启动（推荐）
+
+#### Windows 用户
+```bash
+# 双击运行或在命令行执行
+start.bat
+```
+
+#### Linux/Mac 用户
+```bash
+# 给脚本执行权限（首次运行）
+chmod +x start.sh
+
+# 运行启动脚本
+./start.sh
+```
+
+#### 停止服务
+```bash
+# Windows
+stop.bat
+
+# Linux/Mac
+./stop.sh
+```
+
+### 📋 环境要求
+- Java 21+
+- Node.js 16+
+- MySQL 8.0+
+- Maven 3.6+（项目已包含Maven Wrapper）
+
+### 🔧 手动启动
+
+#### 1. 克隆项目
 ```bash
 git clone <repository-url>
 cd mycs-dormitory-management
 ```
 
-### 2. 数据库配置
+#### 2. 数据库配置
 
-#### 创建数据库
+##### 创建数据库
 ```sql
 CREATE DATABASE mycs_dormitory CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-#### 执行初始化脚本
+##### 执行初始化脚本
 ```bash
-mysql -u root -p mycs_dormitory < src/main/resources/sql/init.sql
+mysql -u root -p mycs_dormitory < mysql-init.sql
 ```
 
-#### 修改数据库配置
+##### 修改数据库配置
 编辑 `src/main/resources/application.properties`：
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/mycs_dormitory?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
@@ -527,34 +561,40 @@ spring.datasource.username=your_username
 spring.datasource.password=your_password
 ```
 
-### 3. Redis配置
+#### 3. Redis配置
 确保Redis服务已启动，默认配置：
 ```properties
 spring.data.redis.host=localhost
 spring.data.redis.port=6379
 ```
 
-### 4. 启动后端服务
+#### 4. 启动后端服务
 ```bash
-# 安装依赖
-mvn clean install
+# Windows
+.\mvnw.cmd spring-boot:run
 
-# 启动应用
-mvn spring-boot:run
+# Linux/Mac
+./mvnw spring-boot:run
 ```
 
-服务启动后访问：
-- 应用地址：http://localhost:8080
-- API文档：http://localhost:8080/swagger-ui.html
-
-### 5. 前端开发（可选）
+#### 5. 启动前端服务
 ```bash
-# 创建Vue 3项目
-npm create vite@latest dormitory-frontend -- --template vue
 cd dormitory-frontend
-npm install
+npm install  # 首次运行需要安装依赖
 npm run dev
 ```
+
+#### 6. 访问系统
+- 前端地址：http://localhost:5173
+- 后端API：http://localhost:8080
+- API文档：http://localhost:8080/swagger-ui.html
+
+### 🔑 默认登录信息
+- 管理员：admin / admin123
+- 学生：student / student123
+
+### 📖 详细说明
+更多启动说明和故障排除请参考：[快速启动指南.md](./快速启动指南.md)
 
 ## API文档
 

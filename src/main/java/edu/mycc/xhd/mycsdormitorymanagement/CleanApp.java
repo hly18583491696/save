@@ -16,7 +16,8 @@ import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 
 @SpringBootApplication(exclude = {
         SecurityAutoConfiguration.class,
-        MongoAutoConfiguration.class
+        MongoAutoConfiguration.class,
+        MongoDataAutoConfiguration.class
 })
 @MapperScan("edu.mycc.xhd.mycsdormitorymanagement.mapper")
 public class CleanApp {
