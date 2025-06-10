@@ -56,4 +56,10 @@ public interface DormAccommodationMapper extends BaseMapper<DormAccommodation> {
      */
     @Select("SELECT COUNT(DISTINCT room_id) FROM dorm_accommodation WHERE status = 'ACTIVE' AND deleted = 0")
     int countOccupiedRooms();
+    
+    /**
+     * 根据房间ID查找已占用的床位号
+     */
+    @Select("SELECT bed_number FROM dorm_accommodation WHERE room_id = #{roomId} AND status = 'ACTIVE' AND deleted = 0")
+    List<String> findOccupiedBedsByRoomId(Long roomId);
 }

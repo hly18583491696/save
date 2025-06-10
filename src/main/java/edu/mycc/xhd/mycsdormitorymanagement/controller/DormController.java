@@ -230,5 +230,21 @@ public class DormController {
         }
     }
     
+    /**
+     * 获取房间的可用床位
+     */
+    @GetMapping("/rooms/{roomId}/available-beds")
+    public Result<List<String>> getAvailableBeds(@PathVariable Long roomId) {
+        log.info("获取房间可用床位请求，房间ID: {}", roomId);
+        try {
+            List<String> availableBeds = dormRoomService.getAvailableBeds(roomId);
+            log.info("成功获取房间{}的可用床位，共{}个", roomId, availableBeds.size());
+            return Result.success(availableBeds);
+        } catch (Exception e) {
+            log.error("获取房间可用床位失败，房间ID: {}, 错误: {}", roomId, e.getMessage());
+            return Result.error("获取房间可用床位失败: " + e.getMessage());
+        }
+    }
+    
     // 住宿记录管理功能已迁移到AccommodationController
 }

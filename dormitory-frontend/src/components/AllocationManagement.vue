@@ -519,6 +519,8 @@ export default {
         status: allocation.status || 'ACTIVE',
         remarks: allocation.remarks || ''
       })
+      loadStudents()
+      loadBuildings()
       loadRooms()
       loadBeds()
       showDialog.value = true

@@ -108,12 +108,14 @@ public class AccommodationController {
         try {
             List<DormAccommodation> accommodations = accommodationService.getAccommodationsByRoomId(roomId);
             Map<String, Object> response = new HashMap<>();
+            response.put("code", 200);
             response.put("success", true);
             response.put("data", accommodations);
             response.put("message", "获取房间住宿记录成功");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
+            response.put("code", 500);
             response.put("success", false);
             response.put("message", "获取房间住宿记录失败: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
@@ -220,6 +222,35 @@ public class AccommodationController {
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "学生退宿失败: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+    
+    /**
+     * 根据学生ID退宿 - 兼容前端PUT请求
+     */
+    @PutMapping("/checkout/student/{studentId}")
+    public ResponseEntity<Map<String, Object>> checkOutByStudentIdPut(@PathVariable Long studentId) {
+        log.info("收到学生退宿请求，学生ID: {}", studentId);
+        try {
+            boolean success = accommodationService.checkOutByStudentId(studentId);
+            Map<String, Object> response = new HashMap<>();
+            if (success) {
+                response.put("success", true);
+                response.put("message", "学生退宿成功");
+                log.info("学生退宿成功，学生ID: {}", studentId);
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("message", "学生退宿失败");
+                log.error("学生退宿失败，学生ID: {}", studentId);
+                return ResponseEntity.status(500).body(response);
+            }
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "学生退宿失败: " + e.getMessage());
+            log.error("学生退宿异常，学生ID: {}, 错误: {}", studentId, e.getMessage(), e);
             return ResponseEntity.status(500).body(response);
         }
     }

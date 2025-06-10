@@ -137,22 +137,22 @@ public class StudentService {
     }
     
     /**
-     * 删除学生（物理删除）
+     * 删除学生（逻辑删除）
      */
     @Transactional
     public boolean deleteStudent(Long id) {
         log.info("开始删除学生，ID: {}", id);
         
-        // 先检查学生是否存在
+        // 先检查学生是否存在且未被删除
         Student student = studentMapper.selectById(id);
-        if (student == null) {
-            log.error("删除失败：学生不存在，ID: {}", id);
-            throw new RuntimeException("学生不存在");
+        if (student == null || student.getDeleted() == 1) {
+            log.error("删除失败：学生不存在或已被删除，ID: {}", id);
+            throw new RuntimeException("学生不存在或已被删除");
         }
         log.info("找到学生记录：{} ({})", student.getStudentName(), student.getStudentNumber());
         
-        // 先删除该学生的所有住宿记录
-        log.info("开始删除学生住宿记录，学生ID: {}", id);
+        // 先逻辑删除该学生的所有住宿记录
+        log.info("开始逻辑删除学生住宿记录，学生ID: {}", id);
         boolean accommodationDeleted = dormAccommodationService.deleteAccommodationsByStudentId(id);
         if (!accommodationDeleted) {
             log.error("删除学生住宿记录失败，学生ID: {}", id);
@@ -160,16 +160,16 @@ public class StudentService {
         }
         log.info("成功删除学生住宿记录，学生ID: {}", id);
         
-        // 物理删除学生记录
-        log.info("开始物理删除学生记录，ID: {}", id);
+        // 逻辑删除学生记录（使用MyBatis-Plus的逻辑删除）
+        log.info("开始逻辑删除学生记录，ID: {}", id);
         int deleteResult = studentMapper.deleteById(id);
-        log.info("数据库删除结果：受影响行数 = {}", deleteResult);
+        log.info("数据库逻辑删除结果：受影响行数 = {}", deleteResult);
         
         boolean success = deleteResult > 0;
         if (success) {
-            log.info("成功删除学生，ID: {}", id);
+            log.info("成功逻辑删除学生，ID: {}，学生表和住宿记录表已同步更新", id);
         } else {
-            log.error("删除学生失败，数据库操作未影响任何行，ID: {}", id);
+            log.error("逻辑删除学生失败，数据库操作未影响任何行，ID: {}", id);
         }
         
         return success;

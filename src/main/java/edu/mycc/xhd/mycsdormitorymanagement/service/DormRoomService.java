@@ -2,11 +2,14 @@ package edu.mycc.xhd.mycsdormitorymanagement.service;
 
 import edu.mycc.xhd.mycsdormitorymanagement.entity.DormRoom;
 import edu.mycc.xhd.mycsdormitorymanagement.mapper.DormRoomMapper;
+import edu.mycc.xhd.mycsdormitorymanagement.mapper.DormAccommodationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * 宿舍房间服务类
@@ -16,6 +19,9 @@ public class DormRoomService {
     
     @Autowired
     private DormRoomMapper dormRoomMapper;
+    
+    @Autowired
+    private DormAccommodationMapper accommodationMapper;
     
     /**
      * 获取所有房间
@@ -116,5 +122,36 @@ public class DormRoomService {
             room.setCurrentCount(occupancy);
             dormRoomMapper.updateById(room);
         }
+    }
+    
+    /**
+     * 获取房间的可用床位
+     */
+    public List<String> getAvailableBeds(Long roomId) {
+        // 获取房间信息
+        DormRoom room = dormRoomMapper.selectById(roomId);
+        if (room == null) {
+            throw new RuntimeException("房间不存在");
+        }
+        
+        // 获取房间总床位数
+        Integer capacity = room.getCapacity();
+        if (capacity == null || capacity <= 0) {
+            return new ArrayList<>();
+        }
+        
+        // 获取已占用的床位
+        List<String> occupiedBeds = accommodationMapper.findOccupiedBedsByRoomId(roomId);
+        
+        // 生成所有床位号（1到capacity）
+        List<String> allBeds = new ArrayList<>();
+        for (int i = 1; i <= capacity; i++) {
+            allBeds.add(String.valueOf(i));
+        }
+        
+        // 过滤掉已占用的床位，返回可用床位
+        return allBeds.stream()
+                .filter(bed -> !occupiedBeds.contains(bed))
+                .collect(Collectors.toList());
     }
 }
