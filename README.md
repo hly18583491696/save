@@ -752,9 +752,460 @@ mycs-dormitory-management/
   - 数据诊断工具
   - 系统维护功能
 
-### 🛠️ 技术栈说明
+### 🛠️ 核心技术实现详解
 
-#### 后端技术
+#### 后端架构设计
+
+**Spring Boot 核心配置**
+- **框架**: Spring Boot 3.x
+- **数据访问**: MyBatis-Plus 3.x
+- **数据库**: MySQL 8.0 + HikariCP连接池
+- **安全**: 自定义JWT认证机制
+- **日志**: SLF4J + Logback
+- **构建工具**: Maven
+- **开发工具**: Spring Boot DevTools
+
+**数据库配置 (MybatisPlusConfig.java)**
+```java
+@Configuration
+public class MybatisPlusConfig {
+    
+    @Bean
+    @ConfigurationProperties("spring.datasource")
+    public DataSource dataSource() {
+        return new HikariDataSource();
+    }
+    
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
+    }
+}
+```
+
+**JWT认证机制 (JwtUtils.java)**
+```java
+@Component
+public class JwtUtils {
+    private static final String SECRET_KEY = "mySecretKey";
+    private static final long EXPIRATION_TIME = 86400000; // 24小时
+    
+    public String getUsernameFromToken(String token) {
+        // 简化版本：从Base64解码获取用户名
+        String[] parts = token.split("\\.");
+        if (parts.length >= 2) {
+            String payload = new String(Base64.getDecoder().decode(parts[1]));
+            // 解析JSON获取用户名
+            return extractUsernameFromPayload(payload);
+        }
+        return null;
+    }
+    
+    public boolean isTokenExpired(String token) {
+        // 令牌过期检查逻辑
+        return false; // 简化实现
+    }
+}
+```
+
+**全局异常处理 (GlobalExceptionHandler.java)**
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<String> handleValidationException(MethodArgumentNotValidException e) {
+        log.warn("参数验证失败: {}", e.getMessage());
+        return Result.badRequest("参数验证失败: " + e.getBindingResult().getFieldError().getDefaultMessage());
+    }
+    
+    @ExceptionHandler(BindException.class)
+    public Result<String> handleBindException(BindException e) {
+        log.warn("参数绑定失败: {}", e.getMessage());
+        return Result.badRequest("参数绑定失败: " + e.getBindingResult().getFieldError().getDefaultMessage());
+    }
+}
+```
+
+**统一响应格式 (Result.java)**
+```java
+public class Result<T> {
+    private Integer code;
+    private String message;
+    private T data;
+    
+    public static <T> Result<T> success() {
+        return new Result<>(200, "操作成功", null);
+    }
+    
+    public static <T> Result<T> success(T data) {
+        return new Result<>(200, "操作成功", data);
+    }
+    
+    public static <T> Result<T> error(String message) {
+        return new Result<>(500, message, null);
+    }
+    
+    public static <T> Result<T> badRequest(String message) {
+        return new Result<>(400, message, null);
+    }
+}
+```
+
+#### 前端架构设计
+
+**Vue.js 3 + Composition API**
+- **框架**: Vue.js 3.x
+- **构建工具**: Vite
+- **UI组件**: 自定义组件 + Font Awesome图标
+- **路由**: Vue Router 4.x
+- **HTTP客户端**: Axios
+- **样式**: CSS3 + 响应式设计
+
+**登录组件实现 (Login.vue)**
+```vue
+<template>
+  <div class="login-container">
+    <form @submit.prevent="handleLogin" class="login-form">
+      <h2>宿舍管理系统</h2>
+      <div class="form-group">
+        <input v-model="username" type="text" placeholder="用户名" required>
+      </div>
+      <div class="form-group">
+        <input v-model="password" type="password" placeholder="密码" required>
+      </div>
+      <div class="form-group">
+        <label>
+          <input v-model="rememberMe" type="checkbox"> 记住我
+        </label>
+      </div>
+      <button type="submit" class="login-btn">登录</button>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+const router = useRouter()
+const username = ref('')
+const password = ref('')
+const rememberMe = ref(false)
+
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:8082/api/auth/login', {
+      username: username.value,
+      password: password.value
+    })
+    
+    if (response.data.code === 200) {
+      const { token, user } = response.data.data
+      
+      // 根据记住我选项保存到不同存储
+      const storage = rememberMe.value ? localStorage : sessionStorage
+      storage.setItem('token', token)
+      storage.setItem('userInfo', JSON.stringify(user))
+      
+      // 跳转到仪表板
+      router.push('/dashboard')
+    }
+  } catch (error) {
+    alert('登录失败：' + error.response?.data?.message || '网络错误')
+  }
+}
+</script>
+```
+
+**宿舍管理组件 (DormitoryManagement.vue)**
+```vue
+<template>
+  <div class="dormitory-management">
+    <div class="header">
+      <button @click="showAddDialog = true" class="add-btn">
+        <i class="fas fa-plus"></i> 添加宿舍
+      </button>
+      <button @click="fetchDormitories" class="refresh-btn">
+        <i class="fas fa-sync-alt"></i> 刷新
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <input v-model="searchBuilding" placeholder="搜索楼栋..." class="search-input">
+      <select v-model="filterStatus" class="filter-select">
+        <option value="">所有状态</option>
+        <option value="AVAILABLE">可用</option>
+        <option value="OCCUPIED">已占用</option>
+        <option value="MAINTENANCE">维修中</option>
+      </select>
+    </div>
+    
+    <div class="dormitory-grid">
+      <div v-for="room in filteredRooms" :key="room.id" class="room-card">
+        <div class="room-header">
+          <h3>{{ room.buildingName }}</h3>
+          <span class="room-number">{{ room.roomNumber }}</span>
+        </div>
+        <div class="room-info">
+          <p><strong>状态:</strong> {{ room.status }}</p>
+          <p><strong>楼层:</strong> {{ room.floor }}</p>
+          <p><strong>类型:</strong> {{ room.roomType }}</p>
+          <p><strong>入住:</strong> {{ room.currentCount }}/{{ room.capacity }}</p>
+        </div>
+        <div class="room-actions">
+          <button @click="editRoom(room)" class="edit-btn">编辑</button>
+          <button @click="manageStudents(room)" class="manage-btn">管理学生</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+
+const rooms = ref([])
+const searchBuilding = ref('')
+const filterStatus = ref('')
+const showAddDialog = ref(false)
+
+const filteredRooms = computed(() => {
+  return rooms.value.filter(room => {
+    const matchesBuilding = !searchBuilding.value || 
+      room.buildingName.toLowerCase().includes(searchBuilding.value.toLowerCase())
+    const matchesStatus = !filterStatus.value || room.status === filterStatus.value
+    return matchesBuilding && matchesStatus
+  })
+})
+
+const fetchDormitories = async () => {
+  try {
+    const response = await axios.get('http://localhost:8082/api/dorm/rooms')
+    if (response.data.code === 200) {
+      rooms.value = response.data.data
+    }
+  } catch (error) {
+    console.error('获取宿舍数据失败:', error)
+  }
+}
+
+onMounted(() => {
+  fetchDormitories()
+})
+</script>
+```
+
+#### 核心业务逻辑实现
+
+**住宿分配服务 (DormAccommodationService.java)**
+```java
+@Service
+@Transactional
+public class DormAccommodationService {
+    
+    @Autowired
+    private DormAccommodationMapper accommodationMapper;
+    
+    @Autowired
+    private DormRoomService dormRoomService;
+    
+    public boolean assignAccommodation(DormAccommodation accommodation) {
+        // 1. 检查学生是否已有住宿记录
+        DormAccommodation existing = accommodationMapper.findActiveByStudentId(
+            accommodation.getStudentId());
+        if (existing != null) {
+            throw new RuntimeException("学生已有住宿记录，请先退宿");
+        }
+        
+        // 2. 检查床位是否被占用
+        if (isBedOccupied(accommodation.getRoomId(), accommodation.getBedNumber())) {
+            throw new RuntimeException("床位已被占用");
+        }
+        
+        // 3. 获取学生信息并设置相关字段
+        Student student = studentService.getStudentById(accommodation.getStudentId());
+        if (student != null) {
+            accommodation.setStudentNumber(student.getStudentNumber());
+            accommodation.setStudentName(student.getStudentName());
+            accommodation.setClassName(student.getClassName());
+            accommodation.setIdCard(student.getIdCard());
+        }
+        
+        // 4. 保存住宿记录
+        accommodation.setCheckInDate(LocalDate.now());
+        accommodation.setStatus("ACTIVE");
+        accommodation.setCreateTime(LocalDateTime.now());
+        
+        boolean success = accommodationMapper.insert(accommodation) > 0;
+        
+        // 5. 更新房间入住人数
+        if (success) {
+            dormRoomService.updateRoomOccupancy(accommodation.getRoomId(), 1);
+        }
+        
+        return success;
+    }
+}
+```
+
+**系统配置服务 (SystemConfigService.java)**
+```java
+@Service
+public class SystemConfigService {
+    
+    @Autowired
+    private SystemConfigMapper systemConfigMapper;
+    
+    public Map<String, Map<String, String>> getAllConfigsGrouped() {
+        List<SystemConfig> configs = systemConfigMapper.findAllActive();
+        Map<String, Map<String, String>> groupedConfigs = new HashMap<>();
+        
+        for (SystemConfig config : configs) {
+            String type = config.getConfigType();
+            if (!groupedConfigs.containsKey(type)) {
+                groupedConfigs.put(type, new HashMap<>());
+            }
+            groupedConfigs.get(type).put(config.getConfigKey(), config.getConfigValue());
+        }
+        
+        return groupedConfigs;
+    }
+    
+    @Transactional
+    public boolean batchUpdateConfigs(Map<String, String> configs) {
+        try {
+            for (Map.Entry<String, String> entry : configs.entrySet()) {
+                updateConfig(entry.getKey(), entry.getValue());
+            }
+            return true;
+        } catch (Exception e) {
+            log.error("批量更新配置失败: {}", e.getMessage());
+            return false;
+        }
+    }
+}
+```
+
+#### 数据库设计详解
+
+**核心表结构**
+
+```sql
+-- 用户表
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL COMMENT '用户名',
+    password VARCHAR(255) NOT NULL COMMENT '密码',
+    real_name VARCHAR(100) COMMENT '真实姓名',
+    email VARCHAR(100) COMMENT '邮箱',
+    phone VARCHAR(20) COMMENT '电话',
+    role ENUM('ADMIN', 'TEACHER', 'STUDENT') DEFAULT 'STUDENT' COMMENT '角色',
+    status TINYINT DEFAULT 1 COMMENT '状态：1-正常，0-禁用',
+    avatar VARCHAR(255) COMMENT '头像URL',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0 COMMENT '逻辑删除：1-已删除，0-正常'
+);
+
+-- 学生表
+CREATE TABLE students (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_number VARCHAR(20) UNIQUE NOT NULL COMMENT '学号',
+    student_name VARCHAR(100) NOT NULL COMMENT '姓名',
+    class_name VARCHAR(100) COMMENT '班级',
+    id_card VARCHAR(18) COMMENT '身份证号',
+    phone VARCHAR(20) COMMENT '电话',
+    email VARCHAR(100) COMMENT '邮箱',
+    status TINYINT DEFAULT 1 COMMENT '状态：1-在校，0-离校',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0
+);
+
+-- 宿舍楼表
+CREATE TABLE dorm_buildings (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    building_code VARCHAR(20) UNIQUE NOT NULL COMMENT '楼栋编号',
+    building_name VARCHAR(100) NOT NULL COMMENT '楼栋名称',
+    building_type VARCHAR(20) COMMENT '楼栋类型：男生楼/女生楼',
+    floors INT COMMENT '楼层数',
+    rooms_per_floor INT COMMENT '每层房间数',
+    manager_name VARCHAR(50) COMMENT '管理员姓名',
+    manager_phone VARCHAR(20) COMMENT '管理员电话',
+    description TEXT COMMENT '描述',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0
+);
+
+-- 宿舍房间表
+CREATE TABLE dorm_rooms (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    building_id BIGINT NOT NULL COMMENT '所属楼栋ID',
+    room_number VARCHAR(20) NOT NULL COMMENT '房间号',
+    floor INT COMMENT '楼层',
+    room_type VARCHAR(20) COMMENT '房间类型：标准间/套间',
+    capacity INT DEFAULT 4 COMMENT '容纳人数',
+    current_count INT DEFAULT 0 COMMENT '当前入住人数',
+    gender VARCHAR(10) COMMENT '性别限制：男/女',
+    status VARCHAR(20) DEFAULT 'AVAILABLE' COMMENT '状态：AVAILABLE/OCCUPIED/MAINTENANCE',
+    facilities TEXT COMMENT '设施描述',
+    rent DECIMAL(10,2) COMMENT '租金',
+    description TEXT COMMENT '房间描述',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0,
+    FOREIGN KEY (building_id) REFERENCES dorm_buildings(id)
+);
+
+-- 住宿记录表
+CREATE TABLE dorm_accommodations (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT NOT NULL COMMENT '学生ID',
+    student_number VARCHAR(20) COMMENT '学号',
+    student_name VARCHAR(100) COMMENT '学生姓名',
+    class_name VARCHAR(100) COMMENT '班级',
+    id_card VARCHAR(18) COMMENT '身份证号',
+    phone VARCHAR(20) COMMENT '电话',
+    email VARCHAR(100) COMMENT '邮箱',
+    room_id BIGINT NOT NULL COMMENT '房间ID',
+    room_number VARCHAR(20) COMMENT '房间号',
+    building_id BIGINT COMMENT '楼栋ID',
+    building_name VARCHAR(100) COMMENT '楼栋名称',
+    bed_number VARCHAR(10) COMMENT '床位号',
+    check_in_date DATE COMMENT '入住日期',
+    check_out_date DATE COMMENT '退宿日期',
+    status VARCHAR(20) DEFAULT 'ACTIVE' COMMENT '状态：ACTIVE/INACTIVE',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0,
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (room_id) REFERENCES dorm_rooms(id),
+    FOREIGN KEY (building_id) REFERENCES dorm_buildings(id)
+);
+
+-- 系统配置表
+CREATE TABLE system_config (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    config_key VARCHAR(100) UNIQUE NOT NULL COMMENT '配置键',
+    config_value TEXT COMMENT '配置值',
+    config_type VARCHAR(50) COMMENT '配置类型：basic/dormitory/notification/security/backup',
+    config_description VARCHAR(255) COMMENT '配置描述',
+    is_system TINYINT DEFAULT 0 COMMENT '是否系统配置：1-系统配置(不可删除)，0-用户配置',
+    status TINYINT DEFAULT 1 COMMENT '状态：1-启用，0-禁用',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+#### 技术栈说明
+
+**后端技术**
 - **框架**: Spring Boot 3.x
 - **数据访问**: MyBatis-Plus
 - **数据库**: MySQL 8.0
@@ -763,7 +1214,7 @@ mycs-dormitory-management/
 - **构建工具**: Maven
 - **开发工具**: Spring Boot DevTools
 
-#### 前端技术
+**前端技术**
 - **框架**: Vue.js 3.x
 - **构建工具**: Vite
 - **UI组件**: 自定义组件 + Font Awesome图标
@@ -1540,6 +1991,279 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 ### 默认账户
 - 管理员：admin / admin123
 - 学生：student / student123
+
+## 🏗️ 核心模块实现逻辑
+
+### 1. 用户认证与授权模块
+
+#### 后端实现逻辑
+**核心类：** `AuthController.java`, `UserService.java`, `JwtUtils.java`
+
+**认证流程：**
+```java
+// 用户登录验证流程
+1. 接收用户名和密码 -> AuthController.login()
+2. 参数校验（非空验证）
+3. 调用UserService.login()进行业务验证：
+   - 根据用户名查询用户信息
+   - 验证密码是否正确
+   - 检查用户状态（是否被禁用）
+   - 验证用户角色权限（ADMIN/TEACHER可登录管理系统）
+4. 生成JWT Token（简化版本，包含用户名信息）
+5. 返回登录结果和用户信息
+```
+
+**权限控制：**
+- 基于角色的访问控制（RBAC）
+- 用户角色：ADMIN（管理员）、TEACHER（教师）、STUDENT（学生）
+- 状态管理：NORMAL（正常）、DISABLED（禁用）
+
+#### 前端实现逻辑
+**核心组件：** `Login.vue`, `router/index.js`
+
+**登录流程：**
+```javascript
+// 前端登录处理流程
+1. 用户输入验证（用户名、密码非空）
+2. 调用后端API：POST /api/auth/login
+3. 处理响应结果：
+   - 成功：保存Token和用户信息到localStorage/sessionStorage
+   - 失败：显示错误信息
+4. 路由跳转到Dashboard页面
+```
+
+**路由守卫：**
+```javascript
+// 路由权限控制
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('userToken') || sessionStorage.getItem('userToken')
+  if (to.meta.requiresAuth && !token) {
+    next('/login') // 未登录跳转到登录页
+  } else {
+    next() // 允许访问
+  }
+})
+```
+
+### 2. 维修管理模块
+
+#### 后端实现逻辑
+**核心类：** `DormMaintenanceController.java`, `DormMaintenanceService.java`, `DormMaintenance.java`
+
+**数据模型：**
+```java
+// 维修申请实体类关键字段
+- requestNumber: 申请单号（自动生成）
+- maintenanceType: 维修类型（水电维修、家具维修、门窗维修等）
+- urgency: 紧急程度（低、中、高、紧急）
+- status: 处理状态（待处理、已分配、维修中、已完成、已取消）
+- description: 问题描述
+- applicantId: 申请人ID
+- roomId: 房间ID
+```
+
+**业务逻辑：**
+```java
+// 维修申请处理流程
+1. 创建维修申请 -> 生成唯一申请单号
+2. 状态流转：待处理 -> 已分配 -> 维修中 -> 已完成
+3. 多维度查询：按状态、类型、紧急程度、申请人、房间等筛选
+4. 分页查询优化：使用MyBatis Plus分页插件
+```
+
+#### 前端实现逻辑
+**核心组件：** `Maintenance.vue`
+
+**功能实现：**
+```javascript
+// 维修管理前端核心功能
+1. 数据展示：
+   - 维修申请列表（支持分页、排序、筛选）
+   - 状态统计（待处理、进行中、已完成数量）
+   
+2. 交互功能：
+   - 多条件筛选（状态、类型、紧急程度）
+   - 批量操作（批量分配、批量完成）
+   - 详情查看和编辑
+   
+3. API调用：
+   - 使用Axios进行HTTP请求
+   - 统一错误处理和加载状态管理
+```
+
+**状态映射处理：**
+```javascript
+// 前后端状态值统一
+后端枚举值：PENDING, COMPLETED, URGENT
+前端显示：待处理, 已完成, 紧急
+// 通过getStatusText函数进行映射转换
+```
+
+### 3. 宿舍管理模块
+
+#### 后端实现逻辑
+**核心类：** `DormBuildingController.java`, `DormRoomController.java`
+
+**数据模型：**
+```java
+// 宿舍楼实体
+DormBuilding:
+- buildingCode: 楼栋编号
+- buildingName: 楼栋名称
+- buildingType: 楼栋类型（男生宿舍、女生宿舍）
+- totalFloors: 总楼层数
+- totalRooms: 总房间数
+
+// 宿舍房间实体
+DormRoom:
+- roomNumber: 房间号
+- buildingId: 所属楼栋ID
+- floor: 楼层
+- roomType: 房间类型（单人间、双人间、四人间等）
+- totalBeds: 总床位数
+- occupiedBeds: 已占用床位数
+- status: 房间状态（可用、已满、维修中）
+```
+
+#### 前端实现逻辑
+**核心组件：** `DormitoryManagement.vue`
+
+**界面设计：**
+```javascript
+// 宿舍管理界面核心功能
+1. 卡片式展示：
+   - 每个房间显示为独立卡片
+   - 显示房间基本信息、入住情况、状态
+   
+2. 可视化元素：
+   - 床位占用率进度条
+   - 状态颜色标识
+   - 图标化信息展示
+   
+3. 交互功能：
+   - 搜索和筛选（按楼栋、状态）
+   - 房间详情查看
+   - 学生管理功能
+```
+
+### 4. 系统架构设计
+
+#### 后端架构
+**技术栈：** Spring Boot + MyBatis Plus + MySQL
+
+**核心配置：**
+```java
+// 数据库配置 - MybatisPlusConfig.java
+1. HikariCP连接池配置
+2. MyBatis Plus分页插件配置
+3. 全局配置（逻辑删除、自动填充等）
+
+// 全局异常处理 - GlobalExceptionHandler.java
+1. 参数校验异常处理
+2. 业务异常统一处理
+3. 系统异常兜底处理
+
+// 统一响应格式 - Result.java
+1. 成功响应：code=200, message, data
+2. 失败响应：code=500/400, message
+3. 链式调用支持
+```
+
+#### 前端架构
+**技术栈：** Vue 3 + Vite + Vue Router
+
+**路由设计：**
+```javascript
+// 路由结构 - router/index.js
+1. 公共路由：登录页面（无需认证）
+2. 受保护路由：管理系统页面（需要认证）
+3. 嵌套路由：Dashboard下的各功能模块
+4. 路由守卫：基于Token的访问控制
+```
+
+**组件设计：**
+```javascript
+// 组件架构
+1. 页面组件：Login.vue, AdminDashboard.vue等
+2. 功能组件：各业务模块组件
+3. 组合式API：使用Vue 3 Composition API
+4. 响应式数据：ref, reactive进行状态管理
+```
+
+### 5. 数据交互流程
+
+#### API设计规范
+```
+// RESTful API设计
+GET    /api/maintenance          # 获取维修申请列表
+POST   /api/maintenance          # 创建维修申请
+GET    /api/maintenance/{id}     # 获取单个维修申请
+PUT    /api/maintenance/{id}     # 更新维修申请
+DELETE /api/maintenance/{id}     # 删除维修申请
+```
+
+#### 前后端数据流
+```
+1. 前端发起请求 -> Axios HTTP客户端
+2. 后端接收请求 -> Controller层路由
+3. 业务处理 -> Service层业务逻辑
+4. 数据访问 -> Mapper层数据库操作
+5. 响应返回 -> 统一Result格式
+6. 前端处理响应 -> 更新界面状态
+```
+
+#### 错误处理机制
+```javascript
+// 前端错误处理
+1. 网络错误：显示网络连接提示
+2. 业务错误：显示后端返回的错误信息
+3. 参数错误：前端表单验证提示
+
+// 后端错误处理
+1. 参数校验：@Valid注解 + GlobalExceptionHandler
+2. 业务异常：自定义异常类 + 统一处理
+3. 系统异常：日志记录 + 通用错误响应
+```
+
+### 6. 数据库设计要点
+
+#### 核心表结构
+```sql
+-- 用户表
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('ADMIN', 'TEACHER', 'STUDENT'),
+    status ENUM('NORMAL', 'DISABLED'),
+    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 维修申请表
+CREATE TABLE dorm_maintenance (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    request_number VARCHAR(50) UNIQUE NOT NULL,
+    maintenance_type VARCHAR(50) NOT NULL,
+    urgency ENUM('低', '中', '高', '紧急'),
+    status ENUM('PENDING', 'ASSIGNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'),
+    description TEXT,
+    applicant_id BIGINT,
+    room_id BIGINT,
+    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### 数据完整性保障
+```sql
+-- 外键约束
+ALTER TABLE dorm_maintenance 
+ADD CONSTRAINT fk_maintenance_applicant 
+FOREIGN KEY (applicant_id) REFERENCES users(id);
+
+-- 索引优化
+CREATE INDEX idx_maintenance_status ON dorm_maintenance(status);
+CREATE INDEX idx_maintenance_type ON dorm_maintenance(maintenance_type);
+```
 
 ## 📝 开发说明
 

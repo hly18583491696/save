@@ -19,30 +19,28 @@
           >
         </div>
         <div class="filter-group">
-          <select v-model="statusFilter" class="form-select" @change="applyFilters">
-            <option value="">全部状态</option>
-            <option value="pending">🕐 待处理</option>
-            <option value="assigned">👷 已分配</option>
-            <option value="in_progress">🔧 维修中</option>
-            <option value="completed">✅ 已完成</option>
-            <option value="cancelled">❌ 已取消</option>
-          </select>
-          <select v-model="typeFilter" class="form-select" @change="applyFilters">
-            <option value="">全部类型</option>
-            <option value="水电维修">💧 水电维修</option>
-            <option value="家具维修">🪑 家具维修</option>
-            <option value="门窗维修">🚪 门窗维修</option>
-            <option value="网络维修">🌐 网络维修</option>
-            <option value="空调维修">❄️ 空调维修</option>
-            <option value="其他维修">🔧 其他维修</option>
-          </select>
-          <select v-model="urgencyFilter" class="form-select" @change="applyFilters">
-            <option value="">全部紧急度</option>
-            <option value="低">🟢 低</option>
-            <option value="中">🟡 中</option>
-            <option value="高">🟠 高</option>
-            <option value="紧急">🔴 紧急</option>
-          </select>
+          <select v-model="statusFilter" @change="handleFilterChange">
+              <option value="">全部状态</option>
+              <option value="PENDING">🕐 待处理</option>
+              <option value="IN_PROGRESS">🔧 处理中</option>
+              <option value="COMPLETED">✅ 已完成</option>
+              <option value="CANCELLED">❌ 已取消</option>
+            </select>
+          <select v-model="typeFilter" @change="handleFilterChange">
+              <option value="">全部类型</option>
+              <option value="ELECTRICAL">💧 水电维修</option>
+              <option value="PLUMBING">🚰 管道维修</option>
+              <option value="FURNITURE">🪑 家具维修</option>
+              <option value="APPLIANCE">🔌 电器维修</option>
+              <option value="OTHER">🔧 其他维修</option>
+            </select>
+          <select v-model="urgencyFilter" @change="handleFilterChange">
+              <option value="">全部紧急度</option>
+              <option value="LOW">🟢 低</option>
+              <option value="NORMAL">🟡 普通</option>
+              <option value="HIGH">🟠 高</option>
+              <option value="URGENT">🔴 紧急</option>
+            </select>
         </div>
       </div>
       <div class="action-buttons">
@@ -101,7 +99,7 @@
             </span>
           </div>
         </div>
-        <div class="stat-card urgent" @click="filterByUrgency('紧急')">
+        <div class="stat-card urgent" @click="filterByUrgency('URGENT')">
           <div class="stat-icon">
             <i class="fas fa-exclamation-triangle"></i>
           </div>
@@ -175,87 +173,97 @@
         <table class="data-table">
           <thead>
             <tr>
-              <th>
+              <th class="col-checkbox">
                 <input type="checkbox" v-model="selectAll" @change="toggleSelectAll">
               </th>
-              <th @click="sortBy('id')" class="sortable">
+              <th class="col-request-number sortable" @click="sortBy('id')">
                 申请编号 
                 <i :class="getSortIcon('id')"></i>
               </th>
-              <th @click="sortBy('roomNumber')" class="sortable">
+              <th class="col-room sortable" @click="sortBy('roomNumber')">
                 宿舍房间 
                 <i :class="getSortIcon('roomNumber')"></i>
               </th>
-              <th>申请人</th>
-              <th>维修类型</th>
-              <th>紧急程度</th>
-              <th>问题描述</th>
-              <th @click="sortBy('createdAt')" class="sortable">
+              <th class="col-applicant">申请人</th>
+              <th class="col-type">维修类型</th>
+              <th class="col-urgency">紧急程度</th>
+              <th class="col-description">问题描述</th>
+              <th class="col-time sortable" @click="sortBy('createdAt')">
                 申请时间 
                 <i :class="getSortIcon('createdAt')"></i>
               </th>
-              <th>处理进度</th>
-              <th>状态</th>
-              <th>操作</th>
+              <th class="col-progress">处理进度</th>
+              <th class="col-status">状态</th>
+              <th class="col-actions">操作</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="request in paginatedRequests" :key="request.id" 
-                :class="{'selected': selectedItems.includes(request.id), 'urgent': request.urgency === '紧急'}">
-              <td>
+                :class="{'selected': selectedItems.includes(request.id), 'urgent': request.urgency === 'URGENT'}">
+              <td class="col-checkbox">
                 <input type="checkbox" :value="request.id" v-model="selectedItems">
               </td>
-              <td class="request-number">
-                <span class="number">{{ request.id }}</span>
-                <span v-if="request.urgency === '紧急'" class="urgent-badge">
-                  <i class="fas fa-exclamation-triangle"></i>
-                </span>
-              </td>
-              <td class="room-info">
-                <span class="room-number">{{ request.roomNumber }}</span>
-                <small class="building">{{ request.building }}栋</small>
-              </td>
-              <td class="applicant-info">
-                <div class="user-avatar">
-                  <i class="fas fa-user"></i>
-                </div>
-                <div class="user-details">
-                  <span class="name">{{ request.applicant }}</span>
+              <td class="col-request-number">
+                <div class="request-number">
+                  <span class="number">{{ request.id }}</span>
+                  <span v-if="request.urgency === 'URGENT'" class="urgent-badge">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </span>
                 </div>
               </td>
-              <td>
+              <td class="col-room">
+                <div class="room-info">
+                  <span class="room-number">{{ request.roomNumber }}</span>
+                  <small class="building">{{ request.building }}栋</small>
+                </div>
+              </td>
+              <td class="col-applicant">
+                <div class="applicant-info">
+                  <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="user-details">
+                    <span class="name">{{ request.applicant }}</span>
+                  </div>
+                </div>
+              </td>
+              <td class="col-type">
                 <span :class="['type-badge', request.type.toLowerCase()]">
                   <i :class="getTypeIcon(request.type)"></i>
                   {{ request.type }}
                 </span>
               </td>
-              <td>
+              <td class="col-urgency">
                 <span :class="['urgency-badge', request.urgency]">
                   {{ request.urgency }}
                 </span>
               </td>
-              <td class="description">
+              <td class="col-description">
                 <div class="desc-content" :title="request.description">
                   {{ request.description.length > 30 ? request.description.substring(0, 30) + '...' : request.description }}
                 </div>
               </td>
-              <td class="time-info">
-                <div class="request-time">{{ formatDate(request.createdAt) }}</div>
-                <small class="relative-time">{{ getRelativeTime(request.createdAt) }}</small>
-              </td>
-              <td class="progress-info">
-                <div class="progress-bar">
-                  <div class="progress-fill" :style="{width: getProgressWidth(request.status)}"></div>
+              <td class="col-time">
+                <div class="time-info">
+                  <div class="request-time">{{ formatDate(request.createdAt) }}</div>
+                  <small class="relative-time">{{ getRelativeTime(request.createdAt) }}</small>
                 </div>
-                <small class="progress-text">{{ getProgressText(request.status) }}</small>
               </td>
-              <td>
+              <td class="col-progress">
+                <div class="progress-info">
+                  <div class="progress-bar">
+                    <div class="progress-fill" :style="{width: getProgressWidth(request.status)}"></div>
+                  </div>
+                  <small class="progress-text">{{ getProgressText(request.status) }}</small>
+                </div>
+              </td>
+              <td class="col-status">
                 <span :class="['status-badge', request.status]">
                   <i :class="getStatusIcon(request.status)"></i>
                   {{ getStatusText(request.status) }}
                 </span>
               </td>
-              <td class="actions">
+              <td class="col-actions">
                 <div class="action-buttons">
                   <button class="btn btn-sm btn-info" @click="viewRequest(request)" title="查看详情">
                     <i class="fas fa-eye"></i>
@@ -326,11 +334,11 @@
       <div v-else class="card-container">
         <div class="maintenance-cards">
           <div v-for="request in paginatedRequests" :key="request.id" 
-               :class="['maintenance-card', request.status, {'urgent': request.urgency === '紧急'}]">
+               :class="['maintenance-card', request.status, {'urgent': request.urgency === 'URGENT'}]">
             <div class="card-header">
               <div class="card-title">
                 <span class="request-number">{{ request.id }}</span>
-                <span v-if="request.urgency === '紧急'" class="urgent-indicator">
+                <span v-if="request.urgency === 'URGENT'" class="urgent-indicator">
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
               </div>
@@ -499,7 +507,7 @@ export default {
       applicant: '',
       contact: '',
       type: '',
-      urgency: '普通',
+      urgency: 'NORMAL',
       description: ''
     })
     
@@ -693,56 +701,51 @@ export default {
     
     const getStatusText = (status) => {
       const statusMap = {
-        'pending': '待处理',
-        'assigned': '已分配',
-        'in_progress': '维修中',
-        'completed': '已完成',
-        'cancelled': '已取消'
+        'PENDING': '待处理',
+        'IN_PROGRESS': '处理中',
+        'COMPLETED': '已完成',
+        'CANCELLED': '已取消'
       }
       return statusMap[status] || status
     }
     
     const getStatusIcon = (status) => {
       const iconMap = {
-        'pending': 'fas fa-clock',
-        'assigned': 'fas fa-user-check',
-        'in_progress': 'fas fa-tools',
-        'completed': 'fas fa-check-circle',
-        'cancelled': 'fas fa-times-circle'
+        'PENDING': 'fas fa-clock',
+        'IN_PROGRESS': 'fas fa-tools',
+        'COMPLETED': 'fas fa-check-circle',
+        'CANCELLED': 'fas fa-times-circle'
       }
       return iconMap[status] || 'fas fa-question-circle'
     }
     
     const getTypeIcon = (type) => {
       const iconMap = {
-        '水电维修': 'fas fa-tint',
-        '家具维修': 'fas fa-couch',
-        '门窗维修': 'fas fa-door-open',
-        '网络维修': 'fas fa-wifi',
-        '空调维修': 'fas fa-snowflake',
-        '其他维修': 'fas fa-wrench'
+        'ELECTRICAL': 'fas fa-bolt',
+        'PLUMBING': 'fas fa-tint',
+        'FURNITURE': 'fas fa-couch',
+        'APPLIANCE': 'fas fa-plug',
+        'OTHER': 'fas fa-tools'
       }
-      return iconMap[type] || 'fas fa-tools'
+      return iconMap[type] || 'fas fa-wrench'
     }
     
     const getProgressWidth = (status) => {
       const progressMap = {
-        'pending': '25%',
-        'assigned': '50%',
-        'in_progress': '75%',
-        'completed': '100%',
-        'cancelled': '0%'
+        'PENDING': '25%',
+        'IN_PROGRESS': '75%',
+        'COMPLETED': '100%',
+        'CANCELLED': '0%'
       }
       return progressMap[status] || '0%'
     }
     
     const getProgressText = (status) => {
       const textMap = {
-        'pending': '等待处理',
-        'assigned': '已分配',
-        'in_progress': '维修中',
-        'completed': '已完成',
-        'cancelled': '已取消'
+        'PENDING': '等待处理',
+        'IN_PROGRESS': '处理中',
+        'COMPLETED': '已完成',
+        'CANCELLED': '已取消'
       }
       return textMap[status] || '未知'
     }
@@ -797,7 +800,7 @@ export default {
         applicant: '',
         contact: '',
         type: '',
-        urgency: '普通',
+        urgency: 'NORMAL',
         description: ''
       }
     }
@@ -1123,15 +1126,15 @@ export default {
   opacity: 0.05;
 }
 
-.stat-card.pending::before {
+.stat-card.PENDING::before {
   background: #f59e0b;
 }
 
-.stat-card.in-progress::before {
+.stat-card.IN_PROGRESS::before {
   background: #3b82f6;
 }
 
-.stat-card.completed::before {
+.stat-card.COMPLETED::before {
   background: #10b981;
 }
 
@@ -1159,15 +1162,15 @@ export default {
   background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-.stat-card.pending .stat-icon {
+.stat-card.PENDING .stat-icon {
   background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
-.stat-card.in-progress .stat-icon {
+.stat-card.IN_PROGRESS .stat-icon {
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
 
-.stat-card.completed .stat-icon {
+.stat-card.COMPLETED .stat-icon {
   background: linear-gradient(135deg, #10b981, #059669);
 }
 
@@ -1307,6 +1310,7 @@ export default {
 .data-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .data-table th {
@@ -1338,6 +1342,55 @@ export default {
   font-size: 14px;
   color: #475569;
   vertical-align: middle;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 列宽度定义 */
+.col-checkbox {
+  width: 50px;
+  text-align: center;
+}
+
+.col-request-number {
+  width: 120px;
+}
+
+.col-room {
+  width: 120px;
+}
+
+.col-applicant {
+  width: 120px;
+}
+
+.col-type {
+  width: 100px;
+}
+
+.col-urgency {
+  width: 80px;
+}
+
+.col-description {
+  width: 200px;
+  max-width: 200px;
+}
+
+.col-time {
+  width: 140px;
+}
+
+.col-progress {
+  width: 120px;
+}
+
+.col-status {
+  width: 100px;
+}
+
+.col-actions {
+  width: 180px;
 }
 
 .data-table tr:hover {
@@ -1377,50 +1430,67 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  max-width: 100%;
 }
 
 .room-number {
   font-weight: 600;
   color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .building {
   color: #64748b;
   font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .applicant-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  max-width: 100%;
 }
 
 .user-avatar {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: linear-gradient(135deg, #667eea, #764ba2);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
+  flex-shrink: 0;
 }
 
 .user-details {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
+  flex: 1;
 }
 
 .user-details .name {
   font-weight: 500;
   color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .user-details .contact {
   color: #64748b;
   font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .type-badge {
@@ -1433,32 +1503,27 @@ export default {
   gap: 4px;
 }
 
-.type-badge.水电维修 {
+.type-badge.ELECTRICAL {
   background: #dbeafe;
   color: #1e40af;
 }
 
-.type-badge.家具维修 {
+.type-badge.PLUMBING {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.type-badge.FURNITURE {
   background: #fef3c7;
   color: #92400e;
 }
 
-.type-badge.门窗维修 {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.type-badge.网络维修 {
+.type-badge.APPLIANCE {
   background: #e0e7ff;
   color: #3730a3;
 }
 
-.type-badge.空调维修 {
-  background: #ecfdf5;
-  color: #047857;
-}
-
-.type-badge.其他维修 {
+.type-badge.OTHER {
   background: #f3f4f6;
   color: #374151;
 }
@@ -1471,17 +1536,22 @@ export default {
   text-transform: uppercase;
 }
 
-.urgency-badge.紧急 {
+.urgency-badge.URGENT {
   background: #fef2f2;
   color: #dc2626;
 }
 
-.urgency-badge.普通 {
+.urgency-badge.NORMAL {
   background: #f0f9ff;
   color: #0369a1;
 }
 
-.urgency-badge.低 {
+.urgency-badge.HIGH {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.urgency-badge.LOW {
   background: #f7fee7;
   color: #365314;
 }
@@ -1490,7 +1560,11 @@ export default {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  line-height: 1.4;
   cursor: help;
 }
 
@@ -1498,16 +1572,24 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  max-width: 100%;
 }
 
 .request-time {
   font-weight: 500;
   color: #1e293b;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .relative-time {
   color: #64748b;
   font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .progress-info {
@@ -1547,27 +1629,22 @@ export default {
   gap: 4px;
 }
 
-.status-badge.pending {
+.status-badge.PENDING {
   background: #fef3c7;
   color: #92400e;
 }
 
-.status-badge.assigned {
-  background: #e0e7ff;
-  color: #3730a3;
-}
-
-.status-badge.in_progress {
+.status-badge.IN_PROGRESS {
   background: #dbeafe;
   color: #1e40af;
 }
 
-.status-badge.completed {
+.status-badge.COMPLETED {
   background: #d1fae5;
   color: #065f46;
 }
 
-.status-badge.cancelled {
+.status-badge.CANCELLED {
   background: #fef2f2;
   color: #dc2626;
 }
@@ -1654,15 +1731,15 @@ export default {
   height: 4px;
 }
 
-.maintenance-card.pending::before {
+.maintenance-card.PENDING::before {
   background: #f59e0b;
 }
 
-.maintenance-card.in_progress::before {
+.maintenance-card.IN_PROGRESS::before {
   background: #3b82f6;
 }
 
-.maintenance-card.completed::before {
+.maintenance-card.COMPLETED::before {
   background: #10b981;
 }
 

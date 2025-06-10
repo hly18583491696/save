@@ -223,9 +223,9 @@ export default {
     
     const getStatusText = (status) => {
       const statuses = {
-        pending: '待处理',
-        completed: '已完成',
-        urgent: '紧急'
+        PENDING: '待处理',
+        COMPLETED: '已完成',
+        URGENT: '紧急'
       }
       return statuses[status] || '未知状态'
     }
@@ -470,17 +470,17 @@ export default {
   font-weight: 500;
 }
 
-.activity-status.pending {
+.activity-status.PENDING {
   background: #fef3c7;
   color: #d97706;
 }
 
-.activity-status.completed {
+.activity-status.COMPLETED {
   background: #d1fae5;
   color: #059669;
 }
 
-.activity-status.urgent {
+.activity-status.URGENT {
   background: #fee2e2;
   color: #dc2626;
 }
