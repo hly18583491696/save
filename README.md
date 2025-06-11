@@ -1317,9 +1317,9 @@ npm run dev
 ```
 
 #### 6. 访问系统
-- 前端地址：http://localhost:5173
-- 后端API：http://localhost:8080
-- API文档：http://localhost:8080/swagger-ui.html
+- 前端地址：http://localhost:5174
+- 后端API：http://localhost:8082
+- API文档：http://localhost:8082/swagger-ui.html
 
 ### 🔑 默认登录信息
 - 管理员：admin / admin123
